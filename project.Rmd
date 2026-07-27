@@ -1,0 +1,510 @@
+---
+title: "Factors Associated with Startup Success"
+subtitle: "LASSO regression and exploratory relationship analysis"
+author: "Reproducible analysis"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: flatly
+    code_folding: hide
+params:
+  data_file: "data/global_startup_success_dataset-selected-columns.csv"
+  seed: 2026
+---
+
+```{r setup, include=FALSE}
+if (!exists("params", inherits = FALSE)) {
+  params <- list(
+    data_file = "data/global_startup_success_dataset-selected-columns.csv",
+    seed = 2026
+  )
+}
+
+knitr::opts_chunk$set(
+  echo = TRUE, warning = FALSE, message = FALSE, error = FALSE,
+  fig.width = 9, fig.height = 5.5, dpi = 120
+)
+
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(glmnet)
+library(recipes)
+library(scales)
+library(broom)
+
+theme_set(
+  theme_minimal(base_size = 12) +
+    theme(
+      plot.title.position = "plot",
+      panel.grid.minor = element_blank(),
+      legend.position = "bottom"
+    )
+)
+
+required_columns <- c(
+  "Startup Name", "Founded Year", "Country", "Industry", "Funding Stage",
+  "Total Funding ($M)", "Number of Employees", "Annual Revenue ($M)",
+  "Valuation ($B)", "Success Score"
+)
+
+raw <- read.csv(
+  params$data_file,
+  check.names = FALSE,
+  stringsAsFactors = FALSE,
+  na.strings = c("", "NA", "N/A", "null")
+)
+
+# Treat whitespace-only cells as missing before checking for empty records.
+raw[] <- lapply(raw, function(x) {
+  if (is.character(x)) {
+    x <- trimws(x)
+    x[x == ""] <- NA_character_
+  }
+  x
+})
+
+missing_columns <- setdiff(required_columns, names(raw))
+if (length(missing_columns) > 0) {
+  stop("Missing required columns: ", paste(missing_columns, collapse = ", "))
+}
+
+input_rows <- nrow(raw)
+# Remove rows that contain no information at all.
+raw <- raw[rowSums(!is.na(raw)) > 0, , drop = FALSE]
+has_data <- nrow(raw) > 0
+```
+
+## Research question
+
+This report asks which observed characteristics are associated with a startup's
+`Success Score`. LASSO (least absolute shrinkage and selection operator) is useful
+here because it can consider many numeric variables and category indicators at
+once, shrink weak effects toward zero, and select a smaller set of useful
+predictors.
+
+Two specifications are used:
+
+1. **Earlier-stage model:** age, country, industry, funding stage, total funding,
+   and employee count.
+2. **All-observed model:** the earlier-stage factors plus annual revenue and
+   valuation.
+
+The first is the more useful specification for early decision-making. Revenue and
+valuation may be consequences of success, so the second model is descriptive and
+should not be interpreted causally.
+
+```{r data-availability, echo=FALSE, results='asis'}
+if (!has_data) {
+  cat(
+    paste0(
+      "> **Data issue:** `", params$data_file,
+      "` contains the expected column names but no populated records. All ",
+      input_rows, " rows in the supplied file are blank. The analysis below is fully ",
+      "implemented and will run after the file is replaced with populated data."
+    )
+  )
+}
+```
+
+## Data preparation
+
+```{r prepare-data}
+if (has_data) {
+  dat <- raw |>
+    transmute(
+      startup_name = trimws(`Startup Name`),
+      founded_year = suppressWarnings(as.numeric(`Founded Year`)),
+      country = trimws(Country),
+      industry = trimws(Industry),
+      funding_stage = trimws(`Funding Stage`),
+      total_funding_m = suppressWarnings(as.numeric(`Total Funding ($M)`)),
+      employees = suppressWarnings(as.numeric(`Number of Employees`)),
+      annual_revenue_m = suppressWarnings(as.numeric(`Annual Revenue ($M)`)),
+      valuation_b = suppressWarnings(as.numeric(`Valuation ($B)`)),
+      success_score = suppressWarnings(as.numeric(`Success Score`))
+    ) |>
+    filter(!is.na(success_score)) |>
+    mutate(
+      startup_age = pmax(as.integer(format(Sys.Date(), "%Y")) - founded_year, 0),
+      across(c(country, industry, funding_stage), ~ na_if(.x, "")),
+      across(c(country, industry, funding_stage), as.factor),
+      # Log transforms reduce the leverage of unusually large startups.
+      log_funding = log1p(pmax(total_funding_m, 0)),
+      log_employees = log1p(pmax(employees, 0)),
+      log_revenue = log1p(pmax(annual_revenue_m, 0)),
+      log_valuation = log1p(pmax(valuation_b, 0))
+    )
+
+  if (nrow(dat) < 20) {
+    stop("At least 20 rows with a numeric Success Score are needed; found ", nrow(dat), ".")
+  }
+  if (sd(dat$success_score, na.rm = TRUE) == 0) {
+    stop("Success Score has no variation, so a regression cannot be estimated.")
+  }
+
+  quality <- tibble(
+    variable = names(dat),
+    type = vapply(dat, function(x) class(x)[1], character(1)),
+    missing_n = vapply(dat, function(x) sum(is.na(x)), integer(1)),
+    missing_pct = missing_n / nrow(dat),
+    unique_n = vapply(dat, function(x) length(unique(x[!is.na(x)])), integer(1))
+  )
+
+  knitr::kable(
+    quality,
+    digits = 3,
+    col.names = c("Variable", "Type", "Missing", "Missing %", "Unique values"),
+    caption = paste("Data quality summary for", nrow(dat), "usable startups")
+  )
+}
+```
+
+## Outcome and sample overview
+
+```{r overview, fig.height=4.5}
+if (has_data) {
+  summary_stats <- dat |>
+    summarise(
+      startups = n(),
+      countries = n_distinct(country, na.rm = TRUE),
+      industries = n_distinct(industry, na.rm = TRUE),
+      mean_success = mean(success_score, na.rm = TRUE),
+      median_success = median(success_score, na.rm = TRUE),
+      sd_success = sd(success_score, na.rm = TRUE)
+    )
+  knitr::kable(summary_stats, digits = 2)
+
+  ggplot(dat, aes(success_score)) +
+    geom_histogram(bins = 25, fill = "#2471A3", color = "white") +
+    geom_vline(
+      xintercept = mean(dat$success_score, na.rm = TRUE),
+      color = "#C0392B", linewidth = 0.9, linetype = 2
+    ) +
+    labs(
+      title = "Distribution of startup success scores",
+      subtitle = "Dashed line is the sample mean",
+      x = "Success score", y = "Number of startups"
+    )
+}
+```
+
+## Numeric relationships
+
+Pearson correlation measures linear association; Spearman correlation also detects
+monotonic relationships and is less sensitive to extreme values. Correlation does
+not establish that a factor causes startup success.
+
+```{r correlations}
+if (has_data) {
+  numeric_for_cor <- dat |>
+    select(
+      success_score, founded_year, startup_age, total_funding_m,
+      employees, annual_revenue_m, valuation_b
+    )
+
+  target_correlations <- setdiff(names(numeric_for_cor), "success_score") |>
+    lapply(function(v) {
+      complete <- complete.cases(numeric_for_cor[[v]], numeric_for_cor$success_score)
+      tibble(
+        factor = v,
+        complete_n = sum(complete),
+        pearson = if (sum(complete) >= 3)
+          cor(numeric_for_cor[[v]][complete],
+              numeric_for_cor$success_score[complete], method = "pearson") else NA_real_,
+        spearman = if (sum(complete) >= 3)
+          cor(numeric_for_cor[[v]][complete],
+              numeric_for_cor$success_score[complete], method = "spearman") else NA_real_
+      )
+    }) |>
+    bind_rows() |>
+    arrange(desc(abs(spearman)))
+
+  knitr::kable(
+    target_correlations, digits = 3,
+    col.names = c("Factor", "Complete N", "Pearson r", "Spearman rho"),
+    caption = "Bivariate associations with Success Score"
+  )
+}
+```
+
+```{r numeric-plots, fig.height=7}
+if (has_data) {
+  relationship_data <- dat |>
+    select(
+      success_score, `Startup age` = startup_age,
+      `Total funding ($M)` = total_funding_m,
+      Employees = employees,
+      `Annual revenue ($M)` = annual_revenue_m,
+      `Valuation ($B)` = valuation_b
+    ) |>
+    pivot_longer(-success_score, names_to = "factor", values_to = "value")
+
+  ggplot(relationship_data, aes(value, success_score)) +
+    geom_point(alpha = 0.45, color = "#2471A3") +
+    geom_smooth(method = "lm", se = TRUE, color = "#C0392B", linewidth = 0.7) +
+    facet_wrap(~ factor, scales = "free_x", ncol = 2) +
+    labs(
+      title = "Numeric factors and startup success",
+      subtitle = "Lines show separate unadjusted linear relationships",
+      x = NULL, y = "Success score"
+    )
+}
+```
+
+## Country, industry, and funding-stage relationships
+
+Group averages can be unstable for categories represented by few startups.
+Accordingly, each plot shows the group sample size and only displays the 12
+largest groups.
+
+```{r grouped-relations, fig.height=10}
+if (has_data) {
+  group_summary <- function(data, variable) {
+    data |>
+      filter(!is.na(.data[[variable]])) |>
+      group_by(group = .data[[variable]]) |>
+      summarise(
+        n = n(),
+        mean_success = mean(success_score, na.rm = TRUE),
+        se = sd(success_score, na.rm = TRUE) / sqrt(n),
+        .groups = "drop"
+      ) |>
+      slice_max(n, n = 12, with_ties = FALSE) |>
+      mutate(
+        lower = mean_success - 1.96 * se,
+        upper = mean_success + 1.96 * se,
+        group = reorder(paste0(group, " (n=", n, ")"), mean_success)
+      )
+  }
+
+  group_plot <- function(summary_data, title) {
+    ggplot(summary_data, aes(mean_success, group)) +
+      geom_errorbarh(aes(xmin = lower, xmax = upper), height = 0.15, color = "#7F8C8D") +
+      geom_point(size = 2.4, color = "#2471A3") +
+      labs(title = title, x = "Mean success score (95% interval)", y = NULL)
+  }
+
+  print(group_plot(group_summary(dat, "funding_stage"), "Success by funding stage"))
+  print(group_plot(group_summary(dat, "industry"), "Success by industry"))
+  print(group_plot(group_summary(dat, "country"), "Success by country"))
+}
+```
+
+## LASSO regression
+
+The data are split 80/20 into training and test sets. All imputation, dummy
+encoding, removal of zero-variance columns, and standardization are learned only
+from the training data. Cross-validation selects the penalty. The conservative
+`lambda.1se` value is used for the final model; it usually produces a smaller,
+more stable set of predictors than the minimum-error penalty.
+
+```{r lasso-functions}
+if (has_data) {
+  set.seed(params$seed)
+  train_ids <- sample(seq_len(nrow(dat)), size = floor(0.80 * nrow(dat)))
+  train <- dat[train_ids, , drop = FALSE]
+  test <- dat[-train_ids, , drop = FALSE]
+
+  run_lasso <- function(train, test, predictors, model_name) {
+    model_formula <- reformulate(predictors, response = "success_score")
+
+    rec <- recipe(model_formula, data = train) |>
+      step_unknown(all_nominal_predictors(), new_level = "Unknown") |>
+      step_novel(all_nominal_predictors(), new_level = "New") |>
+      step_impute_median(all_numeric_predictors()) |>
+      step_dummy(all_nominal_predictors(), one_hot = TRUE) |>
+      step_zv(all_predictors()) |>
+      step_normalize(all_numeric_predictors())
+
+    trained_recipe <- prep(rec, training = train, retain = TRUE)
+    train_baked <- bake(trained_recipe, new_data = train)
+    test_baked <- bake(trained_recipe, new_data = test)
+
+    x_train <- as.matrix(select(train_baked, -success_score))
+    y_train <- train_baked$success_score
+    x_test <- as.matrix(select(test_baked, -success_score))
+    y_test <- test_baked$success_score
+
+    set.seed(params$seed)
+    folds <- min(10, max(3, floor(nrow(x_train) / 5)))
+    cv_fit <- cv.glmnet(
+      x_train, y_train,
+      alpha = 1,
+      family = "gaussian",
+      nfolds = folds,
+      standardize = FALSE,
+      type.measure = "mse"
+    )
+
+    predictions <- as.numeric(
+      predict(cv_fit, newx = x_test, s = "lambda.1se")
+    )
+    baseline <- rep(mean(y_train), length(y_test))
+    test_sse <- sum((y_test - predictions)^2)
+    test_sst <- sum((y_test - mean(y_test))^2)
+
+    metrics <- tibble(
+      model = model_name,
+      test_n = length(y_test),
+      selected_predictors =
+        sum(as.matrix(coef(cv_fit, s = "lambda.1se"))[-1, 1] != 0),
+      lambda = cv_fit$lambda.1se,
+      rmse = sqrt(mean((y_test - predictions)^2)),
+      mae = mean(abs(y_test - predictions)),
+      r_squared = if (test_sst > 0) 1 - test_sse / test_sst else NA_real_,
+      baseline_rmse = sqrt(mean((y_test - baseline)^2))
+    )
+
+    coefficient_matrix <- as.matrix(coef(cv_fit, s = "lambda.1se"))
+    coefficients <- tibble(
+      factor = rownames(coefficient_matrix),
+      coefficient = as.numeric(coefficient_matrix[, 1])
+    ) |>
+      filter(factor != "(Intercept)", coefficient != 0) |>
+      mutate(abs_coefficient = abs(coefficient)) |>
+      arrange(desc(abs_coefficient))
+
+    predictions_table <- tibble(
+      actual = y_test,
+      predicted = predictions,
+      residual = y_test - predictions
+    )
+
+    list(
+      recipe = trained_recipe,
+      fit = cv_fit,
+      metrics = metrics,
+      coefficients = coefficients,
+      predictions = predictions_table
+    )
+  }
+
+  early_predictors <- c(
+    "startup_age", "country", "industry", "funding_stage",
+    "log_funding", "log_employees"
+  )
+  all_predictors <- c(
+    early_predictors, "log_revenue", "log_valuation"
+  )
+
+  early_lasso <- run_lasso(train, test, early_predictors, "Earlier-stage factors")
+  all_lasso <- run_lasso(train, test, all_predictors, "All observed factors")
+}
+```
+
+### Out-of-sample performance
+
+```{r model-performance}
+if (has_data) {
+  performance <- bind_rows(early_lasso$metrics, all_lasso$metrics)
+  knitr::kable(
+    performance, digits = 3,
+    col.names = c(
+      "Model", "Test N", "Selected", "Lambda", "RMSE", "MAE",
+      "Test R-squared", "Mean-only RMSE"
+    )
+  )
+}
+```
+
+A useful model should have RMSE below the mean-only baseline on held-out data.
+Negative test R-squared means the model generalized worse than simply predicting
+the test-set mean.
+
+### Selected factors
+
+Because inputs are standardized, coefficient magnitudes are broadly comparable.
+A positive coefficient is associated with a higher predicted success score,
+holding the other included variables constant; a zero coefficient was excluded
+by LASSO. Category coefficients are relative to the omitted reference category.
+
+```{r selected-coefficients, fig.height=8}
+if (has_data) {
+  selected <- bind_rows(
+    mutate(early_lasso$coefficients, model = "Earlier-stage factors"),
+    mutate(all_lasso$coefficients, model = "All observed factors")
+  )
+
+  if (nrow(selected) == 0) {
+    cat("At the conservative lambda.1se penalty, LASSO selected no predictors.")
+  } else {
+    print(
+      knitr::kable(
+        selected |>
+          group_by(model) |>
+          slice_max(abs_coefficient, n = 20, with_ties = FALSE) |>
+          ungroup() |>
+          select(model, factor, coefficient),
+        digits = 3,
+        col.names = c("Model", "Selected factor", "Standardized coefficient")
+      )
+    )
+
+    selected |>
+      group_by(model) |>
+      slice_max(abs_coefficient, n = 15, with_ties = FALSE) |>
+      ungroup() |>
+      mutate(
+        factor = reorder(factor, coefficient),
+        direction = if_else(coefficient > 0, "Positive", "Negative")
+      ) |>
+      ggplot(aes(coefficient, factor, fill = direction)) +
+      geom_col() +
+      facet_wrap(~ model, scales = "free_y") +
+      scale_fill_manual(values = c(Positive = "#2471A3", Negative = "#C0392B")) +
+      labs(
+        title = "Strongest factors retained by LASSO",
+        subtitle = "Standardized coefficients at the one-standard-error penalty",
+        x = "Coefficient", y = NULL, fill = "Association"
+      )
+  }
+}
+```
+
+### Prediction check
+
+```{r prediction-check, fig.height=4.8}
+if (has_data) {
+  prediction_plot_data <- bind_rows(
+    mutate(early_lasso$predictions, model = "Earlier-stage factors"),
+    mutate(all_lasso$predictions, model = "All observed factors")
+  )
+
+  ggplot(prediction_plot_data, aes(actual, predicted)) +
+    geom_abline(slope = 1, intercept = 0, linetype = 2, color = "#7F8C8D") +
+    geom_point(alpha = 0.7, color = "#2471A3") +
+    facet_wrap(~ model) +
+    coord_equal() +
+    labs(
+      title = "Held-out predictions versus actual scores",
+      subtitle = "Points closer to the dashed 45-degree line are more accurate",
+      x = "Actual success score", y = "Predicted success score"
+    )
+}
+```
+
+## Interpretation and limitations
+
+- These results identify **associations**, not causal effects. Funding, hiring,
+  revenue, valuation, and success may influence one another.
+- The startup name is excluded because it is an identifier, not a reusable
+  explanatory factor.
+- LASSO may choose one variable from a group of highly correlated variables and
+  shrink the others to zero. A zero coefficient does not prove that a factor is
+  irrelevant.
+- Country and industry estimates need adequate representation. Results for small
+  categories are unstable and should not drive decisions alone.
+- The held-out test metrics are the best guide to whether the relationships
+  generalize beyond this sample.
+- A stronger causal analysis would require time-stamped predictors measured before
+  the success outcome, a clear definition of `Success Score`, and preferably
+  repeated observations over time.
+
+## Reproducibility
+
+```{r session-info}
+sessionInfo()
+```

@@ -1,0 +1,7 @@
+.DS_Store
+.Rhistory
+.RData
+.Rproj.user/
+figure/
+project.knit.md
+startup_lasso_analysis.html
