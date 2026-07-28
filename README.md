@@ -1,6 +1,6 @@
-# LaunchLens — Student Startup Signals
+# Strictly Business — A Student Startup Guide
 
-LaunchLens is a student-friendly startup learning platform. It includes:
+Strictly Business is a student-friendly startup learning platform. It includes:
 
 - a six-stage path from problem discovery to launch and learning
 - problem statements, solution hypotheses, brainstorming, validation, and MVP guidance

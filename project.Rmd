@@ -1,6 +1,6 @@
 ---
-title: "LaunchLens"
-subtitle: "Student Startup Signals"
+title: "Strictly Business"
+subtitle: "A Student Startup Guide"
 author: ""
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 output:
@@ -103,7 +103,7 @@ has_data <- nrow(raw) > 0
 ```
 
 <div class="site-nav">
-<a class="brand" href="#">Launch<span>Lens</span></a>
+<a class="brand" href="#">Strictly <span>Business</span></a>
 <div class="nav-links">
 <a href="#startup-roadmap">Start</a>
 <a href="#problem-to-solution">Build</a>
@@ -126,7 +126,7 @@ has_data <- nrow(raw) > 0
 <div class="signal-card">
 <div class="signal-orbit orbit-one"></div>
 <div class="signal-orbit orbit-two"></div>
-<div class="signal-core">LL</div>
+<div class="signal-core">SB</div>
 <div class="signal-label label-one">funding</div>
 <div class="signal-label label-two">traction</div>
 <div class="signal-label label-three">context</div>
