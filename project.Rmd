@@ -344,11 +344,11 @@ has_data <- nrow(raw) > 0
 <div class="workbench-heading"><span>Interactive tool</span><h3>TAM → SAM → SOM calculator</h3><p>Build a transparent bottom-up estimate.</p></div>
 <div class="workbench-fields compact">
 <label>Potential customers<input id="market-customers" type="number" min="0" value="10000"></label>
-<label>Annual revenue per customer ($)<input id="market-arpc" type="number" min="0" value="120"></label>
+<label>Annual revenue per customer (&#36;)<input id="market-arpc" type="number" min="0" value="120"></label>
 <label>Serviceable share (%)<input id="market-sam-share" type="number" min="0" max="100" value="25"></label>
 <label>Obtainable share of SAM (%)<input id="market-som-share" type="number" min="0" max="100" value="5"></label>
 </div>
-<div class="market-results"><div><span>TAM</span><strong id="tam-result">$1,200,000</strong></div><div><span>SAM</span><strong id="sam-result">$300,000</strong></div><div><span>SOM</span><strong id="som-result">$15,000</strong></div></div>
+<div class="market-results"><div><span>TAM</span><strong id="tam-result">&#36;1,200,000</strong></div><div><span>SAM</span><strong id="sam-result">&#36;300,000</strong></div><div><span>SOM</span><strong id="som-result">&#36;15,000</strong></div></div>
 </div>
 
 <details class="academy-lesson" data-lesson="competition">
@@ -474,12 +474,12 @@ has_data <- nrow(raw) > 0
 <div class="workbench pricing-workbench" data-tool-for="cogs-pricing">
 <div class="workbench-heading"><span>Interactive tool</span><h3>Price and unit-economics check</h3><p>See whether a price covers direct cost and contributes toward overhead.</p></div>
 <div class="workbench-fields compact">
-<label>Price per unit ($)<input id="pricing-price" type="number" min="0" step="0.01" value="25"></label>
-<label>Direct COGS per unit ($)<input id="pricing-cogs" type="number" min="0" step="0.01" value="8"></label>
-<label>Monthly fixed costs ($)<input id="pricing-fixed" type="number" min="0" step="0.01" value="1000"></label>
+<label>Price per unit (&#36;)<input id="pricing-price" type="number" min="0" step="0.01" value="25"></label>
+<label>Direct COGS per unit (&#36;)<input id="pricing-cogs" type="number" min="0" step="0.01" value="8"></label>
+<label>Monthly fixed costs (&#36;)<input id="pricing-fixed" type="number" min="0" step="0.01" value="1000"></label>
 <label>Expected monthly units<input id="pricing-units" type="number" min="0" step="1" value="100"></label>
-<label>Closest competitor price ($)<input id="pricing-competitor" type="number" min="0" step="0.01" value="24"></label>
-<label>Estimated customer value ceiling ($)<input id="pricing-value" type="number" min="0" step="0.01" value="35"></label>
+<label>Closest competitor price (&#36;)<input id="pricing-competitor" type="number" min="0" step="0.01" value="24"></label>
+<label>Estimated customer value ceiling (&#36;)<input id="pricing-value" type="number" min="0" step="0.01" value="35"></label>
 </div>
 <div class="pricing-strategies" aria-label="Pricing strategy scenarios">
 <button class="pricing-strategy active" type="button" data-pricing-strategy="margin">Target margin</button>
@@ -489,7 +489,7 @@ has_data <- nrow(raw) > 0
 <button class="pricing-strategy" type="button" data-pricing-strategy="penetration">Penetration</button>
 <button class="pricing-strategy" type="button" data-pricing-strategy="skimming">Skimming</button>
 </div>
-<div class="pricing-scenario" id="pricing-scenario"><span>Target-margin scenario</span><strong>Suggested starting point: $20.00</strong><p>At $8.00 COGS, a 60% target gross margin requires a $20.00 price. Test whether customers perceive enough value at that price.</p></div>
+<div class="pricing-scenario" id="pricing-scenario"><span>Target-margin scenario</span><strong>Suggested starting point: &#36;20.00</strong><p>At &#36;8.00 COGS, a 60% target gross margin requires a &#36;20.00 price. Test whether customers perceive enough value at that price.</p></div>
 <div class="market-results"><div><span>Current gross margin</span><strong id="margin-result">68.0%</strong></div><div><span>Monthly contribution</span><strong id="contribution-result">$1,700</strong></div><div><span>Break-even units</span><strong id="breakeven-result">59</strong></div></div>
 </div>
 
@@ -655,7 +655,7 @@ has_data <- nrow(raw) > 0
 <p class="quiz-explanation"></p>
 </fieldset>
 <fieldset data-quiz-question="q8">
-<legend><span>08</span>A unit sells for $20 and has $8 in direct COGS. What is its gross margin?</legend>
+<legend><span>08</span>A unit sells for &#36;20 and has &#36;8 in direct COGS. What is its gross margin?</legend>
 <label><input type="radio" name="q8" value="a"> 40%</label>
 <label><input type="radio" name="q8" value="b"> 60%</label>
 <label><input type="radio" name="q8" value="c"> 150%</label>

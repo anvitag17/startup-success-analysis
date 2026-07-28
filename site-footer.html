@@ -302,7 +302,7 @@
       item.appendChild(copy);
       deepDive.appendChild(item);
     });
-    body.insertBefore(deepDive, completeButton);
+    completeButton.parentNode.insertBefore(deepDive, completeButton);
   });
 
   function openAcademyTrack(track) {
