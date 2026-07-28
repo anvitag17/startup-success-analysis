@@ -3,6 +3,8 @@
 Strictly Business is a student-friendly startup learning platform. It includes:
 
 - a six-stage path from problem discovery to launch and learning
+- a clickable roadmap with stage-specific next actions
+- a browser-saved idea canvas, progress checklist, and brainstorm prompts
 - problem statements, solution hypotheses, brainstorming, validation, and MVP guidance
 - U.S.-oriented legal and financial basics with official resource links
 - interactive customer-retention, cash-runway, and startup-readiness tools
@@ -52,7 +54,7 @@ docs/index.html
 ```
 
 The HTML presentation is styled in `styles.css`; the analysis and R-generated
-graphs live in `project.Rmd`.
+graphs live in `project.Rmd`; browser interactions live in `site-footer.html`.
 
 ## Publish with GitHub Pages
 

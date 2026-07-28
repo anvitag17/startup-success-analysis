@@ -1,6 +1,9 @@
 <footer class="site-footer">
   <div>
-    <a class="brand" href="#">Strictly <span>Business</span></a>
+    <a class="brand brand-lockup" href="#" aria-label="Strictly Business home">
+      <span class="brand-copy"><span class="brand-top">Strictly</span><span class="brand-bottom">Busines<span class="crushed-letter">s</span></span></span>
+      <svg class="brand-gavel" viewBox="0 0 54 58" aria-hidden="true"><g transform="rotate(-27 27 29)"><rect x="8" y="7" width="30" height="10" rx="2"></rect><rect x="4" y="9" width="6" height="6" rx="1"></rect><rect x="37" y="9" width="6" height="6" rx="1"></rect><rect x="22" y="16" width="5" height="31" rx="2"></rect><rect x="16" y="45" width="17" height="5" rx="2"></rect></g></svg>
+    </a>
     <p>A student-friendly guide for turning startup questions into responsible experiments.</p>
   </div>
   <div class="footer-links">
@@ -22,6 +25,133 @@
     target.querySelector("strong").textContent = primary;
     target.querySelector("span").textContent = secondary;
   }
+
+  var journeyContent = {
+    problem: [
+      "Write down one repeated problem you have personally observed.",
+      "Do not choose a solution yet. Name the person, moment, workaround, and cost."
+    ],
+    insight: [
+      "Collect evidence from real behavior.",
+      "Interview people about the last time the problem happened and compare the patterns you hear."
+    ],
+    solution: [
+      "Choose the smallest useful promise.",
+      "Describe the outcome for one user group, then remove every feature that is not required to test it."
+    ],
+    validation: [
+      "Ask for a meaningful action.",
+      "A signup is useful; a pilot, preorder, referral, repeated use, or payment is stronger evidence."
+    ],
+    launch: [
+      "Deliver reliably for a narrow group.",
+      "Track where users get stuck, what support costs, and whether the experience creates repeat behavior."
+    ],
+    learn: [
+      "Review the evidence and choose one change.",
+      "Keep, revise, or stop the idea based on what happened—not how much time you have already invested."
+    ]
+  };
+
+  Array.prototype.forEach.call(document.querySelectorAll(".journey-step"), function (step) {
+    step.addEventListener("click", function () {
+      Array.prototype.forEach.call(document.querySelectorAll(".journey-step"), function (item) {
+        item.classList.remove("active");
+      });
+      step.classList.add("active");
+      var content = journeyContent[step.getAttribute("data-journey")];
+      var detail = document.getElementById("journey-detail");
+      detail.querySelector("strong").textContent = content[0];
+      detail.querySelector("p").textContent = content[1];
+    });
+  });
+
+  function storageGet(key) {
+    try { return window.localStorage.getItem(key); } catch (error) { return null; }
+  }
+
+  function storageSet(key, value) {
+    try { window.localStorage.setItem(key, value); } catch (error) {}
+  }
+
+  var canvasInputs = Array.prototype.slice.call(document.querySelectorAll(".canvas-input"));
+
+  function updateCanvas() {
+    var values = {};
+    canvasInputs.forEach(function (input) {
+      values[input.id] = input.value.trim();
+    });
+
+    if (!values["canvas-user"] && !values["canvas-problem"] &&
+        !values["canvas-workaround"] && !values["canvas-test"]) {
+      document.getElementById("canvas-preview-text").textContent =
+        "Start typing to turn your notes into a testable startup hypothesis.";
+    } else {
+      document.getElementById("canvas-preview-text").textContent =
+        "We believe " + (values["canvas-user"] || "[specific users]") +
+        " struggle with " + (values["canvas-problem"] || "[a repeated problem]") +
+        ". They currently rely on " + (values["canvas-workaround"] || "[a workaround]") +
+        ". Our smallest next test is " + (values["canvas-test"] || "[an experiment]") + ".";
+    }
+    storageSet("strictly-business-canvas", JSON.stringify(values));
+  }
+
+  var savedCanvas = storageGet("strictly-business-canvas");
+  if (savedCanvas) {
+    try {
+      var parsedCanvas = JSON.parse(savedCanvas);
+      canvasInputs.forEach(function (input) {
+        input.value = parsedCanvas[input.id] || "";
+      });
+    } catch (error) {}
+  }
+  canvasInputs.forEach(function (input) {
+    input.addEventListener("input", updateCanvas);
+  });
+  updateCanvas();
+
+  var brainstormPrompts = [
+    "What expensive or annoying task does your campus still handle manually?",
+    "What do students repeatedly ask for help with in group chats?",
+    "Which campus resource is useful but difficult to discover or access?",
+    "What process makes a club leader open three or more different tools?",
+    "Where do students lose time while moving between school, work, and home?",
+    "Which service works well for full-time professionals but poorly for students?",
+    "What skill do students want to learn but struggle to practice consistently?",
+    "What do students currently borrow, share, resell, or improvise?"
+  ];
+  var promptIndex = 0;
+  document.getElementById("brainstorm-prompt").addEventListener("click", function () {
+    promptIndex = (promptIndex + 1 + Math.floor(Math.random() * (brainstormPrompts.length - 1))) %
+      brainstormPrompts.length;
+    document.getElementById("brainstorm-result").textContent = brainstormPrompts[promptIndex];
+  });
+
+  var checks = Array.prototype.slice.call(document.querySelectorAll(".startup-check"));
+  var savedChecks = storageGet("strictly-business-checks");
+  if (savedChecks) {
+    try {
+      JSON.parse(savedChecks).forEach(function (checked, index) {
+        if (checks[index]) checks[index].checked = Boolean(checked);
+      });
+    } catch (error) {}
+  }
+  checks.forEach(function (check) {
+    check.addEventListener("change", function () {
+      storageSet("strictly-business-checks", JSON.stringify(
+        checks.map(function (item) { return item.checked; })
+      ));
+    });
+  });
+
+  function updateScrollProgress() {
+    var scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    var progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+    document.getElementById("scroll-progress-bar").style.width =
+      Math.min(100, Math.max(0, progress)) + "%";
+  }
+  window.addEventListener("scroll", updateScrollProgress, {passive: true});
+  updateScrollProgress();
 
   document.getElementById("retention-calculate").addEventListener("click", function () {
     var start = numberValue("retention-start");

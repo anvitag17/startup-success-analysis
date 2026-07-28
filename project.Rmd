@@ -102,8 +102,12 @@ raw <- raw[rowSums(!is.na(raw)) > 0, , drop = FALSE]
 has_data <- nrow(raw) > 0
 ```
 
+<div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
 <div class="site-nav">
-<a class="brand" href="#">Strictly <span>Business</span></a>
+<a class="brand brand-lockup" href="#" aria-label="Strictly Business home">
+<span class="brand-copy"><span class="brand-top">Strictly</span><span class="brand-bottom">Busines<span class="crushed-letter">s</span></span></span>
+<svg class="brand-gavel" viewBox="0 0 54 58" aria-hidden="true"><g transform="rotate(-27 27 29)"><rect x="8" y="7" width="30" height="10" rx="2"></rect><rect x="4" y="9" width="6" height="6" rx="1"></rect><rect x="37" y="9" width="6" height="6" rx="1"></rect><rect x="22" y="16" width="5" height="31" rx="2"></rect><rect x="16" y="45" width="17" height="5" rx="2"></rect></g></svg>
+</a>
 <div class="nav-links">
 <a href="#startup-roadmap">Start</a>
 <a href="#problem-to-solution">Build</a>
@@ -123,13 +127,14 @@ has_data <- nrow(raw) > 0
 <a class="button secondary" href="#signal-lab">Try the tools</a>
 </div>
 </div>
-<div class="signal-card">
-<div class="signal-orbit orbit-one"></div>
-<div class="signal-orbit orbit-two"></div>
-<div class="signal-core">SB</div>
-<div class="signal-label label-one">funding</div>
-<div class="signal-label label-two">traction</div>
-<div class="signal-label label-three">context</div>
+<div class="notebook-card">
+<span class="paper-tape"></span>
+<span class="notebook-kicker">Founder notes / 01</span>
+<h2>Problem → evidence → experiment</h2>
+<div class="notebook-line"><span>01</span><p>Who feels this problem?</p></div>
+<div class="notebook-line"><span>02</span><p>What do they do now?</p></div>
+<div class="notebook-line"><span>03</span><p>What can we test Friday?</p></div>
+<div class="handwritten-note">talk to 5 people first ↗</div>
 </div>
 </div>
 
@@ -162,13 +167,14 @@ has_data <- nrow(raw) > 0
 </div>
 
 <div class="journey">
-<div class="journey-step"><span>1</span><strong>Problem</strong><small>Who struggles, and why?</small></div>
-<div class="journey-step"><span>2</span><strong>Insight</strong><small>What does evidence reveal?</small></div>
-<div class="journey-step"><span>3</span><strong>Solution</strong><small>What is your smallest promise?</small></div>
-<div class="journey-step"><span>4</span><strong>Validation</strong><small>Will people act or pay?</small></div>
-<div class="journey-step"><span>5</span><strong>Launch</strong><small>Can you deliver reliably?</small></div>
-<div class="journey-step"><span>6</span><strong>Learn</strong><small>What should change next?</small></div>
+<button class="journey-step active" type="button" data-journey="problem"><span>1</span><strong>Problem</strong><small>Who struggles, and why?</small></button>
+<button class="journey-step" type="button" data-journey="insight"><span>2</span><strong>Insight</strong><small>What does evidence reveal?</small></button>
+<button class="journey-step" type="button" data-journey="solution"><span>3</span><strong>Solution</strong><small>What is your smallest promise?</small></button>
+<button class="journey-step" type="button" data-journey="validation"><span>4</span><strong>Validation</strong><small>Will people act or pay?</small></button>
+<button class="journey-step" type="button" data-journey="launch"><span>5</span><strong>Launch</strong><small>Can you deliver reliably?</small></button>
+<button class="journey-step" type="button" data-journey="learn"><span>6</span><strong>Learn</strong><small>What should change next?</small></button>
 </div>
+<div class="journey-detail" id="journey-detail" aria-live="polite"><span>Right now</span><strong>Write down one repeated problem you have personally observed.</strong><p>Do not choose a solution yet. Name the person, moment, workaround, and cost.</p></div>
 
 ## Problem to solution
 
@@ -187,13 +193,31 @@ has_data <- nrow(raw) > 0
 </div>
 </div>
 
+<div class="idea-canvas">
+<div class="canvas-fields">
+<span class="card-kicker">Your working notes</span>
+<h3>Build a one-page idea canvas</h3>
+<div class="canvas-field"><label for="canvas-user">Who are you helping?</label><input class="canvas-input" id="canvas-user" type="text" placeholder="Example: first-year commuter students"></div>
+<div class="canvas-field"><label for="canvas-problem">What repeated problem do they face?</label><textarea class="canvas-input" id="canvas-problem" rows="3" placeholder="Describe a specific moment, not a broad topic"></textarea></div>
+<div class="canvas-field"><label for="canvas-workaround">What do they use now?</label><input class="canvas-input" id="canvas-workaround" type="text" placeholder="Current workaround or alternative"></div>
+<div class="canvas-field"><label for="canvas-test">What is the smallest test?</label><input class="canvas-input" id="canvas-test" type="text" placeholder="Interview, landing page, pilot, preorder…"></div>
+</div>
+<div class="canvas-preview">
+<span class="card-kicker">Live draft</span>
+<p id="canvas-preview-text">Start typing to turn your notes into a testable startup hypothesis.</p>
+<button id="brainstorm-prompt" type="button">Shuffle a brainstorm prompt</button>
+<div id="brainstorm-result">What expensive or annoying task does your campus still handle manually?</div>
+<small>Your notes are saved only in this browser.</small>
+</div>
+</div>
+
 <div class="checklist">
 <h3>Quick problem check</h3>
-<label><input type="checkbox"> I can name one specific user group.</label>
-<label><input type="checkbox"> The problem happens repeatedly or has a high cost.</label>
-<label><input type="checkbox"> People already use a workaround.</label>
-<label><input type="checkbox"> I can reach these users for interviews or tests.</label>
-<label><input type="checkbox"> I can observe a behavior that would prove improvement.</label>
+<label><input class="startup-check" type="checkbox"> I can name one specific user group.</label>
+<label><input class="startup-check" type="checkbox"> The problem happens repeatedly or has a high cost.</label>
+<label><input class="startup-check" type="checkbox"> People already use a workaround.</label>
+<label><input class="startup-check" type="checkbox"> I can reach these users for interviews or tests.</label>
+<label><input class="startup-check" type="checkbox"> I can observe a behavior that would prove improvement.</label>
 </div>
 
 ## Ideas and brainstorming
