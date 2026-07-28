@@ -19,6 +19,7 @@
   --mauve: #847996;
   --teal: #88b7b5;
   --sage: #a7cab1;
+  --belly: #cbdfb8;
   --cream: #f4ecd6;
   --bg: #17111f;
   --surface: #21182c;
@@ -134,7 +135,7 @@ a {
   position: relative;
   z-index: 2;
   display: inline-block;
-  color: var(--teal);
+  color: var(--belly);
   font-family: "Fredoka", "DM Sans", sans-serif;
   font-size: 1em;
   font-style: normal;
