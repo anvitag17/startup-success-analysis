@@ -107,7 +107,7 @@ has_data <- nrow(raw) > 0
 <a class="brand brand-lockup" href="#" aria-label="Strictly Business home">
 <span class="brand-copy">
 <span class="brand-top">Strictly</span>
-<span class="brand-bottom"><span>Busi</span><span class="ness-wrap"><span class="ness-word">ness</span><svg class="logo-nessie" viewBox="0 0 112 54" aria-hidden="true"><path class="nessie-body" d="M53 39 C64 43 77 39 80 29 C83 20 91 19 99 12"></path></svg><span class="logo-nessie-face" aria-hidden="true"><img src="assets/images/nessie-mascot.png" alt=""></span></span></span>
+<span class="brand-bottom"><span>Busi</span><span class="ness-wrap"><span class="ness-word">ness</span><svg class="logo-nessie" viewBox="0 0 112 54" aria-hidden="true"><path class="nessie-body" d="M49 38 C62 43 78 48 91 46 C95 45 98 44 101 43"></path></svg><span class="logo-nessie-face" aria-hidden="true"><img src="assets/images/nessie-mascot.png" alt=""></span></span></span>
 </span>
 </a>
 <div class="nav-links">
