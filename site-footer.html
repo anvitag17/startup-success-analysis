@@ -3,7 +3,7 @@
     <a class="brand brand-lockup" href="#" aria-label="Strictly Business home">
       <span class="brand-copy">
         <span class="brand-top">Strictly</span>
-        <span class="brand-bottom"><span>Busi</span><span class="ness-wrap"><span class="ness-word">ness</span><svg class="logo-nessie" viewBox="0 0 112 54" aria-hidden="true"><path class="nessie-body" d="M4 41 C17 35 14 15 30 15 C46 15 51 45 69 41 C84 38 76 23 87 17"></path><path class="nessie-neck" d="M87 18 Q89 15 90 13"></path><path class="nessie-head" d="M79 9 Q81 1 89 3 Q96 0 101 7 Q106 12 101 20 Q97 25 89 24 Q80 25 76 18 Q74 12 79 9 Z"></path><path class="nessie-brow" d="M80 10 Q84 7 87 10 M92 10 Q96 7 100 10"></path><circle class="nessie-eye" cx="84" cy="12" r="2.5"></circle><circle class="nessie-eye" cx="96" cy="12" r="2.5"></circle><circle class="nessie-pupil" cx="84" cy="12.5" r="1.1"></circle><circle class="nessie-pupil" cx="96" cy="12.5" r="1.1"></circle><circle class="nessie-nostril" cx="87" cy="17" r="1"></circle><circle class="nessie-nostril" cx="93" cy="17" r="1"></circle><path class="nessie-smile" d="M84 20 Q90 23 96 20"></path></svg></span></span>
+        <span class="brand-bottom"><span>Busi</span><span class="ness-wrap"><span class="ness-word">ness</span><svg class="logo-nessie" viewBox="0 0 112 54" aria-hidden="true"><path class="nessie-body" d="M4 41 C17 35 14 15 30 15 C46 15 51 45 69 41 C83 38 77 24 88 18"></path><path class="nessie-neck" d="M87 20 Q91 14 92 10"></path></svg><span class="logo-nessie-face" aria-hidden="true"><img src="assets/images/nessie-mascot.png" alt=""></span></span></span>
       </span>
     </a>
     <p>A student-friendly guide for turning startup questions into responsible experiments.</p>
@@ -257,6 +257,52 @@
 
   var academyTabs = Array.prototype.slice.call(document.querySelectorAll(".academy-tab"));
   var academyPanels = Array.prototype.slice.call(document.querySelectorAll(".academy-panel"));
+  var lessonDeepDives = {
+    "problem-statement": ["A one-sentence statement plus three real examples of the problem occurring.", "Quotes, frequency, current workaround, and cost from recent customer experiences.", "Describing a broad topic or embedding your preferred solution in the problem."],
+    "customer-segment": ["A one-page early-adopter profile covering demographics, geography, motivation, trigger, behavior, and buying role.", "Five or more conversations with people who match the same behavioral pattern.", "Creating a fictional persona from assumptions or choosing a segment only because it is large."],
+    "target-market": ["A scored segment shortlist and one clearly named beachhead market.", "Reachability, urgency, buying power, switching readiness, and channel access.", "Trying to serve several very different groups with one first offer."],
+    "uvp": ["Three UVP alternatives tested with target customers in the language they naturally use.", "Message comprehension, preference, landing-page action, and reasons people give for choosing.", "Writing a slogan that sounds clever but never explains a customer outcome."],
+    "pitch": ["A 30–60 second recorded pitch with one audience-specific ask.", "Listeners can accurately repeat the customer, problem, value, and next step afterward.", "Giving company history and features before explaining why the problem matters."],
+    "features-benefits": ["A feature → customer benefit → proof metric table ranked must-have to not-now.", "Observed customer tasks, usability results, and movement in the intended outcome.", "Calling a technical capability a benefit without explaining what changes for the user."],
+    "mvp": ["A one-page test brief: assumption, audience, experience, metric, threshold, budget, and date.", "Meaningful behavior such as completion, repeat use, referral, pilot commitment, or payment.", "Building a smaller version of the whole product instead of testing the riskiest assumption."],
+    "customer-interviews": ["Interview notes, exact quotes, and a pattern table across participants.", "Recent stories, current spending or effort, workarounds, triggers, and decision roles.", "Pitching, leading the participant, or counting compliments as demand."],
+    "solution-interviews": ["A task-based prototype script, observation notes, and a list of prioritized revisions.", "Task completion, hesitation, errors, understanding, and a credible next commitment.", "Explaining the interface while testing it or asking only whether people like it."],
+    "experiments": ["An experiment card and results memo with the original decision threshold preserved.", "Conversion by audience/source, sample size, confidence, contradictions, and limitations.", "Changing the success metric after seeing results or testing several major changes at once."],
+    "market-sizing": ["A bottom-up TAM/SAM/SOM workbook with sources, formulas, timing, and assumptions.", "Customer counts, annual spend, service constraints, sales capacity, and comparable benchmarks.", "Presenting a giant industry report number as revenue your startup can capture."],
+    "competition": ["A matrix of direct, indirect, do-it-yourself, and do-nothing alternatives.", "Pricing, segment, channel, reviews, customer interviews, switching costs, and observed gaps.", "Claiming there is no competition because no product looks exactly like yours."],
+    "swot": ["A prioritized SWOT converted into actions, owners, deadlines, and evidence to monitor.", "Internal performance data plus external customer, competitor, regulatory, and trend evidence.", "Filling four boxes with vague adjectives and never changing a decision."],
+    "branding": ["A brand brief: audience, position, promise, proof, personality, voice, and visual rules.", "Name comprehension, recall, trust, distinctiveness, trademark/domain checks, and consistency.", "Choosing visuals from personal taste without testing fit with the intended customer."],
+    "marketing-plan": ["A one-page plan with objective, audience, message, offer, channel, budget, calendar, owner, and metric.", "Qualified reach, conversion through the funnel, acquisition cost, repeat behavior, and revenue.", "Reporting likes or impressions without connecting them to a business objective."],
+    "social-advertising": ["A four-week content and paid-test calendar with a capped budget and stop rule.", "Creative-level clicks, qualified conversions, acquisition cost, revenue, and disclosed partnerships.", "Boosting random posts, hiding paid relationships, or making claims you cannot support."],
+    "website": ["A launch sheet documenting owner access, domain/DNS, platform, pages, policies, analytics, tests, and renewals.", "Mobile and keyboard tests, form delivery, speed, uptime, search indexing, and primary conversion.", "Treating a domain, hosting, email, DNS, analytics, and security as the same product."],
+    "revenue-models": ["A revenue model card naming payer, value unit, price basis, billing timing, and cancellation/expansion triggers.", "Real transactions, contract feedback, buying process, collection timing, retention, and margin.", "Combining subscriptions, ads, commissions, and services before proving one clear engine."],
+    "cogs-pricing": ["A unit-economics sheet with price, discounts, COGS, contribution, margin, returns, fees, and break-even.", "Supplier quotes, payment/fulfillment data, price interviews, purchase tests, and cohort margin.", "Using cost-plus alone when customer value or a hidden delivery cost changes the economics."],
+    "financial-model": ["A 12-month monthly model with base, conservative, and upside scenarios tied to a cash balance.", "Actual versus forecast customers, price, churn, COGS, hiring, expenses, payment timing, and runway.", "Making revenue grow by percentage without modeling how customers are acquired and served."],
+    "exit-strategy": ["A founder options memo covering preferred paths, timing, buyer/successor needs, and readiness gaps.", "Transferable contracts, clean records, recurring economics, documented IP, governance, and reduced founder dependence.", "Treating an acquisition as guaranteed or designing only for an exit instead of customer value."],
+    "structures-partnerships": ["A structure decision memo and signed founder/partner terms reviewed for your jurisdiction.", "Ownership, liability, tax, governance, fundraising, control, contribution, termination, and dispute needs.", "Copying another startup’s entity or relying on verbal promises between friends."],
+    "ip-nda-attorney": ["An IP inventory showing creator, owner, agreements, disclosure dates, protection type, and renewal/deadline.", "Clearance searches, assignments, access controls, contracts, dated records, and qualified legal review.", "Assuming an NDA creates ownership or that registering a domain creates trademark rights."],
+    "legal-operations": ["A compliance calendar and secure folder for formation, tax, licenses, insurance, contracts, privacy, and corporate records.", "Official federal/state/local requirements, filing receipts, reconciled books, signed agreements, and review dates.", "Using a generic checklist once and ignoring changes in location, workforce, product, data, or regulation."]
+  };
+
+  Array.prototype.forEach.call(document.querySelectorAll(".academy-lesson"), function (lesson) {
+    var details = lessonDeepDives[lesson.getAttribute("data-lesson")];
+    var body = lesson.querySelector(".lesson-body");
+    var completeButton = lesson.querySelector(".lesson-complete");
+    if (!details || !body || !completeButton) return;
+    var deepDive = document.createElement("div");
+    deepDive.className = "lesson-deep-dive";
+    ["Your deliverable", "Evidence to collect", "Common mistake"].forEach(function (title, index) {
+      var item = document.createElement("div");
+      var heading = document.createElement("strong");
+      var copy = document.createElement("p");
+      heading.textContent = title;
+      copy.textContent = details[index];
+      item.appendChild(heading);
+      item.appendChild(copy);
+      deepDive.appendChild(item);
+    });
+    body.insertBefore(deepDive, completeButton);
+  });
 
   function openAcademyTrack(track) {
     academyTabs.forEach(function (tab) {
@@ -455,6 +501,392 @@
     check.addEventListener("change", updateWebsiteChecks);
   });
   updateWebsiteChecks();
+
+  var quizAnswers = {
+    q1: ["b", "A testable statement names a specific customer, situation, obstacle, and consequence without hiding a solution inside it.", "foundation"],
+    q2: ["c", "The strongest early segment shares a problem context and behavior and is reachable enough to study—not merely broad demographic traits.", "foundation"],
+    q3: ["a", "An MVP is a learning instrument for the riskiest assumption. It does not need every planned feature or polished production code.", "validation"],
+    q4: ["c", "Specific recent behavior is stronger evidence than a hypothetical promise or an answer shaped by a leading question.", "validation"],
+    q5: ["b", "SOM is a realistic early portion of the serviceable market. TAM describes broad demand, not guaranteed revenue.", "market"],
+    q6: ["a", "A UVP communicates who it serves, the outcome, the category, and a meaningful reason to choose it over an alternative.", "foundation"],
+    q7: ["b", "Advertising claims need support, and a paid or otherwise material creator relationship should be disclosed clearly.", "marketing"],
+    q8: ["b", "Gross margin is ($20 − $8) ÷ $20 = 60%. The $12 difference is gross profit per unit before fixed operating expenses.", "money"],
+    q9: ["c", "These protections cover different assets. A domain alone is not a federal trademark, and patents have eligibility, scope, timing, and term limits.", "legal"],
+    q10: ["a", "A launch requires documented ownership and renewals, secure access, HTTPS, accessible testing, working forms, and appropriate data practices.", "marketing"]
+  };
+
+  document.getElementById("startup-quiz").addEventListener("submit", function (event) {
+    event.preventDefault();
+    var score = 0;
+    var answered = 0;
+    var reviewTracks = [];
+    Object.keys(quizAnswers).forEach(function (name) {
+      var fieldset = document.querySelector('[data-quiz-question="' + name + '"]');
+      var selected = document.querySelector('input[name="' + name + '"]:checked');
+      var explanation = fieldset.querySelector(".quiz-explanation");
+      fieldset.classList.remove("correct", "incorrect", "unanswered");
+      if (!selected) {
+        fieldset.classList.add("unanswered");
+        explanation.textContent = "Choose an answer before scoring this question.";
+        return;
+      }
+      answered += 1;
+      var correct = selected.value === quizAnswers[name][0];
+      fieldset.classList.add(correct ? "correct" : "incorrect");
+      explanation.textContent = (correct ? "Correct — " : "Review — ") + quizAnswers[name][1];
+      if (correct) score += 1;
+      else if (reviewTracks.indexOf(quizAnswers[name][2]) === -1) reviewTracks.push(quizAnswers[name][2]);
+    });
+
+    var result = document.getElementById("quiz-result");
+    var label = result.querySelector("span");
+    var headline = result.querySelector("strong");
+    var note = result.querySelector("p");
+    label.textContent = answered < 10 ? answered + "/10 answered" : score + "/10 correct";
+    headline.textContent = answered < 10 ? "Finish the unanswered questions, then score again." :
+      score >= 9 ? "Excellent—you can connect evidence to startup decisions." :
+      score >= 7 ? "Strong foundation. Review the explanations you missed." :
+      score >= 5 ? "Good start. Revisit the highlighted learning tracks." :
+      "Keep going—the lessons are designed to be retried.";
+    note.textContent = answered < 10 ? "Unanswered questions are outlined in mauve." :
+      reviewTracks.length ? "Suggested review: " + reviewTracks.join(", ") + "." :
+      "You answered every concept correctly. Try applying them to your own startup.";
+    result.scrollIntoView({behavior: "smooth", block: "nearest"});
+  });
+
+  document.getElementById("quiz-reset").addEventListener("click", function () {
+    document.getElementById("startup-quiz").reset();
+    Array.prototype.forEach.call(document.querySelectorAll("[data-quiz-question]"), function (fieldset) {
+      fieldset.classList.remove("correct", "incorrect", "unanswered");
+      fieldset.querySelector(".quiz-explanation").textContent = "";
+    });
+    var result = document.getElementById("quiz-result");
+    result.querySelector("span").textContent = "Not scored yet";
+    result.querySelector("strong").textContent = "Answer all 10 questions when you’re ready.";
+    result.querySelector("p").textContent = "Nessie will explain every answer—not just show a number.";
+  });
+
+  var researchModeContent = {
+    data: [
+      "Start with the sample",
+      "Ask what each row represents before trusting a graph.",
+      "Check whether the startups were selected consistently, what year each measure represents, how Success Score was defined, and where values are missing. Sample design can matter more than model complexity.",
+      "Write a one-sentence definition of the population your dataset can honestly represent."
+    ],
+    relationships: [
+      "Compare before modeling",
+      "Look at shape, scale, missingness, and unusual points—not just one correlation.",
+      "Pearson correlation summarizes a linear relationship; Spearman focuses on rank order. A scatterplot can reveal curves, clusters, unequal spread, or a single influential startup that either statistic hides.",
+      "Choose two variables, sketch the pattern you expect, then compare that expectation with the uploaded-data plot."
+    ],
+    lasso: [
+      "Shrink and select",
+      "LASSO trades a small amount of fit for a simpler model.",
+      "It adds a penalty that pulls weak coefficients toward zero. Cross-validation chooses the penalty. Selected variables can be useful predictors, but correlated variables may substitute for one another and selection does not prove causation.",
+      "Compare the variables selected at minimum error with the more conservative one-standard-error penalty."
+    ],
+    prediction: [
+      "Test on unseen rows",
+      "A prediction is useful only if it works beyond the data used to fit it.",
+      "Hold out test data or use carefully designed resampling, compare against a simple baseline, and report error—not only R-squared. Avoid allowing later outcomes such as valuation to leak into an early-stage prediction.",
+      "Define when the prediction is made and list every variable that would actually be known at that moment."
+    ]
+  };
+
+  Array.prototype.forEach.call(document.querySelectorAll(".research-mode"), function (button) {
+    button.addEventListener("click", function () {
+      Array.prototype.forEach.call(document.querySelectorAll(".research-mode"), function (item) {
+        item.classList.remove("active");
+        item.setAttribute("aria-selected", "false");
+      });
+      button.classList.add("active");
+      button.setAttribute("aria-selected", "true");
+      var content = researchModeContent[button.getAttribute("data-research-mode")];
+      var detail = document.getElementById("research-mode-detail");
+      detail.querySelector("span").textContent = content[0];
+      detail.querySelector("h3").textContent = content[1];
+      detail.querySelector(":scope > p").textContent = content[2];
+      detail.querySelector("div p").textContent = content[3];
+    });
+  });
+
+  var factorContent = {
+    funding: ["Total funding", "Are better-funded startups scored as more successful, or does early success help startups raise more funding?", "Skew, extreme rounds, company age, funding stage, and whether funding occurred before or after the score."],
+    revenue: ["Annual revenue", "Does current revenue add predictive information beyond funding stage and employee count?", "Accounting period, currency, one-time revenue, missing private-company figures, and leakage into a score that already uses revenue."],
+    employees: ["Employee count", "Does team size reflect operating capacity, or simply higher costs and a later company stage?", "Contractors, part-time staff, industry labor intensity, company age, and log transformation for extreme size differences."],
+    valuation: ["Valuation", "Is valuation an independent signal or a market expectation already shaped by funding, revenue, and sentiment?", "Date of valuation, private estimates, down rounds, missingness, market cycle, and severe outcome leakage in early-stage prediction."],
+    age: ["Startup age", "Do older startups score higher because they survived, or can age also indicate slower growth?", "Survivorship bias, founding-year accuracy, cohort effects, industry timelines, and nonlinear relationships."],
+    stage: ["Funding stage", "How do success scores differ across stages, and are groups large enough for a stable comparison?", "Category definitions, small groups, ordering, geography, selection into funding, and within-stage variation."]
+  };
+
+  Array.prototype.forEach.call(document.querySelectorAll(".factor-button"), function (button) {
+    button.addEventListener("click", function () {
+      Array.prototype.forEach.call(document.querySelectorAll(".factor-button"), function (item) {
+        item.classList.remove("active");
+      });
+      button.classList.add("active");
+      var content = factorContent[button.getAttribute("data-factor")];
+      var detail = document.getElementById("factor-detail");
+      detail.querySelector("strong").textContent = content[0];
+      var paragraphs = detail.querySelectorAll("p");
+      paragraphs[0].innerHTML = "<b>Question:</b> " + content[1];
+      paragraphs[1].innerHTML = "<b>Check:</b> " + content[2];
+    });
+  });
+
+  var researchDataset = null;
+  var researchPlotPoints = [];
+
+  function parseCSV(text) {
+    var rows = [];
+    var row = [];
+    var field = "";
+    var quoted = false;
+    for (var i = 0; i < text.length; i += 1) {
+      var character = text[i];
+      if (quoted) {
+        if (character === '"' && text[i + 1] === '"') {
+          field += '"';
+          i += 1;
+        } else if (character === '"') {
+          quoted = false;
+        } else {
+          field += character;
+        }
+      } else if (character === '"') {
+        quoted = true;
+      } else if (character === ",") {
+        row.push(field);
+        field = "";
+      } else if (character === "\n") {
+        row.push(field.replace(/\r$/, ""));
+        rows.push(row);
+        row = [];
+        field = "";
+      } else {
+        field += character;
+      }
+    }
+    if (field.length || row.length) {
+      row.push(field.replace(/\r$/, ""));
+      rows.push(row);
+    }
+    return rows.filter(function (item) {
+      return item.some(function (value) { return value.trim() !== ""; });
+    });
+  }
+
+  function setCSVStatus(title, detail) {
+    var status = document.getElementById("csv-status");
+    status.querySelector("strong").textContent = title;
+    status.querySelector("span").textContent = detail;
+  }
+
+  function loadResearchRows(rows, sourceLabel) {
+    if (rows.length < 3) {
+      setCSVStatus(
+        "Not enough usable rows",
+        "Choose a CSV with a header and at least two data rows."
+      );
+      return;
+    }
+    var headers = rows[0].map(function (header, index) {
+      return header.trim() || "Column " + (index + 1);
+    });
+    var records = rows.slice(1).map(function (row) {
+      var record = {};
+      headers.forEach(function (header, index) { record[header] = (row[index] || "").trim(); });
+      return record;
+    });
+    var numeric = headers.filter(function (header) {
+      var present = records.map(function (record) { return record[header]; })
+        .filter(function (value) { return value !== ""; });
+      var valid = present.filter(function (value) {
+        return Number.isFinite(Number(value.replace(/[$,%]/g, "")));
+      });
+      return present.length >= 3 && valid.length / present.length >= 0.7;
+    });
+    if (numeric.length < 2) {
+      setCSVStatus(
+        "Two numeric columns are needed",
+        "Text categories can be studied in R; this browser plot compares numeric pairs."
+      );
+      return;
+    }
+    researchDataset = {headers: headers, records: records, numeric: numeric};
+    ["research-x", "research-y"].forEach(function (id, selectIndex) {
+      var select = document.getElementById(id);
+      select.innerHTML = "";
+      numeric.forEach(function (header, index) {
+        var option = document.createElement("option");
+        option.value = header;
+        option.textContent = header;
+        if (index === Math.min(selectIndex, numeric.length - 1)) option.selected = true;
+        select.appendChild(option);
+      });
+      select.disabled = false;
+    });
+    setCSVStatus(
+      sourceLabel,
+      records.length + " rows · " + headers.length + " columns · " +
+        numeric.length + " numeric columns detected"
+    );
+    document.getElementById("research-row-count").textContent = records.length.toLocaleString();
+    updateResearchPlot();
+  }
+
+  function updateResearchPlot() {
+    if (!researchDataset) return;
+    var xName = document.getElementById("research-x").value;
+    var yName = document.getElementById("research-y").value;
+    var pairs = researchDataset.records.map(function (record) {
+      return {
+        x: Number((record[xName] || "").replace(/[$,%]/g, "")),
+        y: Number((record[yName] || "").replace(/[$,%]/g, ""))
+      };
+    }).filter(function (point) {
+      return Number.isFinite(point.x) && Number.isFinite(point.y);
+    });
+    document.getElementById("research-pair-count").textContent = pairs.length.toLocaleString();
+    var xMean = pairs.reduce(function (sum, point) { return sum + point.x; }, 0) / pairs.length;
+    var yMean = pairs.reduce(function (sum, point) { return sum + point.y; }, 0) / pairs.length;
+    var numerator = 0;
+    var xSquares = 0;
+    var ySquares = 0;
+    pairs.forEach(function (point) {
+      numerator += (point.x - xMean) * (point.y - yMean);
+      xSquares += Math.pow(point.x - xMean, 2);
+      ySquares += Math.pow(point.y - yMean, 2);
+    });
+    var correlation = pairs.length >= 3 && xSquares > 0 && ySquares > 0 ?
+      numerator / Math.sqrt(xSquares * ySquares) : NaN;
+    document.getElementById("research-correlation").textContent =
+      Number.isFinite(correlation) ? correlation.toFixed(3) : "—";
+    var strength = !Number.isFinite(correlation) ? "Not estimable" :
+      Math.abs(correlation) < 0.2 ? "Very weak linear pattern" :
+      Math.abs(correlation) < 0.4 ? "Weak linear pattern" :
+      Math.abs(correlation) < 0.6 ? "Moderate linear pattern" :
+      Math.abs(correlation) < 0.8 ? "Strong linear pattern" :
+      "Very strong linear pattern";
+    document.getElementById("research-interpretation").textContent = strength;
+    drawResearchPlot(pairs, xName, yName, xMean, yMean, numerator, xSquares);
+  }
+
+  function drawResearchPlot(pairs, xName, yName, xMean, yMean, numerator, xSquares) {
+    var canvas = document.getElementById("research-scatter");
+    var empty = document.getElementById("scatter-empty");
+    var width = Math.max(320, canvas.clientWidth || 900);
+    var height = Math.min(460, Math.max(330, width * 0.52));
+    var dpr = window.devicePixelRatio || 1;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    var context = canvas.getContext("2d");
+    context.scale(dpr, dpr);
+    context.clearRect(0, 0, width, height);
+    if (pairs.length < 2) {
+      empty.style.display = "grid";
+      return;
+    }
+    empty.style.display = "none";
+    var margin = {left: 62, right: 22, top: 22, bottom: 55};
+    var plotWidth = width - margin.left - margin.right;
+    var plotHeight = height - margin.top - margin.bottom;
+    var xValues = pairs.map(function (point) { return point.x; });
+    var yValues = pairs.map(function (point) { return point.y; });
+    var xMin = Math.min.apply(null, xValues);
+    var xMax = Math.max.apply(null, xValues);
+    var yMin = Math.min.apply(null, yValues);
+    var yMax = Math.max.apply(null, yValues);
+    if (xMin === xMax) { xMin -= 1; xMax += 1; }
+    if (yMin === yMax) { yMin -= 1; yMax += 1; }
+    var xPad = (xMax - xMin) * 0.06;
+    var yPad = (yMax - yMin) * 0.08;
+    xMin -= xPad; xMax += xPad; yMin -= yPad; yMax += yPad;
+    function xScale(value) { return margin.left + ((value - xMin) / (xMax - xMin)) * plotWidth; }
+    function yScale(value) { return margin.top + plotHeight - ((value - yMin) / (yMax - yMin)) * plotHeight; }
+
+    context.font = '11px "DM Sans", sans-serif';
+    context.strokeStyle = "rgba(244,236,214,0.10)";
+    context.fillStyle = "#847996";
+    context.lineWidth = 1;
+    for (var tick = 0; tick <= 5; tick += 1) {
+      var xValue = xMin + ((xMax - xMin) * tick / 5);
+      var yValue = yMin + ((yMax - yMin) * tick / 5);
+      var x = xScale(xValue);
+      var y = yScale(yValue);
+      context.beginPath(); context.moveTo(x, margin.top); context.lineTo(x, margin.top + plotHeight); context.stroke();
+      context.beginPath(); context.moveTo(margin.left, y); context.lineTo(margin.left + plotWidth, y); context.stroke();
+      context.textAlign = "center"; context.fillText(Number(xValue.toPrecision(3)), x, height - 30);
+      context.textAlign = "right"; context.fillText(Number(yValue.toPrecision(3)), margin.left - 8, y + 4);
+    }
+
+    var slope = xSquares > 0 ? numerator / xSquares : 0;
+    var intercept = yMean - slope * xMean;
+    context.strokeStyle = "#A7CAB1";
+    context.lineWidth = 2;
+    context.beginPath();
+    context.moveTo(xScale(xMin), yScale(intercept + slope * xMin));
+    context.lineTo(xScale(xMax), yScale(intercept + slope * xMax));
+    context.stroke();
+
+    researchPlotPoints = [];
+    pairs.slice(0, 5000).forEach(function (point) {
+      var x = xScale(point.x);
+      var y = yScale(point.y);
+      context.beginPath();
+      context.arc(x, y, 4, 0, Math.PI * 2);
+      context.fillStyle = "rgba(136,183,181,0.67)";
+      context.fill();
+      context.strokeStyle = "rgba(49,10,49,0.65)";
+      context.lineWidth = 1;
+      context.stroke();
+      researchPlotPoints.push({px: x, py: y, x: point.x, y: point.y});
+    });
+    context.fillStyle = "#c8bdc8";
+    context.font = '600 12px "DM Sans", sans-serif';
+    context.textAlign = "center";
+    context.fillText(xName, margin.left + plotWidth / 2, height - 7);
+    context.save();
+    context.translate(14, margin.top + plotHeight / 2);
+    context.rotate(-Math.PI / 2);
+    context.fillText(yName, 0, 0);
+    context.restore();
+    canvas.setAttribute("aria-label", "Scatterplot of " + yName + " against " + xName);
+  }
+
+  ["research-x", "research-y"].forEach(function (id) {
+    document.getElementById(id).addEventListener("change", updateResearchPlot);
+  });
+
+  document.getElementById("research-file").addEventListener("change", function () {
+    var file = this.files && this.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      loadResearchRows(parseCSV(String(reader.result)), file.name);
+    };
+    reader.readAsText(file);
+  });
+
+  document.getElementById("load-research-demo").addEventListener("click", function () {
+    var rows = [["Funding ($M)", "Employees", "Revenue ($M)", "Valuation ($B)", "Success Score"]];
+    for (var i = 1; i <= 72; i += 1) {
+      var funding = 1.5 + i * 0.72 + (i % 7) * 1.8;
+      var employees = 5 + i * 2 + (i % 9) * 3;
+      var revenue = 0.5 + i * 0.31 + (i % 5) * 0.8;
+      var valuation = 0.02 + funding * 0.018 + revenue * 0.012;
+      var success = 31 + funding * 0.42 + revenue * 0.65 + Math.sin(i * 1.7) * 7;
+      rows.push([
+        funding.toFixed(2), String(employees), revenue.toFixed(2),
+        valuation.toFixed(3), Math.min(100, success).toFixed(1)
+      ]);
+    }
+    loadResearchRows(rows, "Simulated teaching data—not real startup evidence");
+  });
+
+  window.addEventListener("resize", function () {
+    if (researchDataset) updateResearchPlot();
+  });
 
   var chat = document.getElementById("nessie-chat");
   var chatInput = document.getElementById("chat-input");

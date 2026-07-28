@@ -107,7 +107,7 @@ has_data <- nrow(raw) > 0
 <a class="brand brand-lockup" href="#" aria-label="Strictly Business home">
 <span class="brand-copy">
 <span class="brand-top">Strictly</span>
-<span class="brand-bottom"><span>Busi</span><span class="ness-wrap"><span class="ness-word">ness</span><svg class="logo-nessie" viewBox="0 0 112 54" aria-hidden="true"><path class="nessie-body" d="M4 41 C17 35 14 15 30 15 C46 15 51 45 69 41 C84 38 76 23 87 17"></path><path class="nessie-neck" d="M87 18 Q89 15 90 13"></path><path class="nessie-head" d="M79 9 Q81 1 89 3 Q96 0 101 7 Q106 12 101 20 Q97 25 89 24 Q80 25 76 18 Q74 12 79 9 Z"></path><path class="nessie-brow" d="M80 10 Q84 7 87 10 M92 10 Q96 7 100 10"></path><circle class="nessie-eye" cx="84" cy="12" r="2.5"></circle><circle class="nessie-eye" cx="96" cy="12" r="2.5"></circle><circle class="nessie-pupil" cx="84" cy="12.5" r="1.1"></circle><circle class="nessie-pupil" cx="96" cy="12.5" r="1.1"></circle><circle class="nessie-nostril" cx="87" cy="17" r="1"></circle><circle class="nessie-nostril" cx="93" cy="17" r="1"></circle><path class="nessie-smile" d="M84 20 Q90 23 96 20"></path></svg></span></span>
+<span class="brand-bottom"><span>Busi</span><span class="ness-wrap"><span class="ness-word">ness</span><svg class="logo-nessie" viewBox="0 0 112 54" aria-hidden="true"><path class="nessie-body" d="M4 41 C17 35 14 15 30 15 C46 15 51 45 69 41 C83 38 77 24 88 18"></path><path class="nessie-neck" d="M87 20 Q91 14 92 10"></path></svg><span class="logo-nessie-face" aria-hidden="true"><img src="assets/images/nessie-mascot.png" alt=""></span></span></span>
 </span>
 </a>
 <div class="nav-links">
@@ -560,6 +560,92 @@ has_data <- nrow(raw) > 0
 </div>
 </div>
 
+<section class="academy-quiz" id="academy-quiz">
+<div class="quiz-heading">
+<div><span>Final checkpoint</span><h3>Can you help Nessie launch a startup?</h3><p>Answer all ten questions. You’ll get a score, explanations, and the lessons worth reviewing.</p></div>
+<img src="assets/images/nessie-mascot.png" alt="Nessie cheering you on">
+</div>
+<form id="startup-quiz">
+<fieldset data-quiz-question="q1">
+<legend><span>01</span>Which problem statement is most testable?</legend>
+<label><input type="radio" name="q1" value="a"> Students need a better app.</label>
+<label><input type="radio" name="q1" value="b"> Commuter students miss evening campus events because details are spread across several channels.</label>
+<label><input type="radio" name="q1" value="c"> Everyone dislikes confusing technology.</label>
+<p class="quiz-explanation"></p>
+</fieldset>
+<fieldset data-quiz-question="q2">
+<legend><span>02</span>What best defines a useful early customer segment?</legend>
+<label><input type="radio" name="q2" value="a"> Anyone who might someday use the product</label>
+<label><input type="radio" name="q2" value="b"> People of roughly the same age</label>
+<label><input type="radio" name="q2" value="c"> A reachable group with a similar problem trigger, behavior, priority, and buying situation</label>
+<p class="quiz-explanation"></p>
+</fieldset>
+<fieldset data-quiz-question="q3">
+<legend><span>03</span>What is an MVP primarily designed to do?</legend>
+<label><input type="radio" name="q3" value="a"> Test the riskiest assumption with the smallest credible value experience</label>
+<label><input type="radio" name="q3" value="b"> Include every feature competitors offer</label>
+<label><input type="radio" name="q3" value="c"> Impress investors with polished code</label>
+<p class="quiz-explanation"></p>
+</fieldset>
+<fieldset data-quiz-question="q4">
+<legend><span>04</span>Which interview question produces the strongest evidence?</legend>
+<label><input type="radio" name="q4" value="a"> Would you buy my idea?</label>
+<label><input type="radio" name="q4" value="b"> Don’t you think this feature is useful?</label>
+<label><input type="radio" name="q4" value="c"> Tell me about the last time this problem happened and what you did next.</label>
+<p class="quiz-explanation"></p>
+</fieldset>
+<fieldset data-quiz-question="q5">
+<legend><span>05</span>Which statement about TAM, SAM, and SOM is accurate?</legend>
+<label><input type="radio" name="q5" value="a"> TAM is a guaranteed revenue forecast.</label>
+<label><input type="radio" name="q5" value="b"> SOM is the realistic early share of the market you can actually serve.</label>
+<label><input type="radio" name="q5" value="c"> SAM should always equal TAM.</label>
+<p class="quiz-explanation"></p>
+</fieldset>
+<fieldset data-quiz-question="q6">
+<legend><span>06</span>What makes a UVP useful?</legend>
+<label><input type="radio" name="q6" value="a"> It names the customer, desired outcome, category, and credible difference.</label>
+<label><input type="radio" name="q6" value="b"> It contains as many product features as possible.</label>
+<label><input type="radio" name="q6" value="c"> It uses a clever slogan without mentioning value.</label>
+<p class="quiz-explanation"></p>
+</fieldset>
+<fieldset data-quiz-question="q7">
+<legend><span>07</span>A social-media ad uses a paid creator. What should the startup do?</legend>
+<label><input type="radio" name="q7" value="a"> Hide the relationship so the post feels organic.</label>
+<label><input type="radio" name="q7" value="b"> Disclose the material connection clearly and support all advertising claims.</label>
+<label><input type="radio" name="q7" value="c"> Ask the creator to guarantee results.</label>
+<p class="quiz-explanation"></p>
+</fieldset>
+<fieldset data-quiz-question="q8">
+<legend><span>08</span>A unit sells for $20 and has $8 in direct COGS. What is its gross margin?</legend>
+<label><input type="radio" name="q8" value="a"> 40%</label>
+<label><input type="radio" name="q8" value="b"> 60%</label>
+<label><input type="radio" name="q8" value="c"> 150%</label>
+<p class="quiz-explanation"></p>
+</fieldset>
+<fieldset data-quiz-question="q9">
+<legend><span>09</span>Which statement correctly separates common IP types?</legend>
+<label><input type="radio" name="q9" value="a"> A domain registration automatically creates a federal trademark.</label>
+<label><input type="radio" name="q9" value="b"> A patent protects every business idea forever.</label>
+<label><input type="radio" name="q9" value="c"> Trademarks identify source, patents may protect qualifying inventions, and copyright protects original expression.</label>
+<p class="quiz-explanation"></p>
+</fieldset>
+<fieldset data-quiz-question="q10">
+<legend><span>10</span>Which website launch practice is strongest?</legend>
+<label><input type="radio" name="q10" value="a"> Document domain ownership, enable MFA and HTTPS, test accessibility/forms, and plan renewals and backups.</label>
+<label><input type="radio" name="q10" value="b"> Buy a domain and assume hosting, email, security, and renewal happen automatically.</label>
+<label><input type="radio" name="q10" value="c"> Collect every possible visitor detail in case it becomes useful.</label>
+<p class="quiz-explanation"></p>
+</fieldset>
+<div class="quiz-actions">
+<button class="button primary" type="submit">Score my answers</button>
+<button class="button secondary" id="quiz-reset" type="button">Start over</button>
+</div>
+<div class="quiz-result" id="quiz-result" aria-live="polite">
+<span>Not scored yet</span><strong>Answer all 10 questions when you’re ready.</strong><p>Nessie will explain every answer—not just show a number.</p>
+</div>
+</form>
+</section>
+
 ## Problem to solution
 
 <div class="split-panel">
@@ -785,6 +871,63 @@ Two models are prepared. The earlier-stage model uses age, country, industry,
 funding stage, total funding, and employee count. The all-observed model adds
 annual revenue and valuation. Because revenue and valuation may be consequences
 of success, the second model is descriptive rather than causal.
+
+<div class="research-explorer">
+<div class="research-explorer-head">
+<div><span>Interactive research map</span><h3>Choose how you want to investigate the data</h3></div>
+<div class="research-mode-tabs" role="tablist" aria-label="Research explanation mode">
+<button class="research-mode active" type="button" data-research-mode="data">Data</button>
+<button class="research-mode" type="button" data-research-mode="relationships">Relationships</button>
+<button class="research-mode" type="button" data-research-mode="lasso">LASSO</button>
+<button class="research-mode" type="button" data-research-mode="prediction">Prediction</button>
+</div>
+</div>
+<div class="research-mode-detail" id="research-mode-detail" aria-live="polite">
+<span>Start with the sample</span>
+<h3>Ask what each row represents before trusting a graph.</h3>
+<p>Check whether the startups were selected consistently, what year each measure represents, how Success Score was defined, and where values are missing. Sample design can matter more than model complexity.</p>
+<div><strong>Student task</strong><p>Write a one-sentence definition of the population your dataset can honestly represent.</p></div>
+</div>
+<div class="factor-question">
+<span>Explore a factor</span>
+<div class="factor-buttons">
+<button class="factor-button active" type="button" data-factor="funding">Funding</button>
+<button class="factor-button" type="button" data-factor="revenue">Revenue</button>
+<button class="factor-button" type="button" data-factor="employees">Employees</button>
+<button class="factor-button" type="button" data-factor="valuation">Valuation</button>
+<button class="factor-button" type="button" data-factor="age">Startup age</button>
+<button class="factor-button" type="button" data-factor="stage">Funding stage</button>
+</div>
+<div class="factor-detail" id="factor-detail">
+<strong>Total funding</strong>
+<p><b>Question:</b> Are better-funded startups scored as more successful, or does early success help startups raise more funding?</p>
+<p><b>Check:</b> skew, extreme rounds, company age, funding stage, and whether funding occurred before or after the score.</p>
+</div>
+</div>
+</div>
+
+<div class="csv-lab">
+<div class="csv-lab-head">
+<div><span>Browser data lab</span><h3>Upload a CSV and explore two numeric variables</h3><p>The file stays on your device. The tool identifies numeric columns, draws a scatterplot, and calculates a Pearson correlation.</p></div>
+<div class="csv-actions"><label class="csv-upload">Choose CSV<input id="research-file" type="file" accept=".csv,text/csv"></label><button id="load-research-demo" type="button">Load simulated demo</button></div>
+</div>
+<div class="csv-status" id="csv-status"><strong>No dataset loaded</strong><span>Use your populated startup CSV or the clearly labeled simulated demo.</span></div>
+<div class="csv-controls">
+<label>X-axis<select id="research-x" disabled><option>Select a CSV first</option></select></label>
+<label>Y-axis<select id="research-y" disabled><option>Select a CSV first</option></select></label>
+</div>
+<div class="scatter-shell">
+<canvas id="research-scatter" width="900" height="460" aria-label="Interactive scatterplot"></canvas>
+<div class="scatter-empty" id="scatter-empty">Your scatterplot will appear here.</div>
+</div>
+<div class="research-stats">
+<div><span>Rows</span><strong id="research-row-count">—</strong></div>
+<div><span>Complete pairs</span><strong id="research-pair-count">—</strong></div>
+<div><span>Pearson r</span><strong id="research-correlation">—</strong></div>
+<div><span>Interpretation</span><strong id="research-interpretation">Load data</strong></div>
+</div>
+<p class="csv-caution">Correlation describes a linear pattern in the loaded sample. It does not establish causation, handle confounding automatically, or prove the pattern will generalize.</p>
+</div>
 
 ```{r data-availability, echo=FALSE, results='asis'}
 if (!has_data) {
