@@ -125,21 +125,29 @@ a {
 .ness-wrap {
   position: relative;
   display: inline-block;
-  min-width: 67px;
-  margin-left: -1px;
+  min-width: 73px;
+  margin-left: -2px;
   isolation: isolate;
 }
 
 .ness-word {
   position: relative;
   z-index: 2;
-  color: var(--cream);
+  display: inline-block;
+  color: var(--teal);
+  font-family: "Lobster Two", "Cormorant Garamond", cursive;
+  font-size: 1.16em;
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: -0.075em;
+  line-height: 0.72;
+  transform: translateY(1px);
 }
 
 .logo-nessie {
   position: absolute;
   z-index: 1;
-  left: -8px;
+  left: 0;
   top: -12px;
   width: 91px;
   height: 44px;
