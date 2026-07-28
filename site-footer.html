@@ -257,6 +257,7 @@
 
   var academyTabs = Array.prototype.slice.call(document.querySelectorAll(".academy-tab"));
   var academyPanels = Array.prototype.slice.call(document.querySelectorAll(".academy-panel"));
+  var activeAcademyTopics = {};
   var lessonDeepDives = {
     "problem-statement": ["A one-sentence statement plus three real examples of the problem occurring.", "Quotes, frequency, current workaround, and cost from recent customer experiences.", "Describing a broad topic or embedding your preferred solution in the problem."],
     "customer-segment": ["A one-page early-adopter profile covering demographics, geography, motivation, trigger, behavior, and buying role.", "Five or more conversations with people who match the same behavioral pattern.", "Creating a fictional persona from assumptions or choosing a segment only because it is large."],
@@ -315,6 +316,48 @@
       panel.classList.toggle("active", active);
       panel.hidden = !active;
     });
+    buildAcademyTopicTabs(track);
+  }
+
+  function selectAcademyTopic(panel, lessonName) {
+    Array.prototype.forEach.call(panel.querySelectorAll(".academy-lesson"), function (lesson) {
+      var active = lesson.getAttribute("data-lesson") === lessonName;
+      lesson.classList.toggle("topic-active", active);
+      lesson.open = active;
+    });
+    Array.prototype.forEach.call(panel.querySelectorAll("[data-tool-for]"), function (tool) {
+      tool.classList.toggle("topic-tool-active", tool.getAttribute("data-tool-for") === lessonName);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll(".academy-topic-tab"), function (button) {
+      var active = button.getAttribute("data-academy-topic") === lessonName;
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-selected", String(active));
+    });
+    activeAcademyTopics[panel.getAttribute("data-academy-panel")] = lessonName;
+  }
+
+  function buildAcademyTopicTabs(track) {
+    var container = document.getElementById("academy-topic-tabs");
+    var panel = document.querySelector('[data-academy-panel="' + track + '"]');
+    container.innerHTML = "";
+    if (!panel) return;
+    var lessons = Array.prototype.slice.call(panel.querySelectorAll(".academy-lesson"));
+    container.hidden = lessons.length === 0;
+    if (!lessons.length) return;
+    lessons.forEach(function (lesson) {
+      var button = document.createElement("button");
+      var lessonName = lesson.getAttribute("data-lesson");
+      var summary = lesson.querySelector("summary span");
+      button.type = "button";
+      button.className = "academy-topic-tab";
+      button.setAttribute("role", "tab");
+      button.setAttribute("data-academy-topic", lessonName);
+      button.textContent = summary.textContent.replace(/Lesson\s*\d+/i, "").trim();
+      button.addEventListener("click", function () { selectAcademyTopic(panel, lessonName); });
+      container.appendChild(button);
+    });
+    var selected = activeAcademyTopics[track] || lessons[0].getAttribute("data-lesson");
+    selectAcademyTopic(panel, selected);
   }
 
   academyTabs.forEach(function (tab) {
@@ -322,6 +365,8 @@
       openAcademyTrack(tab.getAttribute("data-academy-track"));
     });
   });
+  document.documentElement.classList.add("academy-topics-ready");
+  openAcademyTrack("foundation");
 
   var lessonButtons = Array.prototype.slice.call(
     document.querySelectorAll("[data-complete-lesson]")
@@ -338,7 +383,10 @@
       var complete = completedLessons.indexOf(lesson) !== -1;
       button.classList.toggle("complete", complete);
       button.textContent = complete ? "Completed ✓" : "Mark lesson complete";
-      var lessonCard = button.closest(".academy-lesson");
+      var lessonCard = button.parentNode;
+      while (lessonCard && !lessonCard.classList.contains("academy-lesson")) {
+        lessonCard = lessonCard.parentNode;
+      }
       if (lessonCard) lessonCard.classList.toggle("lesson-done", complete);
     });
     var total = lessonButtons.length;
@@ -402,6 +450,16 @@
   pitchInputs.forEach(function (input) { input.addEventListener("input", updatePitch); });
   updatePitch();
 
+  document.getElementById("generate-pitch").addEventListener("click", function () {
+    updatePitch();
+    var output = document.getElementById("pitch-output");
+    output.classList.remove("pitch-generated");
+    window.setTimeout(function () { output.classList.add("pitch-generated"); }, 0);
+    this.textContent = "Pitch generated ✓";
+    var button = this;
+    window.setTimeout(function () { button.textContent = "Generate my pitch"; }, 1500);
+  });
+
   document.getElementById("copy-pitch").addEventListener("click", function () {
     var button = this;
     var pitch = document.getElementById("pitch-output").textContent;
@@ -438,7 +496,51 @@
   });
   updateMarketSizing();
 
-  var pricingInputs = ["pricing-price", "pricing-cogs", "pricing-fixed", "pricing-units"];
+  var pricingInputs = [
+    "pricing-price", "pricing-cogs", "pricing-fixed", "pricing-units",
+    "pricing-competitor", "pricing-value"
+  ];
+  var activePricingStrategy = "margin";
+
+  function updatePricingScenario() {
+    var cogs = Math.max(0, numberValue("pricing-cogs") || 0);
+    var competitor = Math.max(0, numberValue("pricing-competitor") || 0);
+    var value = Math.max(0, numberValue("pricing-value") || 0);
+    var suggested = 0;
+    var title = "";
+    var explanation = "";
+    if (activePricingStrategy === "cost") {
+      suggested = cogs * 1.5;
+      title = "Cost-plus scenario";
+      explanation = "A 50% markup is simple, but it ignores customer value and alternatives. Use it as a cost floor check, not automatic proof of the right price.";
+    } else if (activePricingStrategy === "competition") {
+      suggested = competitor * 0.98;
+      title = "Competition-led scenario";
+      explanation = "Pricing near a comparable alternative can reduce confusion, but only if the products, segment, service, and cost structure are actually comparable.";
+    } else if (activePricingStrategy === "value") {
+      suggested = value * 0.8;
+      title = "Value-based scenario";
+      explanation = "This scenario captures part of the estimated customer value. Validate the value estimate through interviews, tradeoff questions, and real purchase tests.";
+    } else if (activePricingStrategy === "penetration") {
+      suggested = Math.max(cogs / 0.75, Math.min(competitor * 0.85, value * 0.65));
+      title = "Penetration scenario";
+      explanation = "A lower entry price may accelerate trial, but it can attract price-sensitive users, weaken positioning, and become difficult to raise later.";
+    } else if (activePricingStrategy === "skimming") {
+      suggested = value * 0.95;
+      title = "Skimming scenario";
+      explanation = "A high launch price can work for urgent, differentiated value and early adopters. Expect a smaller first segment and a stronger proof burden.";
+    } else {
+      suggested = cogs / 0.4;
+      title = "Target-margin scenario";
+      explanation = "At " + currency(cogs) + " COGS, a 60% target gross margin requires this price. Test whether customers perceive enough value at that level.";
+    }
+    var scenario = document.getElementById("pricing-scenario");
+    scenario.querySelector("span").textContent = title;
+    scenario.querySelector("strong").textContent =
+      "Suggested starting point: $" + (Number.isFinite(suggested) ? suggested.toFixed(2) : "0.00");
+    scenario.querySelector("p").textContent = explanation;
+  }
+
   function updatePricing() {
     var price = Math.max(0, numberValue("pricing-price") || 0);
     var cogs = Math.max(0, numberValue("pricing-cogs") || 0);
@@ -453,9 +555,20 @@
     document.getElementById("contribution-result").textContent = currency(contribution);
     document.getElementById("breakeven-result").textContent =
       breakEven === null ? "No break-even" : breakEven.toLocaleString();
+    updatePricingScenario();
   }
   pricingInputs.forEach(function (id) {
     document.getElementById(id).addEventListener("input", updatePricing);
+  });
+  Array.prototype.forEach.call(document.querySelectorAll(".pricing-strategy"), function (button) {
+    button.addEventListener("click", function () {
+      Array.prototype.forEach.call(document.querySelectorAll(".pricing-strategy"), function (item) {
+        item.classList.remove("active");
+      });
+      button.classList.add("active");
+      activePricingStrategy = button.getAttribute("data-pricing-strategy");
+      updatePricingScenario();
+    });
   });
   updatePricing();
 
@@ -502,6 +615,67 @@
   });
   updateWebsiteChecks();
 
+  document.getElementById("trademark-check").addEventListener("click", function () {
+    var name = document.getElementById("trademark-name").value.trim();
+    var goods = document.getElementById("trademark-goods").value.trim();
+    var result = document.getElementById("trademark-result");
+    var headline = result.querySelector("strong");
+    var summary = result.querySelector("p");
+    var checklist = document.getElementById("trademark-checklist");
+    result.classList.remove("caution", "promising");
+    if (name.length < 2 || goods.length < 3) {
+      headline.textContent = "Add both a proposed name and specific goods or services.";
+      summary.textContent = "Trademark conflicts depend on both the similarity of the marks and the relatedness of what they identify.";
+      result.classList.add("caution");
+      return;
+    }
+    var normalizedName = name.toLowerCase().replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
+    var nameWords = normalizedName.split(" ").filter(Boolean);
+    var goodsWords = goods.toLowerCase().replace(/[^a-z0-9 ]/g, " ").split(/\s+/).filter(function (word) {
+      return word.length > 3;
+    });
+    var weakTerms = [
+      "best", "better", "fast", "quick", "easy", "smart", "quality", "premium",
+      "online", "digital", "global", "company", "business", "services", "solutions",
+      "group", "shop", "store", "market", "startup", "student", "education", "academy",
+      "technology", "tech", "consulting", "media"
+    ];
+    var descriptiveMatches = nameWords.filter(function (word) {
+      return weakTerms.indexOf(word) !== -1 || goodsWords.indexOf(word) !== -1;
+    });
+    var compact = normalizedName.replace(/\s/g, "");
+    var repeated = /(.)\1\1/.test(compact);
+    var signal = descriptiveMatches.length >= Math.max(1, Math.ceil(nameWords.length / 2)) ?
+      "Descriptive or weak wording signal—search and legal review are especially important." :
+      nameWords.length <= 3 && compact.length >= 5 && !repeated ?
+      "Potentially distinctive structure—but no availability conclusion is possible here." :
+      "Mixed preliminary signal—continue with a comprehensive clearance search.";
+    headline.textContent = signal;
+    summary.textContent =
+      "This pre-screen found " + descriptiveMatches.length + " wording caution" +
+      (descriptiveMatches.length === 1 ? "" : "s") + ". It has not queried or cleared federal, state, or common-law rights.";
+    result.classList.add(descriptiveMatches.length ? "caution" : "promising");
+    var checks = [
+      'Search the exact wording "' + name + '" and spacing/punctuation variations.',
+      "Search sound-alikes, alternate spellings, plurals, translations, and similar meanings.",
+      'Search related goods/services around "' + goods + '," not only identical descriptions.',
+      "Review active and inactive federal records, state/business names, domains, apps, social platforms, and wider web use."
+    ];
+    checklist.innerHTML = "";
+    checks.forEach(function (check) {
+      var item = document.createElement("li");
+      item.textContent = check;
+      checklist.appendChild(item);
+    });
+    document.getElementById("trademark-uspto-link").href =
+      "https://www.uspto.gov/trademarks/search/search";
+    document.getElementById("trademark-web-link").href =
+      "https://www.google.com/search?q=" + encodeURIComponent('"' + name + '" ' + goods);
+    var domainGuess = compact.replace(/[^a-z0-9-]/g, "") + ".com";
+    document.getElementById("trademark-domain-link").href =
+      "https://lookup.icann.org/en/lookup?name=" + encodeURIComponent(domainGuess);
+  });
+
   var quizAnswers = {
     q1: ["b", "A testable statement names a specific customer, situation, obstacle, and consequence without hiding a solution inside it.", "foundation"],
     q2: ["c", "The strongest early segment shares a problem context and behavior and is reachable enough to study—not merely broad demographic traits.", "foundation"],
@@ -515,8 +689,7 @@
     q10: ["a", "A launch requires documented ownership and renewals, secure access, HTTPS, accessible testing, working forms, and appropriate data practices.", "marketing"]
   };
 
-  document.getElementById("startup-quiz").addEventListener("submit", function (event) {
-    event.preventDefault();
+  function scoreStartupQuiz() {
     var score = 0;
     var answered = 0;
     var reviewTracks = [];
@@ -552,6 +725,12 @@
       reviewTracks.length ? "Suggested review: " + reviewTracks.join(", ") + "." :
       "You answered every concept correctly. Try applying them to your own startup.";
     result.scrollIntoView({behavior: "smooth", block: "nearest"});
+  }
+
+  document.getElementById("quiz-score").addEventListener("click", scoreStartupQuiz);
+  document.getElementById("startup-quiz").addEventListener("submit", function (event) {
+    event.preventDefault();
+    scoreStartupQuiz();
   });
 
   document.getElementById("quiz-reset").addEventListener("click", function () {
@@ -605,7 +784,7 @@
       var detail = document.getElementById("research-mode-detail");
       detail.querySelector("span").textContent = content[0];
       detail.querySelector("h3").textContent = content[1];
-      detail.querySelector(":scope > p").textContent = content[2];
+      detail.querySelector("p").textContent = content[2];
       detail.querySelector("div p").textContent = content[3];
     });
   });
@@ -956,11 +1135,20 @@
       track: "money"
     },
     {
-      words: ["partnership", "partner", "nda", "attorney", "lawyer", "patent", "trademark", "bank account"],
+      words: ["trademark", "brand name", "patent", "copyright", "nda", "attorney", "lawyer"],
+      text: "Start with an IP inventory and a clearance plan. A built-in pre-screen can flag wording concerns and prepare searches, but it cannot determine legal availability or likelihood of confusion. Search federal records plus state, business-name, domain, app, social, and wider common-law sources; use qualified counsel when the brand or invention matters.",
+      target: "#startup-academy",
+      label: "Open the trademark pre-screen",
+      track: "legal",
+      topic: "ip-nda-attorney"
+    },
+    {
+      words: ["partnership", "partner", "bank account", "business structure", "llc"],
       text: "Write down ownership, roles, decisions, money, IP, confidentiality, exit, and dispute terms before the relationship becomes complicated. Separate business money, verify registration and tax needs, and use qualified legal help when ownership, regulated activity, core IP, investors, or major contracts are involved.",
       target: "#startup-academy",
       label: "Open the legal track",
-      track: "legal"
+      track: "legal",
+      topic: "structures-partnerships"
     },
     {
       words: ["exit", "sell company", "acquisition", "succession"],
@@ -1015,8 +1203,13 @@
 
   function getNessieReply(question) {
     var normalized = question.toLowerCase();
-    var match = nessieTopics.find(function (topic) {
-      return topic.words.some(function (word) { return normalized.indexOf(word) !== -1; });
+    var match = null;
+    nessieTopics.some(function (topic) {
+      var matched = topic.words.some(function (word) {
+        return normalized.indexOf(word) !== -1;
+      });
+      if (matched) match = topic;
+      return matched;
     });
     return match || {
       text: "I can help you turn that into a smaller decision. Are you trying to understand the problem, choose an MVP, find customers, handle legal basics, work out the money, or measure retention? Pick the closest one and tell me what you already know.",
@@ -1038,7 +1231,15 @@
       action.href = reply.target;
       action.textContent = reply.label;
       action.addEventListener("click", function () {
-        if (reply.track) openAcademyTrack(reply.track);
+        if (reply.track) {
+          openAcademyTrack(reply.track);
+          if (reply.topic) {
+            selectAcademyTopic(
+              document.querySelector('[data-academy-panel="' + reply.track + '"]'),
+              reply.topic
+            );
+          }
+        }
         setChat(false);
       });
       message.appendChild(action);

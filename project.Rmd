@@ -202,6 +202,7 @@ has_data <- nrow(raw) > 0
 </div>
 
 <div class="academy-content">
+<div class="academy-topic-tabs" id="academy-topic-tabs" aria-label="Topics in this learning track"></div>
 <section class="academy-panel active" data-academy-panel="foundation">
 <div class="track-heading"><span>Track 01</span><h3>Turn an observation into a clear business idea</h3><p>Define the problem, the person, and the value before choosing features.</p></div>
 
@@ -258,7 +259,7 @@ has_data <- nrow(raw) > 0
 </div>
 </details>
 
-<div class="workbench pitch-workbench">
+<div class="workbench pitch-workbench" data-tool-for="pitch">
 <div class="workbench-heading"><span>Interactive tool</span><h3>Build your elevator pitch</h3><p>Fill in the pieces and Nessie will assemble a first draft.</p></div>
 <div class="workbench-fields">
 <label>Target customer<input class="pitch-input" id="pitch-customer" placeholder="First-year commuter students"></label>
@@ -271,7 +272,7 @@ has_data <- nrow(raw) > 0
 <div class="workbench-output">
 <span>Pitch draft</span>
 <p id="pitch-output">Complete the fields to build a clear 30-second pitch.</p>
-<button id="copy-pitch" type="button">Copy pitch</button>
+<div class="pitch-actions"><button id="generate-pitch" type="button">Generate my pitch</button><button id="copy-pitch" type="button">Copy pitch</button></div>
 </div>
 </div>
 </section>
@@ -339,7 +340,7 @@ has_data <- nrow(raw) > 0
 </div>
 </details>
 
-<div class="workbench market-workbench">
+<div class="workbench market-workbench" data-tool-for="market-sizing">
 <div class="workbench-heading"><span>Interactive tool</span><h3>TAM → SAM → SOM calculator</h3><p>Build a transparent bottom-up estimate.</p></div>
 <div class="workbench-fields compact">
 <label>Potential customers<input id="market-customers" type="number" min="0" value="10000"></label>
@@ -369,7 +370,7 @@ has_data <- nrow(raw) > 0
 </div>
 </details>
 
-<div class="workbench swot-workbench">
+<div class="workbench swot-workbench" data-tool-for="swot">
 <div class="workbench-heading"><span>Interactive tool</span><h3>Build a one-page SWOT</h3><p>Keep each box specific and connected to evidence.</p></div>
 <div class="swot-grid">
 <label><span>Strengths</span><textarea class="swot-input" id="swot-strengths" rows="4" placeholder="Capabilities, access, proof…"></textarea></label>
@@ -433,7 +434,7 @@ has_data <- nrow(raw) > 0
 </div>
 </details>
 
-<div class="workbench website-workbench">
+<div class="workbench website-workbench" data-tool-for="website">
 <div class="workbench-heading"><span>Interactive checklist</span><h3>Website launch check</h3><p>Check items as you complete them; progress is saved locally.</p></div>
 <div class="website-check-grid">
 <label><input class="website-check" type="checkbox"> One audience and one primary action</label>
@@ -470,15 +471,26 @@ has_data <- nrow(raw) > 0
 </div>
 </details>
 
-<div class="workbench pricing-workbench">
+<div class="workbench pricing-workbench" data-tool-for="cogs-pricing">
 <div class="workbench-heading"><span>Interactive tool</span><h3>Price and unit-economics check</h3><p>See whether a price covers direct cost and contributes toward overhead.</p></div>
 <div class="workbench-fields compact">
 <label>Price per unit ($)<input id="pricing-price" type="number" min="0" step="0.01" value="25"></label>
 <label>Direct COGS per unit ($)<input id="pricing-cogs" type="number" min="0" step="0.01" value="8"></label>
 <label>Monthly fixed costs ($)<input id="pricing-fixed" type="number" min="0" step="0.01" value="1000"></label>
 <label>Expected monthly units<input id="pricing-units" type="number" min="0" step="1" value="100"></label>
+<label>Closest competitor price ($)<input id="pricing-competitor" type="number" min="0" step="0.01" value="24"></label>
+<label>Estimated customer value ceiling ($)<input id="pricing-value" type="number" min="0" step="0.01" value="35"></label>
 </div>
-<div class="market-results"><div><span>Gross margin</span><strong id="margin-result">68.0%</strong></div><div><span>Contribution</span><strong id="contribution-result">$1,700</strong></div><div><span>Break-even units</span><strong id="breakeven-result">59</strong></div></div>
+<div class="pricing-strategies" aria-label="Pricing strategy scenarios">
+<button class="pricing-strategy active" type="button" data-pricing-strategy="margin">Target margin</button>
+<button class="pricing-strategy" type="button" data-pricing-strategy="cost">Cost-plus</button>
+<button class="pricing-strategy" type="button" data-pricing-strategy="competition">Competition-led</button>
+<button class="pricing-strategy" type="button" data-pricing-strategy="value">Value-based</button>
+<button class="pricing-strategy" type="button" data-pricing-strategy="penetration">Penetration</button>
+<button class="pricing-strategy" type="button" data-pricing-strategy="skimming">Skimming</button>
+</div>
+<div class="pricing-scenario" id="pricing-scenario"><span>Target-margin scenario</span><strong>Suggested starting point: $20.00</strong><p>At $8.00 COGS, a 60% target gross margin requires a $20.00 price. Test whether customers perceive enough value at that price.</p></div>
+<div class="market-results"><div><span>Current gross margin</span><strong id="margin-result">68.0%</strong></div><div><span>Monthly contribution</span><strong id="contribution-result">$1,700</strong></div><div><span>Break-even units</span><strong id="breakeven-result">59</strong></div></div>
 </div>
 
 <details class="academy-lesson" data-lesson="financial-model">
@@ -528,6 +540,26 @@ has_data <- nrow(raw) > 0
 </div>
 </details>
 
+<div class="workbench trademark-workbench" data-tool-for="ip-nda-attorney">
+<div class="workbench-heading"><span>Interactive pre-screen</span><h3>Check a possible brand name</h3><p>This tool helps you plan a clearance search. It cannot determine availability, ownership, registration, or likelihood of confusion.</p></div>
+<div class="workbench-fields">
+<label>Proposed name<input id="trademark-name" type="text" maxlength="80" placeholder="Example: Strictly Business"></label>
+<label>Goods or services<input id="trademark-goods" type="text" maxlength="140" placeholder="Example: student startup education website"></label>
+</div>
+<button class="trademark-check-button" id="trademark-check" type="button">Run name pre-screen</button>
+<div class="trademark-result" id="trademark-result" aria-live="polite">
+<div><span>Preliminary signal</span><strong>Enter a name and what it identifies.</strong></div>
+<p>The same or similar wording may coexist for unrelated goods, while different spellings can still conflict when sound, appearance, meaning, and commercial impression are similar.</p>
+<ul id="trademark-checklist"><li>Exact wording and close variations</li><li>Similar sound, spelling, meaning, and translation</li><li>Related goods/services and trade channels</li><li>Federal, state, business-name, domain, and common-law sources</li></ul>
+<div class="trademark-links">
+<a id="trademark-uspto-link" href="https://www.uspto.gov/trademarks/search/search" target="_blank" rel="noopener">Search USPTO records ↗</a>
+<a id="trademark-web-link" href="https://www.google.com/" target="_blank" rel="noopener">Search the wider web ↗</a>
+<a id="trademark-domain-link" href="https://lookup.icann.org/" target="_blank" rel="noopener">Check domain registration ↗</a>
+</div>
+</div>
+<p class="tool-disclaimer">A complete U.S. clearance search also considers inactive records, related goods/services, state records, business names, domains, and unregistered common-law use. Consider a U.S.-licensed trademark attorney before adopting or filing an important brand.</p>
+</div>
+
 <details class="academy-lesson" data-lesson="legal-operations">
 <summary><span><small>Lesson 24</small>Legal and financial launch checklist</span><b>+</b></summary>
 <div class="lesson-body">
@@ -571,6 +603,7 @@ has_data <- nrow(raw) > 0
 <label><input type="radio" name="q1" value="a"> Students need a better app.</label>
 <label><input type="radio" name="q1" value="b"> Commuter students miss evening campus events because details are spread across several channels.</label>
 <label><input type="radio" name="q1" value="c"> Everyone dislikes confusing technology.</label>
+<label><input type="radio" name="q1" value="d"> College students report difficulty discovering events, so one calendar should combine every campus feed.</label>
 <p class="quiz-explanation"></p>
 </fieldset>
 <fieldset data-quiz-question="q2">
@@ -578,6 +611,7 @@ has_data <- nrow(raw) > 0
 <label><input type="radio" name="q2" value="a"> Anyone who might someday use the product</label>
 <label><input type="radio" name="q2" value="b"> People of roughly the same age</label>
 <label><input type="radio" name="q2" value="c"> A reachable group with a similar problem trigger, behavior, priority, and buying situation</label>
+<label><input type="radio" name="q2" value="d"> People who follow startup accounts and say they like the idea</label>
 <p class="quiz-explanation"></p>
 </fieldset>
 <fieldset data-quiz-question="q3">
@@ -585,6 +619,7 @@ has_data <- nrow(raw) > 0
 <label><input type="radio" name="q3" value="a"> Test the riskiest assumption with the smallest credible value experience</label>
 <label><input type="radio" name="q3" value="b"> Include every feature competitors offer</label>
 <label><input type="radio" name="q3" value="c"> Impress investors with polished code</label>
+<label><input type="radio" name="q3" value="d"> Ship the smallest feature set the engineering team can finish in one sprint</label>
 <p class="quiz-explanation"></p>
 </fieldset>
 <fieldset data-quiz-question="q4">
@@ -592,6 +627,7 @@ has_data <- nrow(raw) > 0
 <label><input type="radio" name="q4" value="a"> Would you buy my idea?</label>
 <label><input type="radio" name="q4" value="b"> Don’t you think this feature is useful?</label>
 <label><input type="radio" name="q4" value="c"> Tell me about the last time this problem happened and what you did next.</label>
+<label><input type="radio" name="q4" value="d"> After seeing this prototype, rank the three features you would be most likely to use.</label>
 <p class="quiz-explanation"></p>
 </fieldset>
 <fieldset data-quiz-question="q5">
@@ -599,6 +635,7 @@ has_data <- nrow(raw) > 0
 <label><input type="radio" name="q5" value="a"> TAM is a guaranteed revenue forecast.</label>
 <label><input type="radio" name="q5" value="b"> SOM is the realistic early share of the market you can actually serve.</label>
 <label><input type="radio" name="q5" value="c"> SAM should always equal TAM.</label>
+<label><input type="radio" name="q5" value="d"> SAM is the percentage of the serviceable market the startup expects to capture first.</label>
 <p class="quiz-explanation"></p>
 </fieldset>
 <fieldset data-quiz-question="q6">
@@ -606,6 +643,7 @@ has_data <- nrow(raw) > 0
 <label><input type="radio" name="q6" value="a"> It names the customer, desired outcome, category, and credible difference.</label>
 <label><input type="radio" name="q6" value="b"> It contains as many product features as possible.</label>
 <label><input type="radio" name="q6" value="c"> It uses a clever slogan without mentioning value.</label>
+<label><input type="radio" name="q6" value="d"> It states the primary benefit and promises the lowest price in the category.</label>
 <p class="quiz-explanation"></p>
 </fieldset>
 <fieldset data-quiz-question="q7">
@@ -613,6 +651,7 @@ has_data <- nrow(raw) > 0
 <label><input type="radio" name="q7" value="a"> Hide the relationship so the post feels organic.</label>
 <label><input type="radio" name="q7" value="b"> Disclose the material connection clearly and support all advertising claims.</label>
 <label><input type="radio" name="q7" value="c"> Ask the creator to guarantee results.</label>
+<label><input type="radio" name="q7" value="d"> Put one general partnership disclosure in the creator’s profile biography.</label>
 <p class="quiz-explanation"></p>
 </fieldset>
 <fieldset data-quiz-question="q8">
@@ -620,6 +659,7 @@ has_data <- nrow(raw) > 0
 <label><input type="radio" name="q8" value="a"> 40%</label>
 <label><input type="radio" name="q8" value="b"> 60%</label>
 <label><input type="radio" name="q8" value="c"> 150%</label>
+<label><input type="radio" name="q8" value="d"> It cannot be calculated without monthly fixed costs.</label>
 <p class="quiz-explanation"></p>
 </fieldset>
 <fieldset data-quiz-question="q9">
@@ -627,6 +667,7 @@ has_data <- nrow(raw) > 0
 <label><input type="radio" name="q9" value="a"> A domain registration automatically creates a federal trademark.</label>
 <label><input type="radio" name="q9" value="b"> A patent protects every business idea forever.</label>
 <label><input type="radio" name="q9" value="c"> Trademarks identify source, patents may protect qualifying inventions, and copyright protects original expression.</label>
+<label><input type="radio" name="q9" value="d"> Copyright protects a business name as soon as it is written in a brand guide.</label>
 <p class="quiz-explanation"></p>
 </fieldset>
 <fieldset data-quiz-question="q10">
@@ -634,10 +675,11 @@ has_data <- nrow(raw) > 0
 <label><input type="radio" name="q10" value="a"> Document domain ownership, enable MFA and HTTPS, test accessibility/forms, and plan renewals and backups.</label>
 <label><input type="radio" name="q10" value="b"> Buy a domain and assume hosting, email, security, and renewal happen automatically.</label>
 <label><input type="radio" name="q10" value="c"> Collect every possible visitor detail in case it becomes useful.</label>
+<label><input type="radio" name="q10" value="d"> Launch the site first, then add accessibility, security, policies, and ownership documentation after traction.</label>
 <p class="quiz-explanation"></p>
 </fieldset>
 <div class="quiz-actions">
-<button class="button primary" type="submit">Score my answers</button>
+<button class="button primary" id="quiz-score" type="button">Score my answers</button>
 <button class="button secondary" id="quiz-reset" type="button">Start over</button>
 </div>
 <div class="quiz-result" id="quiz-result" aria-live="polite">
@@ -928,20 +970,6 @@ of success, the second model is descriptive rather than causal.
 </div>
 <p class="csv-caution">Correlation describes a linear pattern in the loaded sample. It does not establish causation, handle confounding automatically, or prove the pattern will generalize.</p>
 </div>
-
-```{r data-availability, echo=FALSE, results='asis'}
-if (!has_data) {
-  cat(
-    paste0(
-      "> **Research data needed:** `", params$data_file,
-      "` contains the expected column names but no populated records. All ",
-      input_rows, " rows in the supplied file are blank. The learning platform ",
-      "and calculators work now; R graphs and model results will appear after the ",
-      "file is replaced with populated data."
-    )
-  )
-}
-```
 
 ### Dataset overview
 
