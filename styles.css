@@ -147,20 +147,12 @@ a {
   filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.24));
 }
 
-.nessie-body,
-.nessie-neck {
+.nessie-body {
   fill: none;
   stroke: var(--teal);
   stroke-linecap: round;
   stroke-linejoin: round;
-}
-
-.nessie-body {
   stroke-width: 8;
-}
-
-.nessie-neck {
-  stroke-width: 7;
 }
 
 .logo-nessie-face {
