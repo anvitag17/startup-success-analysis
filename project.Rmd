@@ -107,11 +107,12 @@ has_data <- nrow(raw) > 0
 <a class="brand brand-lockup" href="#" aria-label="Strictly Business home">
 <span class="brand-copy">
 <span class="brand-top">Strictly</span>
-<span class="brand-bottom"><span>Busi</span><span class="ness-wrap"><span class="ness-word">ness</span><svg class="logo-nessie" viewBox="0 0 104 52" aria-hidden="true"><path class="nessie-body" d="M4 39 C16 34 13 14 29 14 C45 14 49 43 67 40 C85 37 72 15 88 10"></path><path class="nessie-neck" d="M88 10 C91 4 98 5 99 12"></path><circle class="nessie-eye" cx="94" cy="8" r="2.4"></circle><path class="nessie-smile" d="M92 14 Q96 17 100 13"></path></svg></span></span>
+<span class="brand-bottom"><span>Busi</span><span class="ness-wrap"><span class="ness-word">ness</span><svg class="logo-nessie" viewBox="0 0 112 54" aria-hidden="true"><path class="nessie-body" d="M4 41 C17 35 14 15 30 15 C46 15 51 45 69 41 C84 38 76 23 87 17"></path><path class="nessie-neck" d="M87 18 Q89 15 90 13"></path><path class="nessie-head" d="M79 9 Q81 1 89 3 Q96 0 101 7 Q106 12 101 20 Q97 25 89 24 Q80 25 76 18 Q74 12 79 9 Z"></path><path class="nessie-brow" d="M80 10 Q84 7 87 10 M92 10 Q96 7 100 10"></path><circle class="nessie-eye" cx="84" cy="12" r="2.5"></circle><circle class="nessie-eye" cx="96" cy="12" r="2.5"></circle><circle class="nessie-pupil" cx="84" cy="12.5" r="1.1"></circle><circle class="nessie-pupil" cx="96" cy="12.5" r="1.1"></circle><circle class="nessie-nostril" cx="87" cy="17" r="1"></circle><circle class="nessie-nostril" cx="93" cy="17" r="1"></circle><path class="nessie-smile" d="M84 20 Q90 23 96 20"></path></svg></span></span>
 </span>
 </a>
 <div class="nav-links">
-<a href="#startup-roadmap">Start</a>
+<a href="#startup-roadmap">Roadmap</a>
+<a href="#startup-academy">Learn</a>
 <a href="#problem-to-solution">Build</a>
 <a href="#financial-foundations">Money</a>
 <a href="#signal-lab">Tools</a>
@@ -178,6 +179,386 @@ has_data <- nrow(raw) > 0
 <button class="journey-step" type="button" data-journey="learn"><span>6</span><strong>Learn</strong><small>What should change next?</small></button>
 </div>
 <div class="journey-detail" id="journey-detail" aria-live="polite"><span>Right now</span><strong>Write down one repeated problem you have personally observed.</strong><p>Do not choose a solution yet. Name the person, moment, workaround, and cost.</p></div>
+
+## Startup academy
+
+<p class="section-intro">Work through the parts of a startup in any order. Open a lesson, use its template, and mark it complete. Your progress and workspace answers stay in this browser.</p>
+
+<div class="academy-progress">
+<div><span>Your learning progress</span><strong id="academy-progress-label">0 of 24 lessons complete</strong></div>
+<div class="academy-progress-track" aria-hidden="true"><span id="academy-progress-bar"></span></div>
+<button id="academy-reset" type="button">Reset progress</button>
+</div>
+
+<div class="academy-shell">
+<div class="academy-tabs" role="tablist" aria-label="Startup learning tracks">
+<button class="academy-tab active" type="button" role="tab" aria-selected="true" data-academy-track="foundation"><span>01</span>Foundation</button>
+<button class="academy-tab" type="button" role="tab" aria-selected="false" data-academy-track="validation"><span>02</span>Validation</button>
+<button class="academy-tab" type="button" role="tab" aria-selected="false" data-academy-track="market"><span>03</span>Market</button>
+<button class="academy-tab" type="button" role="tab" aria-selected="false" data-academy-track="marketing"><span>04</span>Marketing</button>
+<button class="academy-tab" type="button" role="tab" aria-selected="false" data-academy-track="money"><span>05</span>Money</button>
+<button class="academy-tab" type="button" role="tab" aria-selected="false" data-academy-track="legal"><span>06</span>Legal</button>
+<button class="academy-tab" type="button" role="tab" aria-selected="false" data-academy-track="finish"><span>07</span>Finish</button>
+</div>
+
+<div class="academy-content">
+<section class="academy-panel active" data-academy-panel="foundation">
+<div class="track-heading"><span>Track 01</span><h3>Turn an observation into a clear business idea</h3><p>Define the problem, the person, and the value before choosing features.</p></div>
+
+<details class="academy-lesson" data-lesson="problem-statement" open>
+<summary><span><small>Lesson 01</small>Problem statement</span><b>+</b></summary>
+<div class="lesson-body">
+<p>A useful problem statement names a specific customer, a situation, the job they are trying to do, the obstacle, and the cost of the problem. It should describe the problem without quietly prescribing your favorite solution.</p>
+<div class="lesson-template"><strong>Template</strong><p><em>[Customer]</em> struggles to <em>[make progress]</em> when <em>[situation]</em> because <em>[root cause]</em>, causing <em>[time, money, risk, or frustration]</em>.</p></div>
+<ul><li>Weak: “Students need a better food app.”</li><li>Stronger: “Students with evening labs struggle to find an affordable campus meal after 8 p.m., leading them to skip dinner or pay delivery fees.”</li></ul>
+<button class="lesson-complete" type="button" data-complete-lesson="problem-statement">Mark lesson complete</button>
+</div>
+</details>
+
+<details class="academy-lesson" data-lesson="customer-segment">
+<summary><span><small>Lesson 02</small>Customer segment and profile</span><b>+</b></summary>
+<div class="lesson-body">
+<p>A segment is a group whose needs, behavior, and buying situation are similar enough for one focused strategy. “Everyone” is not a usable first segment.</p>
+<div class="concept-grid four">
+<div><strong>Demographics</strong><p>Age, income, education, role, organization size, or life stage.</p></div>
+<div><strong>Geographics</strong><p>Country, region, campus, neighborhood, climate, or remote/in-person context.</p></div>
+<div><strong>Psychographics</strong><p>Values, motivations, identity, attitudes, priorities, and risk tolerance.</p></div>
+<div><strong>Behavior</strong><p>Frequency, trigger, current workaround, purchase process, and willingness to switch.</p></div>
+</div>
+<div class="lesson-template"><strong>Customer profile</strong><p>Our early adopter is <em>[specific person]</em> who experiences <em>[trigger/problem]</em> <em>[frequency]</em>, currently uses <em>[alternative]</em>, and cares most about <em>[desired outcome]</em>.</p></div>
+<button class="lesson-complete" type="button" data-complete-lesson="customer-segment">Mark lesson complete</button>
+</div>
+</details>
+
+<details class="academy-lesson" data-lesson="target-market">
+<summary><span><small>Lesson 03</small>Target market and beachhead</span><b>+</b></summary>
+<div class="lesson-body">
+<p>Your target market is the segment you intentionally serve. Your beachhead is the smallest group you can reach, satisfy, and learn from first. Prioritize segments by problem intensity, reachability, ability to pay, urgency, and strategic fit.</p>
+<div class="lesson-template"><strong>Decision test</strong><p>If you had only two weeks and $100, which customer group could you contact directly and offer a credible test to?</p></div>
+<button class="lesson-complete" type="button" data-complete-lesson="target-market">Mark lesson complete</button>
+</div>
+</details>
+
+<details class="academy-lesson" data-lesson="uvp">
+<summary><span><small>Lesson 04</small>Unique value proposition (UVP)</span><b>+</b></summary>
+<div class="lesson-body">
+<p>A UVP explains the important outcome, the intended customer, and why your approach is meaningfully better than the current alternative. It is not a slogan.</p>
+<div class="lesson-template"><strong>UVP statement</strong><p>For <em>[target customer]</em> who needs <em>[job/outcome]</em>, <em>[product]</em> is a <em>[category]</em> that <em>[primary benefit]</em>. Unlike <em>[alternative]</em>, it <em>[credible difference]</em>.</p></div>
+<p><strong>Sustainable goals:</strong> decide whether environmental or social impact is part of the customer value, an operating constraint, or a measurable mission. Name the metric—such as waste avoided, access improved, or emissions reduced—rather than using vague “green” claims.</p>
+<button class="lesson-complete" type="button" data-complete-lesson="uvp">Mark lesson complete</button>
+</div>
+</details>
+
+<details class="academy-lesson" data-lesson="pitch">
+<summary><span><small>Lesson 05</small>Elevator pitch</span><b>+</b></summary>
+<div class="lesson-body">
+<p>A strong 30–60 second pitch creates interest, not information overload. Lead with the customer and problem, explain the outcome, show one reason to believe, and end with a specific ask.</p>
+<ol><li><strong>Hook:</strong> a concrete problem or surprising observation.</li><li><strong>Who + problem:</strong> the target user and costly moment.</li><li><strong>Solution + benefit:</strong> what changes for them.</li><li><strong>Proof:</strong> interviews, pilot results, traction, or relevant insight.</li><li><strong>Ask:</strong> an introduction, interview, pilot, feedback, or funding conversation.</li></ol>
+<button class="lesson-complete" type="button" data-complete-lesson="pitch">Mark lesson complete</button>
+</div>
+</details>
+
+<div class="workbench pitch-workbench">
+<div class="workbench-heading"><span>Interactive tool</span><h3>Build your elevator pitch</h3><p>Fill in the pieces and Nessie will assemble a first draft.</p></div>
+<div class="workbench-fields">
+<label>Target customer<input class="pitch-input" id="pitch-customer" placeholder="First-year commuter students"></label>
+<label>Problem<input class="pitch-input" id="pitch-problem" placeholder="miss useful campus events"></label>
+<label>Solution<input class="pitch-input" id="pitch-solution" placeholder="a personalized event digest"></label>
+<label>Primary benefit<input class="pitch-input" id="pitch-benefit" placeholder="find relevant events in under a minute"></label>
+<label>Difference or proof<input class="pitch-input" id="pitch-proof" placeholder="built from 20 student interviews"></label>
+<label>Your ask<input class="pitch-input" id="pitch-ask" placeholder="five students for a one-week pilot"></label>
+</div>
+<div class="workbench-output">
+<span>Pitch draft</span>
+<p id="pitch-output">Complete the fields to build a clear 30-second pitch.</p>
+<button id="copy-pitch" type="button">Copy pitch</button>
+</div>
+</div>
+</section>
+
+<section class="academy-panel" data-academy-panel="validation" hidden>
+<div class="track-heading"><span>Track 02</span><h3>Test behavior before building too much</h3><p>Use interviews and small experiments to replace opinions with evidence.</p></div>
+
+<details class="academy-lesson" data-lesson="features-benefits" open>
+<summary><span><small>Lesson 06</small>Features and benefits</span><b>+</b></summary>
+<div class="lesson-body">
+<p>A feature is what the product does. A benefit is the useful change a customer experiences. Connect every feature to the problem, outcome, and evidence needed.</p>
+<div class="mini-table"><div><strong>Feature</strong><strong>Benefit</strong><strong>Proof metric</strong></div><div><span>One-click event filter</span><span>Less searching</span><span>Time to find an event</span></div><div><span>Deadline reminders</span><span>Fewer missed tasks</span><span>On-time completion rate</span></div></div>
+<p>Prioritize with <strong>must-have, should-have, could-have, not-now</strong>. A top feature directly solves the primary problem; an impressive feature that does not is still a distraction.</p>
+<button class="lesson-complete" type="button" data-complete-lesson="features-benefits">Mark lesson complete</button>
+</div>
+</details>
+
+<details class="academy-lesson" data-lesson="mvp">
+<summary><span><small>Lesson 07</small>Minimum viable product</span><b>+</b></summary>
+<div class="lesson-body">
+<p>An MVP is the smallest experience that tests your riskiest business assumption while still delivering enough value for a real response. It may be a landing page, concierge service, spreadsheet, preorder, clickable prototype, or limited pilot.</p>
+<div class="lesson-template"><strong>MVP test</strong><p>We need to learn whether <em>[customer]</em> will <em>[meaningful behavior]</em> for <em>[outcome]</em>. We can test this with <em>[small experience]</em> and will continue if <em>[threshold]</em>.</p></div>
+<button class="lesson-complete" type="button" data-complete-lesson="mvp">Mark lesson complete</button>
+</div>
+</details>
+
+<details class="academy-lesson" data-lesson="customer-interviews">
+<summary><span><small>Lesson 08</small>Customer interviews</span><b>+</b></summary>
+<div class="lesson-body">
+<p>Interview people who recently experienced the problem. Ask about specific past events, not imagined future behavior. Do not pitch during a problem interview.</p>
+<ul><li>“Tell me about the last time this happened.”</li><li>“What did you do next?”</li><li>“What was hardest, slowest, or most expensive?”</li><li>“What have you already tried?”</li><li>“Who decides or pays?”</li></ul>
+<p>Write exact quotes, behaviors, workarounds, frequency, and contradictions. Five interviews can reveal patterns; they do not prove an entire market.</p>
+<button class="lesson-complete" type="button" data-complete-lesson="customer-interviews">Mark lesson complete</button>
+</div>
+</details>
+
+<details class="academy-lesson" data-lesson="solution-interviews">
+<summary><span><small>Lesson 09</small>Solution interviews and usability</span><b>+</b></summary>
+<div class="lesson-body">
+<p>After the problem is understood, show a low-fidelity solution. Give the participant a realistic task and ask them to think aloud. Watch where they hesitate instead of teaching them how it works.</p>
+<p>End with a meaningful commitment: join a pilot, schedule a follow-up, share data, introduce a buyer, preorder, or pay. Compliments are not validation.</p>
+<button class="lesson-complete" type="button" data-complete-lesson="solution-interviews">Mark lesson complete</button>
+</div>
+</details>
+
+<details class="academy-lesson" data-lesson="experiments">
+<summary><span><small>Lesson 10</small>Marketing tests and survey results</span><b>+</b></summary>
+<div class="lesson-body">
+<p>A useful experiment has one hypothesis, one audience, one offer, one primary metric, a time limit, and a decision rule set before launch. Examples include two landing-page messages, waitlist conversion, outreach replies, a small paid-ad test, or two price points.</p>
+<p>Surveys are strongest for measuring patterns after interviews help you write good questions. Report sample source, sample size, question wording, response distribution, missing responses, and limitations. Avoid treating a convenience sample as the whole market.</p>
+<button class="lesson-complete" type="button" data-complete-lesson="experiments">Mark lesson complete</button>
+</div>
+</details>
+</section>
+
+<section class="academy-panel" data-academy-panel="market" hidden>
+<div class="track-heading"><span>Track 03</span><h3>Understand the market and the alternatives</h3><p>Size the opportunity, study competition, and test feasibility.</p></div>
+
+<details class="academy-lesson" data-lesson="market-sizing" open>
+<summary><span><small>Lesson 11</small>Market sizing: TAM, SAM, SOM</span><b>+</b></summary>
+<div class="lesson-body">
+<div class="concept-grid three"><div><strong>TAM</strong><p>Total annual demand if every relevant buyer used your solution.</p></div><div><strong>SAM</strong><p>The portion you can serve with your product, geography, channel, and constraints.</p></div><div><strong>SOM</strong><p>The realistic share you could capture in a defined period with available resources.</p></div></div>
+<p>Use both <strong>top-down</strong> sources and a <strong>bottom-up</strong> model: reachable accounts × realistic annual revenue per account. State every assumption and never present TAM as a sales forecast.</p>
+<button class="lesson-complete" type="button" data-complete-lesson="market-sizing">Mark lesson complete</button>
+</div>
+</details>
+
+<div class="workbench market-workbench">
+<div class="workbench-heading"><span>Interactive tool</span><h3>TAM → SAM → SOM calculator</h3><p>Build a transparent bottom-up estimate.</p></div>
+<div class="workbench-fields compact">
+<label>Potential customers<input id="market-customers" type="number" min="0" value="10000"></label>
+<label>Annual revenue per customer ($)<input id="market-arpc" type="number" min="0" value="120"></label>
+<label>Serviceable share (%)<input id="market-sam-share" type="number" min="0" max="100" value="25"></label>
+<label>Obtainable share of SAM (%)<input id="market-som-share" type="number" min="0" max="100" value="5"></label>
+</div>
+<div class="market-results"><div><span>TAM</span><strong id="tam-result">$1,200,000</strong></div><div><span>SAM</span><strong id="sam-result">$300,000</strong></div><div><span>SOM</span><strong id="som-result">$15,000</strong></div></div>
+</div>
+
+<details class="academy-lesson" data-lesson="competition">
+<summary><span><small>Lesson 12</small>Competitive analysis</span><b>+</b></summary>
+<div class="lesson-body">
+<p>Competition includes direct products, indirect approaches, do-it-yourself workarounds, and doing nothing. Compare the customer segment, job solved, pricing, channel, strengths, weaknesses, switching costs, and proof—not just feature counts.</p>
+<p>Use the analysis to find an underserved need or a different tradeoff. “We have no competitors” usually means the current workaround has not been identified.</p>
+<a class="lesson-source" href="https://www.sba.gov/business-guide/plan-your-business/market-research-competitive-analysis" target="_blank" rel="noopener">Official SBA market-research guide ↗</a>
+<button class="lesson-complete" type="button" data-complete-lesson="competition">Mark lesson complete</button>
+</div>
+</details>
+
+<details class="academy-lesson" data-lesson="swot">
+<summary><span><small>Lesson 13</small>SWOT and feasibility</span><b>+</b></summary>
+<div class="lesson-body">
+<p><strong>Strengths and weaknesses</strong> are internal. <strong>Opportunities and threats</strong> are external. Convert the list into action: use a strength to pursue an opportunity, correct a weakness, and reduce exposure to a threat.</p>
+<p>Feasibility asks whether the venture is desirable to customers, technically and operationally possible, legally responsible, and financially sustainable. Identify the assumption that could break the idea first.</p>
+<button class="lesson-complete" type="button" data-complete-lesson="swot">Mark lesson complete</button>
+</div>
+</details>
+
+<div class="workbench swot-workbench">
+<div class="workbench-heading"><span>Interactive tool</span><h3>Build a one-page SWOT</h3><p>Keep each box specific and connected to evidence.</p></div>
+<div class="swot-grid">
+<label><span>Strengths</span><textarea class="swot-input" id="swot-strengths" rows="4" placeholder="Capabilities, access, proof…"></textarea></label>
+<label><span>Weaknesses</span><textarea class="swot-input" id="swot-weaknesses" rows="4" placeholder="Gaps, constraints, unknowns…"></textarea></label>
+<label><span>Opportunities</span><textarea class="swot-input" id="swot-opportunities" rows="4" placeholder="Trends, unmet needs, partnerships…"></textarea></label>
+<label><span>Threats</span><textarea class="swot-input" id="swot-threats" rows="4" placeholder="Competitors, regulation, substitutes…"></textarea></label>
+</div>
+<small>Saved automatically in this browser.</small>
+</div>
+</section>
+
+<section class="academy-panel" data-academy-panel="marketing" hidden>
+<div class="track-heading"><span>Track 04</span><h3>Make the right promise in the right place</h3><p>Connect brand, channels, content, and a trustworthy website.</p></div>
+
+<details class="academy-lesson" data-lesson="branding" open>
+<summary><span><small>Lesson 14</small>Branding</span><b>+</b></summary>
+<div class="lesson-body">
+<p>A brand is the expectation people build from every interaction. Define your audience, positioning, personality, promise, reasons to believe, voice, visual system, and consistency rules. A logo supports the brand; it is not the whole brand.</p>
+<p>Before committing to a name, check domain availability, social handles, state business records, and similar trademarks. Test whether the name is pronounceable, memorable, and appropriate across likely markets.</p>
+<button class="lesson-complete" type="button" data-complete-lesson="branding">Mark lesson complete</button>
+</div>
+</details>
+
+<details class="academy-lesson" data-lesson="marketing-plan">
+<summary><span><small>Lesson 15</small>Marketing plan, mix, and functions</span><b>+</b></summary>
+<div class="lesson-body">
+<p>The classic marketing mix is <strong>Product, Price, Place, and Promotion</strong>. Services often add <strong>People, Process, and Physical evidence</strong>. Make the choices reinforce one position.</p>
+<div class="concept-grid three"><div><strong>Research</strong><p>Segments, needs, competitors, trends, and demand.</p></div><div><strong>Offer</strong><p>Product design, benefits, brand, packaging, and pricing.</p></div><div><strong>Go to market</strong><p>Distribution, promotion, sales, service, and retention.</p></div></div>
+<p>A one-page plan should name the objective, audience, insight, message, offer, channels, budget, calendar, owner, primary metric, and review date.</p>
+<button class="lesson-complete" type="button" data-complete-lesson="marketing-plan">Mark lesson complete</button>
+</div>
+</details>
+
+<details class="academy-lesson" data-lesson="social-advertising">
+<summary><span><small>Lesson 16</small>Social media and advertising</span><b>+</b></summary>
+<div class="lesson-body">
+<p>Choose channels based on where the customer already pays attention and how they make the purchase—not which platform is newest. Build content around customer questions, useful proof, demonstrations, stories, and calls to action.</p>
+<p>For paid tests, define audience, creative, offer, landing page, budget cap, and one conversion metric. Track impressions → clicks → qualified actions → customers. Advertising claims must be truthful, supported, and not misleading; disclose material connections with endorsers clearly.</p>
+<a class="lesson-source" href="https://www.ftc.gov/business-guidance/advertising-marketing" target="_blank" rel="noopener">Official FTC advertising guidance ↗</a>
+<button class="lesson-complete" type="button" data-complete-lesson="social-advertising">Mark lesson complete</button>
+</div>
+</details>
+
+<details class="academy-lesson" data-lesson="website">
+<summary><span><small>Lesson 17</small>Website and domain—from zero to launch</span><b>+</b></summary>
+<div class="lesson-body">
+<ol class="website-steps">
+<li><strong>Choose the job:</strong> validation landing page, portfolio, booking site, store, community, or product app.</li>
+<li><strong>Pick a name and domain:</strong> choose a short, readable domain through an accredited registrar. You rent registration by the year; enable auto-renew, account MFA, registrar lock, and accurate contact information.</li>
+<li><strong>Choose a platform:</strong> a hosted builder is fastest; a CMS offers content flexibility; static HTML/GitHub Pages is inexpensive for informational sites; a web application needs hosting, a database, authentication, and maintenance.</li>
+<li><strong>Connect DNS:</strong> the registrar manages ownership; DNS records point the domain to hosting. Common records include A/AAAA, CNAME, MX for email, and TXT for verification/security.</li>
+<li><strong>Design the core journey:</strong> one clear audience, headline/UVP, benefits and proof, strong call to action, contact details, and only the pages users need.</li>
+<li><strong>Make it trustworthy:</strong> HTTPS, mobile layout, accessible contrast and labels, fast images, working forms, privacy notice, terms when appropriate, refund/shipping policies for commerce, and truthful claims.</li>
+<li><strong>Measure:</strong> analytics with consent where required, search-console verification, conversion events, uptime, and form testing. Collect only data you need.</li>
+<li><strong>Maintain:</strong> renew domain and hosting, update software, back up content, patch security issues, test links/forms, and keep owner access documented.</li>
+</ol>
+<p><strong>Minimum pages:</strong> Home, Product/Service, About or credibility, Contact, and required policy pages. Add FAQ, pricing, case studies, or a blog only when they support a customer decision.</p>
+<p><strong>SEO basics:</strong> useful page titles, one clear topic per page, descriptive URLs, headings that match questions, original helpful content, alt text, internal links, sitemap, and performance. SEO cannot rescue a page that gives visitors no value.</p>
+<div class="source-row"><a class="lesson-source" href="https://www.icann.org/en/system/files/files/registering-domain-name-15feb23-en.pdf" target="_blank" rel="noopener">ICANN domain guide ↗</a><a class="lesson-source" href="https://developers.google.com/search/docs/fundamentals/seo-starter-guide" target="_blank" rel="noopener">Google SEO starter guide ↗</a></div>
+<button class="lesson-complete" type="button" data-complete-lesson="website">Mark lesson complete</button>
+</div>
+</details>
+
+<div class="workbench website-workbench">
+<div class="workbench-heading"><span>Interactive checklist</span><h3>Website launch check</h3><p>Check items as you complete them; progress is saved locally.</p></div>
+<div class="website-check-grid">
+<label><input class="website-check" type="checkbox"> One audience and one primary action</label>
+<label><input class="website-check" type="checkbox"> Domain owner, renewal, MFA, and recovery documented</label>
+<label><input class="website-check" type="checkbox"> HTTPS and custom domain working</label>
+<label><input class="website-check" type="checkbox"> Mobile, keyboard, contrast, and form labels tested</label>
+<label><input class="website-check" type="checkbox"> Privacy, terms, contact, and commerce policies reviewed</label>
+<label><input class="website-check" type="checkbox"> Analytics/conversions and search tools configured</label>
+<label><input class="website-check" type="checkbox"> Forms, links, payments, email, and error pages tested</label>
+<label><input class="website-check" type="checkbox"> Backups, updates, renewals, and ownership handoff planned</label>
+</div>
+<div class="website-check-result"><strong id="website-check-count">0/8 ready</strong><span id="website-check-note">Start with the site’s main job.</span></div>
+</div>
+</section>
+
+<section class="academy-panel" data-academy-panel="money" hidden>
+<div class="track-heading"><span>Track 05</span><h3>Build an economic model, not just a price</h3><p>Understand revenue, direct costs, cash, projections, and possible exits.</p></div>
+
+<details class="academy-lesson" data-lesson="revenue-models" open>
+<summary><span><small>Lesson 18</small>Revenue models</span><b>+</b></summary>
+<div class="lesson-body">
+<p>Common models include one-time sales, subscription, usage-based, transaction fee, marketplace commission, licensing, advertising, sponsorship, freemium, services, leasing, and franchising. Choose based on how value is delivered and how customers prefer to buy.</p>
+<p>Test the unit: who pays, for what, how often, through which contract or checkout, and what causes expansion or cancellation. Mixing models too early makes learning harder.</p>
+<button class="lesson-complete" type="button" data-complete-lesson="revenue-models">Mark lesson complete</button>
+</div>
+</details>
+
+<details class="academy-lesson" data-lesson="cogs-pricing">
+<summary><span><small>Lesson 19</small>COGS, margin, and pricing strategy</span><b>+</b></summary>
+<div class="lesson-body">
+<p><strong>COGS</strong> includes direct costs required to deliver one unit: materials, production labor, packaging, transaction fees, shipping subsidy, or usage-based infrastructure. Gross profit = revenue − COGS; gross margin % = gross profit ÷ revenue.</p>
+<p>Pricing approaches include cost-plus, competitor-based, value-based, tiered, penetration, skimming, bundle, subscription, and usage-based. Use costs as a floor, customer value and alternatives as context, then test willingness to pay. Include discounts, returns, taxes, channel fees, and support in the model.</p>
+<button class="lesson-complete" type="button" data-complete-lesson="cogs-pricing">Mark lesson complete</button>
+</div>
+</details>
+
+<div class="workbench pricing-workbench">
+<div class="workbench-heading"><span>Interactive tool</span><h3>Price and unit-economics check</h3><p>See whether a price covers direct cost and contributes toward overhead.</p></div>
+<div class="workbench-fields compact">
+<label>Price per unit ($)<input id="pricing-price" type="number" min="0" step="0.01" value="25"></label>
+<label>Direct COGS per unit ($)<input id="pricing-cogs" type="number" min="0" step="0.01" value="8"></label>
+<label>Monthly fixed costs ($)<input id="pricing-fixed" type="number" min="0" step="0.01" value="1000"></label>
+<label>Expected monthly units<input id="pricing-units" type="number" min="0" step="1" value="100"></label>
+</div>
+<div class="market-results"><div><span>Gross margin</span><strong id="margin-result">68.0%</strong></div><div><span>Contribution</span><strong id="contribution-result">$1,700</strong></div><div><span>Break-even units</span><strong id="breakeven-result">59</strong></div></div>
+</div>
+
+<details class="academy-lesson" data-lesson="financial-model">
+<summary><span><small>Lesson 20</small>Financial model and banking</span><b>+</b></summary>
+<div class="lesson-body">
+<p>A useful model connects assumptions to monthly revenue, COGS, payroll, operating expenses, cash flow, and cash balance. Build a base case plus conservative and upside scenarios. Track actuals against the model and update assumptions rather than hiding misses.</p>
+<p>Core statements serve different jobs: the income statement shows performance over time, the cash-flow statement explains cash movement, and the balance sheet shows assets, liabilities, and equity at a point in time.</p>
+<p>Before accepting or spending business money, choose the entity and tax setup, obtain required registrations/EIN, then compare business accounts by fees, transaction limits, deposit insurance, payment tools, integrations, and signer controls. Keep business and personal activity separate and reconcile monthly.</p>
+<a class="lesson-source" href="https://www.irs.gov/publications/p583" target="_blank" rel="noopener">IRS starting and recordkeeping guidance ↗</a>
+<button class="lesson-complete" type="button" data-complete-lesson="financial-model">Mark lesson complete</button>
+</div>
+</details>
+
+<details class="academy-lesson" data-lesson="exit-strategy">
+<summary><span><small>Lesson 21</small>Funding and exit strategies</span><b>+</b></summary>
+<div class="lesson-body">
+<p>Funding may come from revenue/bootstrapping, grants, competitions, friends and family, crowdfunding, debt, angels, venture capital, or strategic partners. Match the source to risk, repayment ability, growth expectations, ownership tradeoffs, and use of funds.</p>
+<p>Possible exits include owner operation, family or employee succession, acquisition, merger, management buyout, licensing assets, public offering for rare high-growth firms, or orderly closure. Plan clean records, transferable contracts, documented IP, governance, and reduced dependence on one founder long before an exit.</p>
+<a class="lesson-source" href="https://www.sba.gov/business-guide/manage-your-business/close-or-sell-your-business" target="_blank" rel="noopener">Official SBA exit guidance ↗</a>
+<button class="lesson-complete" type="button" data-complete-lesson="exit-strategy">Mark lesson complete</button>
+</div>
+</details>
+</section>
+
+<section class="academy-panel" data-academy-panel="legal" hidden>
+<div class="track-heading"><span>Track 06</span><h3>Protect the company, founders, customers, and work</h3><p>This U.S.-focused overview is a decision checklist—not personal legal or tax advice.</p></div>
+
+<details class="academy-lesson" data-lesson="structures-partnerships" open>
+<summary><span><small>Lesson 22</small>Structures, founders, and partnerships</span><b>+</b></summary>
+<div class="lesson-body">
+<p>Common U.S. forms include sole proprietorship, general or limited partnership, LLP, LLC, and corporation. The choice changes liability, taxes, governance, fundraising, filing, and administration. Rules vary by state and situation.</p>
+<p>“Partnership” can also describe a working relationship: co-marketing, referral/affiliate, distribution, supplier, licensing, joint venture, strategic alliance, or equity partnership. Put scope, ownership, money, confidentiality, performance, brand use, liability, data, termination, and dispute terms in writing.</p>
+<p>Founder agreements should address roles, decision rights, equity, vesting, IP assignment, time commitment, compensation, fundraising, departures, deadlock, and what happens if someone stops contributing.</p>
+<a class="lesson-source" href="https://www.sba.gov/business-guide/launch-your-business/choose-business-structure" target="_blank" rel="noopener">Compare structures at SBA.gov ↗</a>
+<button class="lesson-complete" type="button" data-complete-lesson="structures-partnerships">Mark lesson complete</button>
+</div>
+</details>
+
+<details class="academy-lesson" data-lesson="ip-nda-attorney">
+<summary><span><small>Lesson 23</small>Trademarks, patents, NDAs, and attorneys</span><b>+</b></summary>
+<div class="lesson-body">
+<div class="concept-grid four"><div><strong>Trademark</strong><p>Protects source-identifying names, logos, and related brand elements for goods/services.</p></div><div><strong>Patent</strong><p>May protect a qualifying new invention; it gives exclusion rights, not automatic permission to practice it.</p></div><div><strong>Copyright</strong><p>Protects original expression such as writing, art, code, photos, or video—not the underlying idea.</p></div><div><strong>Trade secret</strong><p>Protects valuable confidential information when reasonable secrecy measures are maintained.</p></div></div>
+<p>Search before adopting a brand or filing. Patent timing can matter, and public disclosure may affect rights. NDAs can define confidential information, permitted use, exclusions, duration, return/destruction, and remedies, but they do not replace access controls, IP assignment, or a well-scoped contract.</p>
+<p>Talk to an attorney when founder equity or ownership is unclear, a regulated product is involved, meaningful contracts or hiring begin, IP is core to the venture, investors are approaching, a dispute or demand arrives, or the cost of being wrong is high. For patents, consider a USPTO-registered patent attorney or agent.</p>
+<div class="source-row"><a class="lesson-source" href="https://www.uspto.gov/trademarks/basics" target="_blank" rel="noopener">USPTO trademark basics ↗</a><a class="lesson-source" href="https://www.uspto.gov/patents/basics/essentials" target="_blank" rel="noopener">USPTO patent essentials ↗</a></div>
+<button class="lesson-complete" type="button" data-complete-lesson="ip-nda-attorney">Mark lesson complete</button>
+</div>
+</details>
+
+<details class="academy-lesson" data-lesson="legal-operations">
+<summary><span><small>Lesson 24</small>Legal and financial launch checklist</span><b>+</b></summary>
+<div class="lesson-body">
+<div class="legal-check-columns">
+<div><strong>Form and register</strong><ul><li>Choose entity, state, business name, and ownership</li><li>Register assumed names where required</li><li>Obtain EIN/tax IDs and licenses/permits</li><li>Document governance and founder approvals</li></ul></div>
+<div><strong>Operate responsibly</strong><ul><li>Separate bank account, bookkeeping, taxes, and records</li><li>Written customer, vendor, contractor, and employee terms</li><li>Insurance appropriate to product and risk</li><li>Privacy, cybersecurity, accessibility, and data retention</li></ul></div>
+<div><strong>Protect assets</strong><ul><li>IP ownership and assignments from every contributor</li><li>Trademark/domain clearance and renewal calendar</li><li>Confidentiality and restricted access</li><li>Contract, compliance, and corporate-record storage</li></ul></div>
+</div>
+<p>Requirements depend on location, industry, workforce, customers, and data. Recheck federal, state, local, and industry rules before launch and as the business changes.</p>
+<div class="source-row"><a class="lesson-source" href="https://www.sba.gov/business-guide/launch-your-business" target="_blank" rel="noopener">SBA launch checklist ↗</a><a class="lesson-source" href="https://www.irs.gov/businesses/small-businesses-self-employed/starting-a-business" target="_blank" rel="noopener">IRS starting-a-business guide ↗</a></div>
+<button class="lesson-complete" type="button" data-complete-lesson="legal-operations">Mark lesson complete</button>
+</div>
+</details>
+</section>
+
+<section class="academy-panel" data-academy-panel="finish" hidden>
+<div class="track-heading"><span>Track 07</span><h3>Turn the evidence into a decision</h3><p>Finish with a business case that makes assumptions and limitations visible.</p></div>
+<div class="finish-grid">
+<article><span>01</span><h3>Summary of key points</h3><p>Restate the customer, problem, UVP, solution, market, model, evidence, economics, risks, and next milestone in plain language.</p></article>
+<article><span>02</span><h3>Feasibility</h3><p>Rate desirability, technical delivery, operations, legal responsibility, and financial viability. Name what still needs proof.</p></article>
+<article><span>03</span><h3>SWOT</h3><p>Translate the four boxes into actions, owners, evidence, and review dates instead of ending with a list.</p></article>
+<article><span>04</span><h3>Competitive analysis</h3><p>Explain the current alternatives, your focused advantage, switching barriers, and how competitors may respond.</p></article>
+<article><span>05</span><h3>Survey and interview results</h3><p>Report method, sample, exact measures, findings, contradictions, bias, and what the evidence does—and does not—support.</p></article>
+<article><span>06</span><h3>Conclusion and next test</h3><p>Choose continue, revise, pause, or stop. Define the next assumption, test, threshold, budget, owner, and decision date.</p></article>
+</div>
+<div class="lesson-template finish-template"><strong>Final recommendation</strong><p>Based on <em>[evidence]</em>, we recommend <em>[decision]</em> because <em>[reason]</em>. The largest remaining risk is <em>[assumption]</em>, which we will test by <em>[experiment]</em> before <em>[date]</em>.</p></div>
+<a class="button primary" href="#problem-to-solution">Build your idea canvas</a>
+<a class="button secondary" href="#signal-lab">Check your startup signals</a>
+</section>
+</div>
+</div>
 
 ## Problem to solution
 

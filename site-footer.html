@@ -3,7 +3,7 @@
     <a class="brand brand-lockup" href="#" aria-label="Strictly Business home">
       <span class="brand-copy">
         <span class="brand-top">Strictly</span>
-        <span class="brand-bottom"><span>Busi</span><span class="ness-wrap"><span class="ness-word">ness</span><svg class="logo-nessie" viewBox="0 0 104 52" aria-hidden="true"><path class="nessie-body" d="M4 39 C16 34 13 14 29 14 C45 14 49 43 67 40 C85 37 72 15 88 10"></path><path class="nessie-neck" d="M88 10 C91 4 98 5 99 12"></path><circle class="nessie-eye" cx="94" cy="8" r="2.4"></circle><path class="nessie-smile" d="M92 14 Q96 17 100 13"></path></svg></span></span>
+        <span class="brand-bottom"><span>Busi</span><span class="ness-wrap"><span class="ness-word">ness</span><svg class="logo-nessie" viewBox="0 0 112 54" aria-hidden="true"><path class="nessie-body" d="M4 41 C17 35 14 15 30 15 C46 15 51 45 69 41 C84 38 76 23 87 17"></path><path class="nessie-neck" d="M87 18 Q89 15 90 13"></path><path class="nessie-head" d="M79 9 Q81 1 89 3 Q96 0 101 7 Q106 12 101 20 Q97 25 89 24 Q80 25 76 18 Q74 12 79 9 Z"></path><path class="nessie-brow" d="M80 10 Q84 7 87 10 M92 10 Q96 7 100 10"></path><circle class="nessie-eye" cx="84" cy="12" r="2.5"></circle><circle class="nessie-eye" cx="96" cy="12" r="2.5"></circle><circle class="nessie-pupil" cx="84" cy="12.5" r="1.1"></circle><circle class="nessie-pupil" cx="96" cy="12.5" r="1.1"></circle><circle class="nessie-nostril" cx="87" cy="17" r="1"></circle><circle class="nessie-nostril" cx="93" cy="17" r="1"></circle><path class="nessie-smile" d="M84 20 Q90 23 96 20"></path></svg></span></span>
       </span>
     </a>
     <p>A student-friendly guide for turning startup questions into responsible experiments.</p>
@@ -255,6 +255,207 @@
   });
   updateReadiness();
 
+  var academyTabs = Array.prototype.slice.call(document.querySelectorAll(".academy-tab"));
+  var academyPanels = Array.prototype.slice.call(document.querySelectorAll(".academy-panel"));
+
+  function openAcademyTrack(track) {
+    academyTabs.forEach(function (tab) {
+      var active = tab.getAttribute("data-academy-track") === track;
+      tab.classList.toggle("active", active);
+      tab.setAttribute("aria-selected", String(active));
+    });
+    academyPanels.forEach(function (panel) {
+      var active = panel.getAttribute("data-academy-panel") === track;
+      panel.classList.toggle("active", active);
+      panel.hidden = !active;
+    });
+  }
+
+  academyTabs.forEach(function (tab) {
+    tab.addEventListener("click", function () {
+      openAcademyTrack(tab.getAttribute("data-academy-track"));
+    });
+  });
+
+  var lessonButtons = Array.prototype.slice.call(
+    document.querySelectorAll("[data-complete-lesson]")
+  );
+  var completedLessons = [];
+  var savedLessons = storageGet("strictly-business-academy-progress");
+  if (savedLessons) {
+    try { completedLessons = JSON.parse(savedLessons); } catch (error) {}
+  }
+
+  function updateAcademyProgress() {
+    lessonButtons.forEach(function (button) {
+      var lesson = button.getAttribute("data-complete-lesson");
+      var complete = completedLessons.indexOf(lesson) !== -1;
+      button.classList.toggle("complete", complete);
+      button.textContent = complete ? "Completed ✓" : "Mark lesson complete";
+      var lessonCard = button.closest(".academy-lesson");
+      if (lessonCard) lessonCard.classList.toggle("lesson-done", complete);
+    });
+    var total = lessonButtons.length;
+    var count = completedLessons.length;
+    document.getElementById("academy-progress-label").textContent =
+      count + " of " + total + " lessons complete";
+    document.getElementById("academy-progress-bar").style.width =
+      (total ? (count / total) * 100 : 0) + "%";
+    storageSet("strictly-business-academy-progress", JSON.stringify(completedLessons));
+  }
+
+  lessonButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      var lesson = button.getAttribute("data-complete-lesson");
+      var index = completedLessons.indexOf(lesson);
+      if (index === -1) completedLessons.push(lesson);
+      else completedLessons.splice(index, 1);
+      updateAcademyProgress();
+    });
+  });
+
+  document.getElementById("academy-reset").addEventListener("click", function () {
+    if (window.confirm("Reset all completed lessons? Your workspace answers will stay saved.")) {
+      completedLessons = [];
+      updateAcademyProgress();
+    }
+  });
+  updateAcademyProgress();
+
+  var pitchInputs = Array.prototype.slice.call(document.querySelectorAll(".pitch-input"));
+
+  function updatePitch() {
+    var customer = document.getElementById("pitch-customer").value.trim();
+    var problem = document.getElementById("pitch-problem").value.trim();
+    var solution = document.getElementById("pitch-solution").value.trim();
+    var benefit = document.getElementById("pitch-benefit").value.trim();
+    var proof = document.getElementById("pitch-proof").value.trim();
+    var ask = document.getElementById("pitch-ask").value.trim();
+    var hasInput = pitchInputs.some(function (input) { return input.value.trim(); });
+    var pitch = hasInput ?
+      (customer || "[target customer]") + " struggle to " +
+      (problem || "[solve a specific problem]") + ". " +
+      (solution || "[your solution]") + " helps them " +
+      (benefit || "[reach an important outcome]") + ". " +
+      (proof ? "Our reason to believe is that it is " + proof + ". " : "") +
+      "Right now, we’re looking for " + (ask || "[a specific next step]") + "." :
+      "Complete the fields to build a clear 30-second pitch.";
+    document.getElementById("pitch-output").textContent = pitch;
+    var pitchValues = {};
+    pitchInputs.forEach(function (input) { pitchValues[input.id] = input.value; });
+    storageSet("strictly-business-pitch", JSON.stringify(pitchValues));
+  }
+
+  var savedPitch = storageGet("strictly-business-pitch");
+  if (savedPitch) {
+    try {
+      var parsedPitch = JSON.parse(savedPitch);
+      pitchInputs.forEach(function (input) { input.value = parsedPitch[input.id] || ""; });
+    } catch (error) {}
+  }
+  pitchInputs.forEach(function (input) { input.addEventListener("input", updatePitch); });
+  updatePitch();
+
+  document.getElementById("copy-pitch").addEventListener("click", function () {
+    var button = this;
+    var pitch = document.getElementById("pitch-output").textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(pitch).then(function () {
+        button.textContent = "Copied ✓";
+        window.setTimeout(function () { button.textContent = "Copy pitch"; }, 1500);
+      });
+    } else {
+      button.textContent = "Select and copy the draft";
+      window.setTimeout(function () { button.textContent = "Copy pitch"; }, 1800);
+    }
+  });
+
+  function currency(value) {
+    return "$" + Math.round(value).toLocaleString();
+  }
+
+  var marketInputs = ["market-customers", "market-arpc", "market-sam-share", "market-som-share"];
+  function updateMarketSizing() {
+    var customers = Math.max(0, numberValue("market-customers") || 0);
+    var arpc = Math.max(0, numberValue("market-arpc") || 0);
+    var samShare = Math.min(100, Math.max(0, numberValue("market-sam-share") || 0)) / 100;
+    var somShare = Math.min(100, Math.max(0, numberValue("market-som-share") || 0)) / 100;
+    var tam = customers * arpc;
+    var sam = tam * samShare;
+    var som = sam * somShare;
+    document.getElementById("tam-result").textContent = currency(tam);
+    document.getElementById("sam-result").textContent = currency(sam);
+    document.getElementById("som-result").textContent = currency(som);
+  }
+  marketInputs.forEach(function (id) {
+    document.getElementById(id).addEventListener("input", updateMarketSizing);
+  });
+  updateMarketSizing();
+
+  var pricingInputs = ["pricing-price", "pricing-cogs", "pricing-fixed", "pricing-units"];
+  function updatePricing() {
+    var price = Math.max(0, numberValue("pricing-price") || 0);
+    var cogs = Math.max(0, numberValue("pricing-cogs") || 0);
+    var fixed = Math.max(0, numberValue("pricing-fixed") || 0);
+    var units = Math.max(0, numberValue("pricing-units") || 0);
+    var unitContribution = price - cogs;
+    var margin = price > 0 ? (unitContribution / price) * 100 : 0;
+    var contribution = unitContribution * units;
+    var breakEven = unitContribution > 0 ? Math.ceil(fixed / unitContribution) : null;
+    document.getElementById("margin-result").textContent =
+      Number.isFinite(margin) ? margin.toFixed(1) + "%" : "—";
+    document.getElementById("contribution-result").textContent = currency(contribution);
+    document.getElementById("breakeven-result").textContent =
+      breakEven === null ? "No break-even" : breakEven.toLocaleString();
+  }
+  pricingInputs.forEach(function (id) {
+    document.getElementById(id).addEventListener("input", updatePricing);
+  });
+  updatePricing();
+
+  var swotInputs = Array.prototype.slice.call(document.querySelectorAll(".swot-input"));
+  var savedSwot = storageGet("strictly-business-swot");
+  if (savedSwot) {
+    try {
+      var parsedSwot = JSON.parse(savedSwot);
+      swotInputs.forEach(function (input) { input.value = parsedSwot[input.id] || ""; });
+    } catch (error) {}
+  }
+  swotInputs.forEach(function (input) {
+    input.addEventListener("input", function () {
+      var values = {};
+      swotInputs.forEach(function (field) { values[field.id] = field.value; });
+      storageSet("strictly-business-swot", JSON.stringify(values));
+    });
+  });
+
+  var websiteChecks = Array.prototype.slice.call(document.querySelectorAll(".website-check"));
+  var savedWebsiteChecks = storageGet("strictly-business-website-checks");
+  if (savedWebsiteChecks) {
+    try {
+      JSON.parse(savedWebsiteChecks).forEach(function (checked, index) {
+        if (websiteChecks[index]) websiteChecks[index].checked = Boolean(checked);
+      });
+    } catch (error) {}
+  }
+
+  function updateWebsiteChecks() {
+    var count = websiteChecks.filter(function (check) { return check.checked; }).length;
+    document.getElementById("website-check-count").textContent =
+      count + "/" + websiteChecks.length + " ready";
+    document.getElementById("website-check-note").textContent =
+      count === websiteChecks.length ? "Ready for a careful launch review." :
+      count >= 5 ? "Close—test the unfinished launch risks." :
+      "Start with the site’s main job.";
+    storageSet("strictly-business-website-checks", JSON.stringify(
+      websiteChecks.map(function (check) { return check.checked; })
+    ));
+  }
+  websiteChecks.forEach(function (check) {
+    check.addEventListener("change", updateWebsiteChecks);
+  });
+  updateWebsiteChecks();
+
   var chat = document.getElementById("nessie-chat");
   var chatInput = document.getElementById("chat-input");
   var chatMessages = document.getElementById("chat-messages");
@@ -280,6 +481,62 @@
   });
 
   var nessieTopics = [
+    {
+      words: ["elevator", "pitch", "uvp", "value proposition"],
+      text: "A clear pitch names one customer, one costly problem, the outcome your solution creates, one reason to believe, and one specific ask. Skip the long feature list. Use the pitch builder to create a draft, then say it aloud and cut anything that does not help the listener understand or act.",
+      target: "#startup-academy",
+      label: "Build an elevator pitch",
+      track: "foundation"
+    },
+    {
+      words: ["segment", "demographic", "psychographic", "target market", "customer profile"],
+      text: "Start narrower than feels comfortable. Describe the customer’s context, problem trigger, current behavior, priority, and ability to act or pay. Demographics tell you who they are; behavior and motivation explain why they might switch.",
+      target: "#startup-academy",
+      label: "Define a customer segment",
+      track: "foundation"
+    },
+    {
+      words: ["tam", "sam", "som", "market size", "competitive", "competition", "swot"],
+      text: "Size the market with visible assumptions: reachable customers × annual revenue per customer. TAM is the broad demand, SAM is what your model can serve, and SOM is the realistic early share. Then compare direct competitors, indirect alternatives, workarounds, and doing nothing.",
+      target: "#startup-academy",
+      label: "Open the market track",
+      track: "market"
+    },
+    {
+      words: ["brand", "marketing", "social media", "advertising", "ads"],
+      text: "Choose a customer and objective before choosing a channel. Your brand promise, offer, landing page, and call to action should match. Run small tests with one primary conversion metric, and make every advertising claim truthful, supported, and clear.",
+      target: "#startup-academy",
+      label: "Open the marketing track",
+      track: "marketing"
+    },
+    {
+      words: ["website", "domain", "hosting", "dns", "seo"],
+      text: "Begin with the website’s job and one primary action. Then choose a domain and platform, connect DNS and HTTPS, build the core pages, test mobile and accessibility, add appropriate policies, configure measurement, and document renewals, backups, and ownership.",
+      target: "#startup-academy",
+      label: "Use the website launch guide",
+      track: "marketing"
+    },
+    {
+      words: ["price", "pricing", "cogs", "revenue model", "gross margin", "financial model"],
+      text: "Pricing must connect customer value with unit economics. Calculate direct COGS, gross margin, contribution, and break-even; then test a pricing approach against real buying behavior. A financial model should make its customer, volume, price, cost, and timing assumptions visible.",
+      target: "#startup-academy",
+      label: "Open the money track",
+      track: "money"
+    },
+    {
+      words: ["partnership", "partner", "nda", "attorney", "lawyer", "patent", "trademark", "bank account"],
+      text: "Write down ownership, roles, decisions, money, IP, confidentiality, exit, and dispute terms before the relationship becomes complicated. Separate business money, verify registration and tax needs, and use qualified legal help when ownership, regulated activity, core IP, investors, or major contracts are involved.",
+      target: "#startup-academy",
+      label: "Open the legal track",
+      track: "legal"
+    },
+    {
+      words: ["exit", "sell company", "acquisition", "succession"],
+      text: "An exit may be continued owner operation, succession, acquisition, merger, buyout, licensing, or orderly closure. Clean financial records, transferable contracts, documented IP, clear ownership, and a business that can operate without one founder preserve options.",
+      target: "#startup-academy",
+      label: "Review exits and funding",
+      track: "money"
+    },
     {
       words: ["retain", "retention", "churn", "customer rate"],
       text: "Retention asks whether people keep receiving enough value to return. For a simple cohort: (customers at the end − new customers added) ÷ customers at the start. Track one clearly defined group over one clearly defined period.",
@@ -348,7 +605,10 @@
       action.className = "chat-action";
       action.href = reply.target;
       action.textContent = reply.label;
-      action.addEventListener("click", function () { setChat(false); });
+      action.addEventListener("click", function () {
+        if (reply.track) openAcademyTrack(reply.track);
+        setChat(false);
+      });
       message.appendChild(action);
     }
 
