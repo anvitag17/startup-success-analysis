@@ -14,14 +14,6 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: "Nessie Script";
-  src: url("assets/fonts/LobsterTwo-BoldItalic.ttf") format("truetype");
-  font-style: italic;
-  font-weight: 700;
-  font-display: swap;
-}
-
 :root {
   --violet: #310a31;
   --mauve: #847996;
@@ -142,14 +134,13 @@ a {
   position: relative;
   z-index: 2;
   display: inline-block;
-  color: var(--cream);
-  font-family: "Nessie Script", cursive;
-  font-size: 1.12em;
-  font-style: italic;
-  font-weight: 700;
-  letter-spacing: -0.055em;
-  line-height: 0.72;
-  transform: translateY(1px);
+  color: var(--teal);
+  font-family: "Fredoka", "DM Sans", sans-serif;
+  font-size: 1em;
+  font-style: normal;
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  line-height: 0.78;
 }
 
 .logo-nessie {
@@ -168,7 +159,7 @@ a {
   stroke: var(--teal);
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-width: 5.5;
+  stroke-width: 7;
 }
 
 .logo-nessie-face {
