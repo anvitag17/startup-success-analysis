@@ -105,8 +105,10 @@ has_data <- nrow(raw) > 0
 <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
 <div class="site-nav">
 <a class="brand brand-lockup" href="#" aria-label="Strictly Business home">
-<span class="brand-copy"><span class="brand-top">Strictly</span><span class="brand-bottom">Busines<span class="crushed-letter">s</span></span></span>
-<svg class="brand-gavel" viewBox="0 0 54 58" aria-hidden="true"><g transform="rotate(-27 27 29)"><rect x="8" y="7" width="30" height="10" rx="2"></rect><rect x="4" y="9" width="6" height="6" rx="1"></rect><rect x="37" y="9" width="6" height="6" rx="1"></rect><rect x="22" y="16" width="5" height="31" rx="2"></rect><rect x="16" y="45" width="17" height="5" rx="2"></rect></g></svg>
+<span class="brand-copy">
+<span class="brand-top">Strictly</span>
+<span class="brand-bottom"><span>Busi</span><span class="ness-wrap"><span class="ness-word">ness</span><svg class="logo-nessie" viewBox="0 0 104 52" aria-hidden="true"><path class="nessie-body" d="M4 39 C16 34 13 14 29 14 C45 14 49 43 67 40 C85 37 72 15 88 10"></path><path class="nessie-neck" d="M88 10 C91 4 98 5 99 12"></path><circle class="nessie-eye" cx="94" cy="8" r="2.4"></circle><path class="nessie-smile" d="M92 14 Q96 17 100 13"></path></svg></span></span>
+</span>
 </a>
 <div class="nav-links">
 <a href="#startup-roadmap">Start</a>
@@ -124,17 +126,18 @@ has_data <- nrow(raw) > 0
 <p>Learn how to find a real problem, test a solution, understand the numbers, and make smarter startup decisions—one experiment at a time.</p>
 <div class="hero-actions">
 <a class="button primary" href="#startup-roadmap">Start your roadmap</a>
-<a class="button secondary" href="#signal-lab">Try the tools</a>
+<button class="button secondary" type="button" data-open-chat>Ask Nessie</button>
 </div>
 </div>
-<div class="notebook-card">
-<span class="paper-tape"></span>
-<span class="notebook-kicker">Founder notes / 01</span>
-<h2>Problem → evidence → experiment</h2>
-<div class="notebook-line"><span>01</span><p>Who feels this problem?</p></div>
-<div class="notebook-line"><span>02</span><p>What do they do now?</p></div>
-<div class="notebook-line"><span>03</span><p>What can we test Friday?</p></div>
-<div class="handwritten-note">talk to 5 people first ↗</div>
+<div class="nessie-stage">
+<span class="nessie-orbit one" aria-hidden="true"></span>
+<span class="nessie-orbit two" aria-hidden="true"></span>
+<img class="hero-nessie" src="assets/images/nessie-mascot.png" alt="Nessie, the Strictly Business startup guide">
+<button class="nessie-speech" type="button" data-open-chat>
+<span>Stuck on your startup?</span>
+<strong>Let’s figure out the next move.</strong>
+</button>
+<div class="nessie-tag">Nessie · startup study buddy</div>
 </div>
 </div>
 

@@ -1,8 +1,10 @@
 <footer class="site-footer">
   <div>
     <a class="brand brand-lockup" href="#" aria-label="Strictly Business home">
-      <span class="brand-copy"><span class="brand-top">Strictly</span><span class="brand-bottom">Busines<span class="crushed-letter">s</span></span></span>
-      <svg class="brand-gavel" viewBox="0 0 54 58" aria-hidden="true"><g transform="rotate(-27 27 29)"><rect x="8" y="7" width="30" height="10" rx="2"></rect><rect x="4" y="9" width="6" height="6" rx="1"></rect><rect x="37" y="9" width="6" height="6" rx="1"></rect><rect x="22" y="16" width="5" height="31" rx="2"></rect><rect x="16" y="45" width="17" height="5" rx="2"></rect></g></svg>
+      <span class="brand-copy">
+        <span class="brand-top">Strictly</span>
+        <span class="brand-bottom"><span>Busi</span><span class="ness-wrap"><span class="ness-word">ness</span><svg class="logo-nessie" viewBox="0 0 104 52" aria-hidden="true"><path class="nessie-body" d="M4 39 C16 34 13 14 29 14 C45 14 49 43 67 40 C85 37 72 15 88 10"></path><path class="nessie-neck" d="M88 10 C91 4 98 5 99 12"></path><circle class="nessie-eye" cx="94" cy="8" r="2.4"></circle><path class="nessie-smile" d="M92 14 Q96 17 100 13"></path></svg></span></span>
+      </span>
     </a>
     <p>A student-friendly guide for turning startup questions into responsible experiments.</p>
   </div>
@@ -13,6 +15,34 @@
   </div>
   <small>Educational information only. Strictly Business does not provide legal, tax, financial, or investment advice.</small>
 </footer>
+<button class="nessie-launcher" type="button" data-chat-toggle aria-controls="nessie-chat" aria-expanded="false">
+  <span class="launcher-avatar"><img src="assets/images/nessie-mascot.png" alt=""></span>
+  <span><strong>Ask Nessie</strong><small>your startup study buddy</small></span>
+  <span class="launcher-dot" aria-hidden="true"></span>
+</button>
+<aside class="nessie-chat" id="nessie-chat" aria-hidden="true" aria-label="Chat with Nessie, the startup study buddy">
+  <div class="chat-header">
+    <span class="chat-avatar"><img src="assets/images/nessie-mascot.png" alt=""></span>
+    <span><strong>Nessie</strong><small>Startup study buddy · online</small></span>
+    <button class="chat-close" type="button" data-chat-close aria-label="Close chat">×</button>
+  </div>
+  <div class="chat-messages" id="chat-messages" aria-live="polite">
+    <div class="chat-message bot">
+      <p>Hey! Tell me where you’re stuck and I’ll help you choose one useful next step.</p>
+    </div>
+  </div>
+  <div class="chat-prompts" aria-label="Suggested questions">
+    <button type="button" data-chat-prompt="How do I know if my idea solves a real problem?">Test my idea</button>
+    <button type="button" data-chat-prompt="What should my first MVP include?">Plan an MVP</button>
+    <button type="button" data-chat-prompt="How do retention and runway work?">Understand metrics</button>
+  </div>
+  <form class="chat-form" id="chat-form">
+    <label class="sr-only" for="chat-input">Ask Nessie a startup question</label>
+    <input id="chat-input" type="text" maxlength="240" autocomplete="off" placeholder="Ask about ideas, legal, money…">
+    <button type="submit" aria-label="Send message">Send</button>
+  </form>
+  <p class="chat-privacy">Guide-based answers only. Your messages stay in this browser.</p>
+</aside>
 <script>
 (function () {
   function numberValue(id) {
@@ -224,5 +254,135 @@
     input.addEventListener("input", updateReadiness);
   });
   updateReadiness();
+
+  var chat = document.getElementById("nessie-chat");
+  var chatInput = document.getElementById("chat-input");
+  var chatMessages = document.getElementById("chat-messages");
+  var chatLauncher = document.querySelector("[data-chat-toggle]");
+
+  function setChat(open) {
+    chat.classList.toggle("open", open);
+    chat.setAttribute("aria-hidden", String(!open));
+    chatLauncher.setAttribute("aria-expanded", String(open));
+    if (open) {
+      window.setTimeout(function () { chatInput.focus(); }, 180);
+    }
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-open-chat]"), function (button) {
+    button.addEventListener("click", function () { setChat(true); });
+  });
+  chatLauncher.addEventListener("click", function () {
+    setChat(!chat.classList.contains("open"));
+  });
+  document.querySelector("[data-chat-close]").addEventListener("click", function () {
+    setChat(false);
+  });
+
+  var nessieTopics = [
+    {
+      words: ["retain", "retention", "churn", "customer rate"],
+      text: "Retention asks whether people keep receiving enough value to return. For a simple cohort: (customers at the end − new customers added) ÷ customers at the start. Track one clearly defined group over one clearly defined period.",
+      target: "#signal-lab",
+      label: "Open the retention tool"
+    },
+    {
+      words: ["runway", "burn", "cash", "money", "finance", "financial", "funding"],
+      text: "Start with cash discipline, not a dramatic funding plan. Monthly net burn is cash out minus cash in; runway is cash available divided by net burn. Then list the assumptions most likely to change either number.",
+      target: "#financial-foundations",
+      label: "Review the money guide"
+    },
+    {
+      words: ["legal", "llc", "incorporate", "ein", "trademark", "contract", "tax"],
+      text: "Legal needs depend on your location and what you sell. Begin by separating personal and business money, documenting founder ownership, checking permits and tax duties, and protecting customer data. Use this site as a checklist, then verify decisions with official agencies or a qualified professional.",
+      target: "#legal-basics",
+      label: "See the legal checklist"
+    },
+    {
+      words: ["mvp", "prototype", "first version", "build", "launch"],
+      text: "Your MVP should test the riskiest assumption with the least work. Pick one user, one painful moment, one promised outcome, and one behavior that proves value. A manual pilot or clickable prototype may teach you more than a full app.",
+      target: "#problem-to-solution",
+      label: "Build an idea canvas"
+    },
+    {
+      words: ["interview", "customer", "problem", "validate", "validation", "real need"],
+      text: "Ask about the last time the problem happened: what triggered it, what they tried, what it cost, and what they did next. Past behavior is stronger evidence than “Would you use my app?” Five focused conversations can reveal patterns worth testing.",
+      target: "#problem-to-solution",
+      label: "Go to problem framing"
+    },
+    {
+      words: ["brainstorm", "idea", "ideas", "think of"],
+      text: "Keep a friction log for a week. Notice repeated waiting, manual work, confusing handoffs, wasted money, and tasks people avoid. Choose one pattern where you can actually reach the affected users, then write three very different ways to improve it.",
+      target: "#ideas-and-brainstorming",
+      label: "Use the brainstorm prompts"
+    },
+    {
+      words: ["success", "predict", "prediction", "score", "ready"],
+      text: "No score can guarantee startup success. Useful prediction is narrower: estimate whether your current evidence supports the next decision. Look at problem frequency, access to users, willingness to act or pay, repeat use, and whether the economics can work.",
+      target: "#signal-lab",
+      label: "Check your readiness"
+    }
+  ];
+
+  function getNessieReply(question) {
+    var normalized = question.toLowerCase();
+    var match = nessieTopics.find(function (topic) {
+      return topic.words.some(function (word) { return normalized.indexOf(word) !== -1; });
+    });
+    return match || {
+      text: "I can help you turn that into a smaller decision. Are you trying to understand the problem, choose an MVP, find customers, handle legal basics, work out the money, or measure retention? Pick the closest one and tell me what you already know.",
+      target: "#startup-roadmap",
+      label: "See the startup roadmap"
+    };
+  }
+
+  function addChatMessage(text, sender, reply) {
+    var message = document.createElement("div");
+    message.className = "chat-message " + sender;
+    var paragraph = document.createElement("p");
+    paragraph.textContent = text;
+    message.appendChild(paragraph);
+
+    if (reply && reply.target) {
+      var action = document.createElement("a");
+      action.className = "chat-action";
+      action.href = reply.target;
+      action.textContent = reply.label;
+      action.addEventListener("click", function () { setChat(false); });
+      message.appendChild(action);
+    }
+
+    chatMessages.appendChild(message);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function answerQuestion(question) {
+    var cleanQuestion = question.trim();
+    if (!cleanQuestion) return;
+    addChatMessage(cleanQuestion, "user");
+    chatInput.value = "";
+    var reply = getNessieReply(cleanQuestion);
+    window.setTimeout(function () {
+      addChatMessage(reply.text, "bot", reply);
+    }, 260);
+  }
+
+  document.getElementById("chat-form").addEventListener("submit", function (event) {
+    event.preventDefault();
+    answerQuestion(chatInput.value);
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-chat-prompt]"), function (prompt) {
+    prompt.addEventListener("click", function () {
+      answerQuestion(prompt.getAttribute("data-chat-prompt"));
+    });
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && chat.classList.contains("open")) {
+      setChat(false);
+      chatLauncher.focus();
+    }
+  });
 })();
 </script>
