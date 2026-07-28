@@ -1,7 +1,14 @@
 # LaunchLens — Student Startup Signals
 
-LaunchLens is a student-friendly website that studies factors associated with
-startup success using:
+LaunchLens is a student-friendly startup learning platform. It includes:
+
+- a six-stage path from problem discovery to launch and learning
+- problem statements, solution hypotheses, brainstorming, validation, and MVP guidance
+- U.S.-oriented legal and financial basics with official resource links
+- interactive customer-retention, cash-runway, and startup-readiness tools
+- a clear separation between educational estimates and genuine predictions
+
+Its embedded research lab studies factors associated with startup success using:
 
 - LASSO regression with cross-validation
 - held-out prediction metrics

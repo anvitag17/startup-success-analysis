@@ -8,6 +8,8 @@ output:
     toc: false
     theme: null
     css: styles.css
+    includes:
+      after_body: site-footer.html
 params:
   data_file: "data/global_startup_success_dataset-selected-columns.csv"
   seed: 2026
@@ -103,21 +105,22 @@ has_data <- nrow(raw) > 0
 <div class="site-nav">
 <a class="brand" href="#">Launch<span>Lens</span></a>
 <div class="nav-links">
-<a href="#dataset-overview">Data</a>
-<a href="#factor-comparisons">Factors</a>
-<a href="#lasso-regression">LASSO</a>
-<a href="#conclusions">Conclusions</a>
+<a href="#startup-roadmap">Start</a>
+<a href="#problem-to-solution">Build</a>
+<a href="#financial-foundations">Money</a>
+<a href="#signal-lab">Tools</a>
+<a href="#research-lab">Research</a>
 </div>
 </div>
 
 <div class="hero">
 <div class="hero-copy">
-<div class="eyebrow">Student startup research · powered by R</div>
-<h1>See the signals.<br><span>Build with context.</span></h1>
-<p>LaunchLens turns startup data into clear, student-friendly evidence—so big ideas can begin with better questions.</p>
+<div class="eyebrow">A practical startup guide for students</div>
+<h1>Build the idea<br><span>people actually need.</span></h1>
+<p>Learn how to find a real problem, test a solution, understand the numbers, and make smarter startup decisions—one experiment at a time.</p>
 <div class="hero-actions">
-<a class="button primary" href="#factor-comparisons">Explore the factors</a>
-<a class="button secondary" href="#methodology">How it works</a>
+<a class="button primary" href="#startup-roadmap">Start your roadmap</a>
+<a class="button secondary" href="#signal-lab">Try the tools</a>
 </div>
 </div>
 <div class="signal-card">
@@ -131,42 +134,191 @@ has_data <- nrow(raw) > 0
 </div>
 
 <div class="metric-strip">
-  <div><strong>2</strong><span>LASSO models</span></div>
-  <div><strong>6</strong><span>research sections</span></div>
-  <div><strong>R</strong><span>reproducible analysis</span></div>
+  <div><strong>6</strong><span>startup stages</span></div>
+  <div><strong>3</strong><span>student calculators</span></div>
+  <div><strong>R</strong><span>evidence-backed research lab</span></div>
 </div>
 
-## Introduction
+## Startup roadmap
 
-This report asks which observed characteristics are associated with a startup's
-`Success Score`. LASSO (least absolute shrinkage and selection operator) is useful
-here because it can consider many numeric variables and category indicators at
-once, shrink weak effects toward zero, and select a smaller set of useful
-predictors.
+<p class="section-intro">A startup is not just a small company or a clever app. It is a team searching for a repeatable way to solve a meaningful problem—and a sustainable way to deliver that solution.</p>
 
-Two specifications are used:
+<div class="card-grid three">
+<article class="learning-card">
+<span class="card-kicker">01 · Problem</span>
+<h3>Find a real struggle</h3>
+<p>Start with a specific person, a repeated frustration, and the cost of leaving it unsolved.</p>
+</article>
+<article class="learning-card">
+<span class="card-kicker">02 · Evidence</span>
+<h3>Replace guesses with learning</h3>
+<p>Talk to people, study current workarounds, and look for behavior—not polite compliments.</p>
+</article>
+<article class="learning-card">
+<span class="card-kicker">03 · Experiment</span>
+<h3>Test the smallest promise</h3>
+<p>Use a prototype, landing page, pilot, or manual service before building the full product.</p>
+</article>
+</div>
 
-1. **Earlier-stage model:** age, country, industry, funding stage, total funding,
-   and employee count.
-2. **All-observed model:** the earlier-stage factors plus annual revenue and
-   valuation.
+<div class="journey">
+<div class="journey-step"><span>1</span><strong>Problem</strong><small>Who struggles, and why?</small></div>
+<div class="journey-step"><span>2</span><strong>Insight</strong><small>What does evidence reveal?</small></div>
+<div class="journey-step"><span>3</span><strong>Solution</strong><small>What is your smallest promise?</small></div>
+<div class="journey-step"><span>4</span><strong>Validation</strong><small>Will people act or pay?</small></div>
+<div class="journey-step"><span>5</span><strong>Launch</strong><small>Can you deliver reliably?</small></div>
+<div class="journey-step"><span>6</span><strong>Learn</strong><small>What should change next?</small></div>
+</div>
 
-The first is the more useful specification for early decision-making. Revenue and
-valuation may be consequences of success, so the second model is descriptive and
-should not be interpreted causally.
+## Problem to solution
 
-```{r data-availability, echo=FALSE, results='asis'}
-if (!has_data) {
-  cat(
-    paste0(
-      "> **Data issue:** `", params$data_file,
-      "` contains the expected column names but no populated records. All ",
-      input_rows, " rows in the supplied file are blank. The analysis below is fully ",
-      "implemented and will run after the file is replaced with populated data."
-    )
-  )
-}
-```
+<div class="split-panel">
+<div>
+<span class="card-kicker">Problem statement</span>
+<h3>Make the problem narrow enough to test</h3>
+<p class="formula">[Specific user] struggles to [make progress] when [situation] because [root cause], which leads to [measurable cost].</p>
+<p>“Students need a productivity app” is broad. “First-year commuters miss campus events because information is scattered across five channels” is testable.</p>
+</div>
+<div>
+<span class="card-kicker">Solution hypothesis</span>
+<h3>Describe an outcome, not a feature pile</h3>
+<p class="formula">We believe [solution] will help [user] achieve [outcome]. We will know when [behavior or metric] changes.</p>
+<p>Your first solution is a hypothesis. Learning that it is wrong early is progress, not failure.</p>
+</div>
+</div>
+
+<div class="checklist">
+<h3>Quick problem check</h3>
+<label><input type="checkbox"> I can name one specific user group.</label>
+<label><input type="checkbox"> The problem happens repeatedly or has a high cost.</label>
+<label><input type="checkbox"> People already use a workaround.</label>
+<label><input type="checkbox"> I can reach these users for interviews or tests.</label>
+<label><input type="checkbox"> I can observe a behavior that would prove improvement.</label>
+</div>
+
+## Ideas and brainstorming
+
+<p class="section-intro">Strong startup ideas usually come from close observation: inconvenient workflows, excluded users, expensive delays, new technology, or a process you understand unusually well.</p>
+
+<div class="card-grid four">
+<article class="learning-card"><span class="card-kicker">Observe</span><h3>Keep a friction log</h3><p>Record repeated complaints, awkward workarounds, waiting, waste, and tasks people avoid.</p></article>
+<article class="learning-card"><span class="card-kicker">Reframe</span><h3>Ask “How might we?”</h3><p>Turn a complaint into an open challenge without deciding the answer too early.</p></article>
+<article class="learning-card"><span class="card-kicker">Expand</span><h3>Create 20 options</h3><p>Separate idea generation from judgment. Include manual, service, software, and community solutions.</p></article>
+<article class="learning-card"><span class="card-kicker">Narrow</span><h3>Score the evidence</h3><p>Rank urgency, access to users, willingness to act, testability, and your unfair insight.</p></article>
+</div>
+
+<div class="prompt-box">
+<strong>15-minute idea sprint</strong>
+<p>Choose one community you know. List five repeated problems, three current workarounds for each, and one way to test demand this week for the strongest problem.</p>
+</div>
+
+## Validation and MVP
+
+<div class="split-panel">
+<div>
+<span class="card-kicker">Customer discovery</span>
+<h3>Interview the past, not the imaginary future</h3>
+<ul class="mini-list">
+<li>“Tell me about the last time this happened.”</li>
+<li>“What did you do instead?”</li>
+<li>“What did that cost in time, money, or stress?”</li>
+<li>“Who decides whether to try or buy a solution?”</li>
+</ul>
+<p>Avoid pitching during discovery. The goal is to understand behavior and decision-making.</p>
+</div>
+<div>
+<span class="card-kicker">Minimum viable product</span>
+<h3>Build the smallest credible test</h3>
+<ul class="mini-list">
+<li>Clickable prototype for usability</li>
+<li>Landing page or waitlist for demand</li>
+<li>Manual concierge service for delivery</li>
+<li>Paid pilot or preorder for willingness to pay</li>
+</ul>
+<p>An MVP is a learning instrument. Choose it based on the riskiest assumption—not the most exciting feature.</p>
+</div>
+</div>
+
+<div class="resource-band">
+<div><strong>Evidence before scale</strong><span>The NSF I-Corps program uses experiential customer discovery to reduce commercialization risk.</span></div>
+<a href="https://www.nsf.gov/funding/initiatives/i-corps" target="_blank" rel="noopener">Explore NSF I-Corps ↗</a>
+</div>
+
+## Legal basics
+
+<div class="legal-note"><strong>Educational guidance, not legal advice.</strong> Requirements depend on your country, state, industry, team, and customers. Use official sources and consult a qualified attorney or accountant for decisions with legal or tax consequences.</div>
+
+<div class="card-grid three">
+<article class="learning-card"><span class="card-kicker">Founders</span><h3>Put agreements in writing</h3><p>Clarify roles, ownership, vesting, decision rights, departures, and who owns work created for the startup.</p></article>
+<article class="learning-card"><span class="card-kicker">Entity</span><h3>Choose structure deliberately</h3><p>Structure affects taxes, liability, paperwork, fundraising, and ownership. Do not copy another startup blindly.</p><a class="resource-link" href="https://www.sba.gov/business-guide/launch-your-business/choose-business-structure" target="_blank" rel="noopener">SBA structure guide ↗</a></article>
+<article class="learning-card"><span class="card-kicker">Identity</span><h3>Check names and IP</h3><p>A domain or social handle does not establish trademark rights. Search similar marks and understand what your brand identifies.</p><a class="resource-link" href="https://www.uspto.gov/trademarks/basics" target="_blank" rel="noopener">USPTO trademark basics ↗</a></article>
+<article class="learning-card"><span class="card-kicker">Registration</span><h3>Register in the right order</h3><p>Check state or local formation, licenses, permits, tax registration, and banking requirements. In the U.S., form an entity before requesting its EIN.</p><a class="resource-link" href="https://www.irs.gov/businesses/small-businesses-self-employed/get-an-employer-identification-number" target="_blank" rel="noopener">IRS EIN guidance ↗</a></article>
+<article class="learning-card"><span class="card-kicker">Data</span><h3>Protect customer information</h3><p>Collect only what you need, secure access, explain usage clearly, and review rules for minors, health, education, payments, and location data.</p></article>
+<article class="learning-card"><span class="card-kicker">People</span><h3>Know who works for you</h3><p>Employee and contractor classifications have different tax, wage, benefit, and IP consequences.</p></article>
+</div>
+
+## Financial foundations
+
+<p class="section-intro">You do not need an MBA to understand startup finance. You do need a clear view of cash, costs, price, unit economics, and how long you can keep learning.</p>
+
+<div class="card-grid four">
+<article class="learning-card"><span class="card-kicker">Costs</span><h3>Separate one-time and monthly costs</h3><p>Include software, equipment, licenses, insurance, contractors, marketing, payment fees, and a realistic buffer.</p></article>
+<article class="learning-card"><span class="card-kicker">Price</span><h3>Connect price to value</h3><p>Test willingness to pay. Revenue is stronger evidence than sign-ups, and margin matters more than revenue alone.</p></article>
+<article class="learning-card"><span class="card-kicker">Cash</span><h3>Track burn and runway</h3><p>Net burn is monthly cash out minus cash in. Runway estimates how many months remain at the current burn.</p></article>
+<article class="learning-card"><span class="card-kicker">Funding</span><h3>Match money to the milestone</h3><p>Bootstrapping, grants, competitions, loans, and equity each change risk, control, and expectations.</p></article>
+</div>
+
+<div class="resource-band">
+<div><strong>Build a realistic cost map</strong><span>The SBA recommends identifying one-time and monthly expenses before launch, then using them for profit, break-even, and funding estimates.</span></div>
+<a href="https://www.sba.gov/business-guide/plan-your-business/calculate-your-startup-costs" target="_blank" rel="noopener">SBA startup-cost guide ↗</a>
+</div>
+
+## Signal lab
+
+<p class="section-intro">Use these calculators to turn startup activity into questions you can act on. Results stay in your browser and are educational estimates—not guarantees or investment advice.</p>
+
+<div class="tool-grid">
+<article class="calculator-card">
+<span class="card-kicker">Customer health</span>
+<h3>Retention rate</h3>
+<p>Estimate the share of starting customers who remain at the end of a period.</p>
+<label>Customers at start<input id="retention-start" type="number" min="1" step="1" placeholder="100"></label>
+<label>New customers added<input id="retention-new" type="number" min="0" step="1" placeholder="20"></label>
+<label>Customers at end<input id="retention-end" type="number" min="0" step="1" placeholder="95"></label>
+<button id="retention-calculate" type="button">Calculate retention</button>
+<div class="tool-result" id="retention-result" aria-live="polite"><strong>—</strong><span>Enter your customer counts</span></div>
+<small>Formula: (ending customers − new customers) ÷ starting customers</small>
+</article>
+
+<article class="calculator-card">
+<span class="card-kicker">Cash health</span>
+<h3>Runway estimate</h3>
+<p>Estimate how long your current cash lasts if monthly net burn stays constant.</p>
+<label>Cash available (USD)<input id="runway-cash" type="number" min="0" step="100" placeholder="12000"></label>
+<label>Monthly cash out (USD)<input id="runway-out" type="number" min="0" step="50" placeholder="2500"></label>
+<label>Monthly cash in (USD)<input id="runway-in" type="number" min="0" step="50" placeholder="500"></label>
+<button id="runway-calculate" type="button">Estimate runway</button>
+<div class="tool-result" id="runway-result" aria-live="polite"><strong>—</strong><span>Enter cash and monthly flows</span></div>
+<small>Runway changes when revenue, spending, or timing changes.</small>
+</article>
+
+<article class="calculator-card readiness-card">
+<span class="card-kicker">Learning progress</span>
+<h3>Startup readiness snapshot</h3>
+<p>Rate the evidence behind your startup. This is a reflection tool—not a probability of success.</p>
+<label>Problem evidence <output id="problem-value">3</output><input class="readiness-input" id="problem-score" type="range" min="1" max="5" value="3"></label>
+<label>Customer learning <output id="customer-value">3</output><input class="readiness-input" id="customer-score" type="range" min="1" max="5" value="3"></label>
+<label>Early traction <output id="traction-value">3</output><input class="readiness-input" id="traction-score" type="range" min="1" max="5" value="3"></label>
+<label>Financial clarity <output id="finance-value">3</output><input class="readiness-input" id="finance-score" type="range" min="1" max="5" value="3"></label>
+<label>Team execution <output id="team-value">3</output><input class="readiness-input" id="team-score" type="range" min="1" max="5" value="3"></label>
+<div class="tool-result" id="readiness-result" aria-live="polite"><strong>50/100</strong><span>Validation stage</span></div>
+</article>
+</div>
+
+<div class="prediction-note">
+<strong>What can you responsibly estimate?</strong>
+<p>With consistent historical data, models can estimate retention risk, demand, revenue ranges, churn, cash runway, or a defined success score. They cannot know whether a startup will “succeed overall” with certainty. Predictions inherit the assumptions, missing information, and bias in their training data.</p>
+</div>
 
 ```{r prepare-data, include=FALSE}
 
@@ -214,7 +366,33 @@ if (has_data) {
 }
 ```
 
-## Dataset overview
+## Research lab
+
+<div class="research-banner">
+<div><span class="card-kicker">R + LASSO</span><h3>Test startup signals with data</h3></div>
+<p>The learning guides above help students make decisions today. This research lab asks a narrower question: which observed startup characteristics are associated with a defined <code>Success Score</code>?</p>
+</div>
+
+Two models are prepared. The earlier-stage model uses age, country, industry,
+funding stage, total funding, and employee count. The all-observed model adds
+annual revenue and valuation. Because revenue and valuation may be consequences
+of success, the second model is descriptive rather than causal.
+
+```{r data-availability, echo=FALSE, results='asis'}
+if (!has_data) {
+  cat(
+    paste0(
+      "> **Research data needed:** `", params$data_file,
+      "` contains the expected column names but no populated records. All ",
+      input_rows, " rows in the supplied file are blank. The learning platform ",
+      "and calculators work now; R graphs and model results will appear after the ",
+      "file is replaced with populated data."
+    )
+  )
+}
+```
+
+### Dataset overview
 
 The dashboard begins with a basic data-quality check before showing any model
 results. Missing values, sample size, and category coverage matter because a
@@ -258,7 +436,7 @@ if (has_data) {
 }
 ```
 
-## Factor comparisons
+### Factor comparisons
 
 Pearson correlation measures linear association; Spearman correlation also detects
 monotonic relationships and is less sensitive to extreme values. Correlation does
@@ -321,7 +499,7 @@ if (has_data) {
 }
 ```
 
-### Country, industry, and funding-stage relationships
+#### Country, industry, and funding-stage relationships
 
 Group averages can be unstable for categories represented by few startups.
 Accordingly, each plot shows the group sample size and only displays the 12
@@ -360,7 +538,7 @@ if (has_data) {
 }
 ```
 
-## LASSO regression
+### LASSO regression
 
 The data are split 80/20 into training and test sets. All imputation, dummy
 encoding, removal of zero-variance columns, and standardization are learned only
@@ -462,7 +640,7 @@ if (has_data) {
 }
 ```
 
-### Out-of-sample performance
+#### Out-of-sample performance
 
 ```{r model-performance}
 if (has_data) {
@@ -481,7 +659,7 @@ A useful model should have RMSE below the mean-only baseline on held-out data.
 Negative test R-squared means the model generalized worse than simply predicting
 the test-set mean.
 
-### Selected factors
+#### Selected factors
 
 Because inputs are standardized, coefficient magnitudes are broadly comparable.
 A positive coefficient is associated with a higher predicted success score,
@@ -534,7 +712,7 @@ if (has_data) {
 }
 ```
 
-### Prediction check
+#### Prediction check
 
 ```{r prediction-check, fig.height=4.8}
 if (has_data) {
@@ -556,7 +734,7 @@ if (has_data) {
 }
 ```
 
-## Conclusions
+### Research conclusions
 
 - These results identify **associations**, not causal effects. Funding, hiring,
   revenue, valuation, and success may influence one another.
@@ -573,7 +751,7 @@ if (has_data) {
   the success outcome, a clear definition of `Success Score`, and preferably
   repeated observations over time.
 
-## Methodology
+### Research methodology
 
 The analysis uses an 80/20 training-test split. Preprocessing is learned from the
 training data only: missing numeric values are median-imputed, new and missing
@@ -585,7 +763,7 @@ penalty is reported to favor a simpler model.
 The full R source is available in the project repository so every figure and
 metric can be rebuilt when the dataset changes.
 
-### Reproducibility details
+#### Reproducibility details
 
 The report was generated with R and records its complete package environment in
 the source build. This keeps the public page focused while preserving the

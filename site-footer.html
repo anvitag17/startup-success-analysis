@@ -1,0 +1,98 @@
+<footer class="site-footer">
+  <div>
+    <a class="brand" href="#">Launch<span>Lens</span></a>
+    <p>A student-friendly guide for turning startup questions into responsible experiments.</p>
+  </div>
+  <div class="footer-links">
+    <a href="https://www.sba.gov/business-guide" target="_blank" rel="noopener">SBA Business Guide</a>
+    <a href="https://www.irs.gov/businesses/small-businesses-self-employed/starting-a-business" target="_blank" rel="noopener">IRS Starting a Business</a>
+    <a href="https://github.com/anvitag17/startup-success-analysis" target="_blank" rel="noopener">View the R project</a>
+  </div>
+  <small>Educational information only. LaunchLens does not provide legal, tax, financial, or investment advice.</small>
+</footer>
+<script>
+(function () {
+  function numberValue(id) {
+    var value = Number(document.getElementById(id).value);
+    return Number.isFinite(value) ? value : NaN;
+  }
+
+  function setResult(id, primary, secondary) {
+    var target = document.getElementById(id);
+    target.querySelector("strong").textContent = primary;
+    target.querySelector("span").textContent = secondary;
+  }
+
+  document.getElementById("retention-calculate").addEventListener("click", function () {
+    var start = numberValue("retention-start");
+    var added = numberValue("retention-new");
+    var end = numberValue("retention-end");
+
+    if (!(start > 0) || added < 0 || end < 0) {
+      setResult("retention-result", "Check inputs", "Start must be above zero");
+      return;
+    }
+
+    var retained = end - added;
+    if (retained < 0 || retained > start) {
+      setResult("retention-result", "Check inputs", "Counts do not form a valid cohort");
+      return;
+    }
+
+    var rate = (retained / start) * 100;
+    setResult(
+      "retention-result",
+      rate.toFixed(1) + "%",
+      (100 - rate).toFixed(1) + "% cohort churn"
+    );
+  });
+
+  document.getElementById("runway-calculate").addEventListener("click", function () {
+    var cash = numberValue("runway-cash");
+    var cashOut = numberValue("runway-out");
+    var cashIn = numberValue("runway-in");
+
+    if (cash < 0 || cashOut < 0 || cashIn < 0) {
+      setResult("runway-result", "Check inputs", "Use zero or positive numbers");
+      return;
+    }
+
+    var burn = cashOut - cashIn;
+    if (burn <= 0) {
+      setResult("runway-result", "No net burn", "Monthly cash in covers cash out");
+      return;
+    }
+
+    var months = cash / burn;
+    setResult(
+      "runway-result",
+      months.toFixed(1) + " months",
+      "$" + burn.toLocaleString(undefined, {maximumFractionDigits: 0}) + " monthly net burn"
+    );
+  });
+
+  var readinessInputs = Array.prototype.slice.call(
+    document.querySelectorAll(".readiness-input")
+  );
+  var weights = [0.25, 0.20, 0.25, 0.15, 0.15];
+
+  function updateReadiness() {
+    var weighted = readinessInputs.reduce(function (total, input, index) {
+      document.getElementById(input.id.replace("-score", "-value")).value = input.value;
+      return total + Number(input.value) * weights[index];
+    }, 0);
+
+    var score = Math.round(((weighted - 1) / 4) * 100);
+    var stage = score < 35 ? "Explore the problem" :
+      score < 60 ? "Validation stage" :
+      score < 80 ? "Build and measure" :
+      "Strengthen and repeat";
+    setResult("readiness-result", score + "/100", stage);
+  }
+
+  readinessInputs.forEach(function (input) {
+    input.addEventListener("input", updateReadiness);
+  });
+  updateReadiness();
+})();
+</script>
