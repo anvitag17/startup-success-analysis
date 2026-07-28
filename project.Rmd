@@ -1,14 +1,13 @@
 ---
-title: "Factors Associated with Startup Success"
-subtitle: "LASSO regression and exploratory relationship analysis"
-author: "Reproducible analysis"
+title: "LaunchLens"
+subtitle: "Student Startup Signals"
+author: ""
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 output:
   html_document:
-    toc: true
-    toc_float: true
-    theme: flatly
-    code_folding: hide
+    toc: false
+    theme: null
+    css: styles.css
 params:
   data_file: "data/global_startup_success_dataset-selected-columns.csv"
   seed: 2026
@@ -23,7 +22,7 @@ if (!exists("params", inherits = FALSE)) {
 }
 
 knitr::opts_chunk$set(
-  echo = TRUE, warning = FALSE, message = FALSE, error = FALSE,
+  echo = FALSE, warning = FALSE, message = FALSE, error = FALSE,
   fig.width = 9, fig.height = 5.5, dpi = 120
 )
 
@@ -35,12 +34,36 @@ library(recipes)
 library(scales)
 library(broom)
 
+launch_palette <- list(
+  violet = "#310A31",
+  mauve = "#847996",
+  teal = "#88B7B5",
+  sage = "#A7CAB1",
+  cream = "#F4ECD6",
+  background = "#17111F",
+  surface = "#21182C",
+  grid = "#44384F"
+)
+
 theme_set(
-  theme_minimal(base_size = 12) +
+  theme_minimal(base_size = 12, base_family = "sans") +
     theme(
       plot.title.position = "plot",
+      plot.background = element_rect(fill = launch_palette$surface, color = NA),
+      panel.background = element_rect(fill = launch_palette$surface, color = NA),
+      panel.grid.major = element_line(color = launch_palette$grid, linewidth = 0.35),
       panel.grid.minor = element_blank(),
-      legend.position = "bottom"
+      plot.title = element_text(color = launch_palette$cream, face = "bold", size = 15),
+      plot.subtitle = element_text(color = launch_palette$sage),
+      axis.title = element_text(color = launch_palette$cream),
+      axis.text = element_text(color = launch_palette$cream),
+      strip.background = element_rect(fill = launch_palette$violet, color = NA),
+      strip.text = element_text(color = launch_palette$cream, face = "bold"),
+      legend.position = "bottom",
+      legend.background = element_rect(fill = launch_palette$surface, color = NA),
+      legend.key = element_rect(fill = launch_palette$surface, color = NA),
+      legend.text = element_text(color = launch_palette$cream),
+      legend.title = element_text(color = launch_palette$cream)
     )
 )
 
@@ -77,7 +100,43 @@ raw <- raw[rowSums(!is.na(raw)) > 0, , drop = FALSE]
 has_data <- nrow(raw) > 0
 ```
 
-## Research question
+<div class="site-nav">
+<a class="brand" href="#">Launch<span>Lens</span></a>
+<div class="nav-links">
+<a href="#dataset-overview">Data</a>
+<a href="#factor-comparisons">Factors</a>
+<a href="#lasso-regression">LASSO</a>
+<a href="#conclusions">Conclusions</a>
+</div>
+</div>
+
+<div class="hero">
+<div class="hero-copy">
+<div class="eyebrow">Student startup research · powered by R</div>
+<h1>See the signals.<br><span>Build with context.</span></h1>
+<p>LaunchLens turns startup data into clear, student-friendly evidence—so big ideas can begin with better questions.</p>
+<div class="hero-actions">
+<a class="button primary" href="#factor-comparisons">Explore the factors</a>
+<a class="button secondary" href="#methodology">How it works</a>
+</div>
+</div>
+<div class="signal-card">
+<div class="signal-orbit orbit-one"></div>
+<div class="signal-orbit orbit-two"></div>
+<div class="signal-core">LL</div>
+<div class="signal-label label-one">funding</div>
+<div class="signal-label label-two">traction</div>
+<div class="signal-label label-three">context</div>
+</div>
+</div>
+
+<div class="metric-strip">
+  <div><strong>2</strong><span>LASSO models</span></div>
+  <div><strong>6</strong><span>research sections</span></div>
+  <div><strong>R</strong><span>reproducible analysis</span></div>
+</div>
+
+## Introduction
 
 This report asks which observed characteristics are associated with a startup's
 `Success Score`. LASSO (least absolute shrinkage and selection operator) is useful
@@ -109,9 +168,8 @@ if (!has_data) {
 }
 ```
 
-## Data preparation
+```{r prepare-data, include=FALSE}
 
-```{r prepare-data}
 if (has_data) {
   dat <- raw |>
     transmute(
@@ -153,6 +211,17 @@ if (has_data) {
     unique_n = vapply(dat, function(x) length(unique(x[!is.na(x)])), integer(1))
   )
 
+}
+```
+
+## Dataset overview
+
+The dashboard begins with a basic data-quality check before showing any model
+results. Missing values, sample size, and category coverage matter because a
+clean-looking graph can still be misleading when the underlying sample is thin.
+
+```{r quality-table}
+if (has_data) {
   knitr::kable(
     quality,
     digits = 3,
@@ -161,8 +230,6 @@ if (has_data) {
   )
 }
 ```
-
-## Outcome and sample overview
 
 ```{r overview, fig.height=4.5}
 if (has_data) {
@@ -178,10 +245,10 @@ if (has_data) {
   knitr::kable(summary_stats, digits = 2)
 
   ggplot(dat, aes(success_score)) +
-    geom_histogram(bins = 25, fill = "#2471A3", color = "white") +
+    geom_histogram(bins = 25, fill = launch_palette$teal, color = launch_palette$surface) +
     geom_vline(
       xintercept = mean(dat$success_score, na.rm = TRUE),
-      color = "#C0392B", linewidth = 0.9, linetype = 2
+      color = launch_palette$sage, linewidth = 0.9, linetype = 2
     ) +
     labs(
       title = "Distribution of startup success scores",
@@ -191,7 +258,7 @@ if (has_data) {
 }
 ```
 
-## Numeric relationships
+## Factor comparisons
 
 Pearson correlation measures linear association; Spearman correlation also detects
 monotonic relationships and is less sensitive to extreme values. Correlation does
@@ -243,8 +310,8 @@ if (has_data) {
     pivot_longer(-success_score, names_to = "factor", values_to = "value")
 
   ggplot(relationship_data, aes(value, success_score)) +
-    geom_point(alpha = 0.45, color = "#2471A3") +
-    geom_smooth(method = "lm", se = TRUE, color = "#C0392B", linewidth = 0.7) +
+    geom_point(alpha = 0.5, color = launch_palette$teal) +
+    geom_smooth(method = "lm", se = TRUE, color = launch_palette$sage, linewidth = 0.7) +
     facet_wrap(~ factor, scales = "free_x", ncol = 2) +
     labs(
       title = "Numeric factors and startup success",
@@ -254,7 +321,7 @@ if (has_data) {
 }
 ```
 
-## Country, industry, and funding-stage relationships
+### Country, industry, and funding-stage relationships
 
 Group averages can be unstable for categories represented by few startups.
 Accordingly, each plot shows the group sample size and only displays the 12
@@ -282,8 +349,8 @@ if (has_data) {
 
   group_plot <- function(summary_data, title) {
     ggplot(summary_data, aes(mean_success, group)) +
-      geom_errorbarh(aes(xmin = lower, xmax = upper), height = 0.15, color = "#7F8C8D") +
-      geom_point(size = 2.4, color = "#2471A3") +
+      geom_errorbarh(aes(xmin = lower, xmax = upper), height = 0.15, color = launch_palette$mauve) +
+      geom_point(size = 2.4, color = launch_palette$teal) +
       labs(title = title, x = "Mean success score (95% interval)", y = NULL)
   }
 
@@ -454,7 +521,10 @@ if (has_data) {
       ggplot(aes(coefficient, factor, fill = direction)) +
       geom_col() +
       facet_wrap(~ model, scales = "free_y") +
-      scale_fill_manual(values = c(Positive = "#2471A3", Negative = "#C0392B")) +
+      scale_fill_manual(values = c(
+        Positive = launch_palette$teal,
+        Negative = launch_palette$mauve
+      )) +
       labs(
         title = "Strongest factors retained by LASSO",
         subtitle = "Standardized coefficients at the one-standard-error penalty",
@@ -474,8 +544,8 @@ if (has_data) {
   )
 
   ggplot(prediction_plot_data, aes(actual, predicted)) +
-    geom_abline(slope = 1, intercept = 0, linetype = 2, color = "#7F8C8D") +
-    geom_point(alpha = 0.7, color = "#2471A3") +
+    geom_abline(slope = 1, intercept = 0, linetype = 2, color = launch_palette$mauve) +
+    geom_point(alpha = 0.7, color = launch_palette$teal) +
     facet_wrap(~ model) +
     coord_equal() +
     labs(
@@ -486,7 +556,7 @@ if (has_data) {
 }
 ```
 
-## Interpretation and limitations
+## Conclusions
 
 - These results identify **associations**, not causal effects. Funding, hiring,
   revenue, valuation, and success may influence one another.
@@ -503,8 +573,24 @@ if (has_data) {
   the success outcome, a clear definition of `Success Score`, and preferably
   repeated observations over time.
 
-## Reproducibility
+## Methodology
 
-```{r session-info}
+The analysis uses an 80/20 training-test split. Preprocessing is learned from the
+training data only: missing numeric values are median-imputed, new and missing
+categories are handled explicitly, categorical variables are dummy encoded, and
+numeric predictors are standardized. Ten-fold cross-validation (or fewer folds
+for small samples) selects the LASSO penalty. The conservative one-standard-error
+penalty is reported to favor a simpler model.
+
+The full R source is available in the project repository so every figure and
+metric can be rebuilt when the dataset changes.
+
+### Reproducibility details
+
+The report was generated with R and records its complete package environment in
+the source build. This keeps the public page focused while preserving the
+technical details in the repository.
+
+```{r session-info, include=FALSE}
 sessionInfo()
 ```

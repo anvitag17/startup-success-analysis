@@ -1,6 +1,7 @@
-# Startup Success Analysis
+# LaunchLens — Student Startup Signals
 
-This project studies factors associated with startup success using:
+LaunchLens is a student-friendly website that studies factors associated with
+startup success using:
 
 - LASSO regression with cross-validation
 - held-out prediction metrics
@@ -15,6 +16,20 @@ The current CSV has the correct headers but its 124 records are blank. Replace
 `data/global_startup_success_dataset-selected-columns.csv` with populated data
 using the same columns before interpreting results.
 
+### Data-source options
+
+- **Best match for this existing project:** [Global Startup Success Dataset on Kaggle](https://www.kaggle.com/datasets/hamnakaleemds/global-startup-success-dataset).
+  It has the same fields and is suitable for a class or portfolio demonstration.
+  Treat its `Success Score` as a constructed learning outcome unless the uploader
+  provides evidence that the company records and score are independently verified.
+- **Firm-level commercial data:** [Dealroom](https://dealroom.co/products/dealroom-api/)
+  or [Crunchbase](https://about.crunchbase.com/data). These are stronger sources
+  for real startup, funding, and company information, but complete exports or API
+  access may require an account or paid plan.
+- **Open official data:** [World Bank new-business-density data](https://data.worldbank.org/indicator/IC.BUS.NDNS.ZS).
+  This measures formal business formation by country and year. It is real public
+  data, but it requires a different country-level research question and model.
+
 ## Build the report and website
 
 From this folder, run:
@@ -28,6 +43,9 @@ The generated GitHub Pages website is:
 ```text
 docs/index.html
 ```
+
+The HTML presentation is styled in `styles.css`; the analysis and R-generated
+graphs live in `project.Rmd`.
 
 ## Publish with GitHub Pages
 
