@@ -107,7 +107,7 @@ has_data <- nrow(raw) > 0
 <a class="brand brand-lockup" href="#" aria-label="Strictly Business home">
 <span class="brand-copy">
 <span class="brand-top">Strictly</span>
-<span class="brand-bottom"><span>Busi</span><span class="ness-wrap"><span class="ness-word">ness</span><svg class="logo-nessie" viewBox="0 0 112 54" aria-hidden="true"><path class="nessie-tail-outline" d="M-7 42 C4 55 10 8 25 16 S36 54 50 46 S72 40 93 45"></path><path class="nessie-body" d="M-7 42 C4 55 10 8 25 16 S36 54 50 46 S72 40 93 45"></path><path class="nessie-tail-belly" d="M-7 42 C4 55 10 8 25 16 S36 54 50 46 S72 40 93 45"></path></svg><span class="logo-nessie-face" aria-hidden="true"><img src="assets/images/nessie-mascot.png" alt=""></span></span></span>
+<span class="brand-bottom"><span>Busi</span><span class="ness-wrap"><span class="ness-word">ness</span><svg class="logo-nessie" viewBox="0 0 112 54" aria-hidden="true"><path class="nessie-tail-outline" d="M-7 42 C4 55 10 8 25 16 S36 54 50 46 S74 44 93 30"></path><path class="nessie-body" d="M-7 42 C4 55 10 8 25 16 S36 54 50 46 S74 44 93 30"></path><path class="nessie-tail-belly" d="M-7 42 C4 55 10 8 25 16 S36 54 50 46 S74 44 93 30"></path></svg><span class="logo-nessie-face" aria-hidden="true"><img src="assets/images/nessie-mascot.png" alt=""></span></span></span>
 </span>
 </a>
 <div class="nav-links">
