@@ -111,6 +111,13 @@ a {
 .brand .brand-bottom {
   display: block;
   color: var(--cream);
+  -webkit-text-stroke: 0.7px var(--nessie-outline);
+  paint-order: stroke fill;
+  text-shadow:
+    -0.35px -0.35px 0 var(--nessie-outline),
+    0.35px -0.35px 0 var(--nessie-outline),
+    -0.35px 0.35px 0 var(--nessie-outline),
+    0.35px 0.35px 0 var(--nessie-outline);
 }
 
 .brand-top {
