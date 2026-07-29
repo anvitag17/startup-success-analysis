@@ -186,30 +186,44 @@ a {
   stroke-width: 3.2;
 }
 
-.logo-nessie-face {
+.logo-smiley-face {
   position: absolute;
   z-index: 3;
-  left: 55px;
-  top: -24px;
-  width: 39px;
-  height: 43px;
-  overflow: hidden;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
+  left: 63px;
+  top: -20px;
+  width: 35px;
+  height: 35px;
+  border: 3px solid var(--nessie-outline);
+  border-radius: 50%;
+  background: var(--teal);
   filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.25));
-  transform: rotate(-1deg) scaleX(-1);
 }
 
-.logo-nessie-face img {
+.smiley-eye {
   position: absolute;
-  left: -19px;
-  top: 0;
-  width: 100px;
-  height: 100px;
-  max-width: none;
-  border: 0;
-  border-radius: 0;
+  top: 9px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #17111f;
+}
+
+.smiley-eye.left {
+  left: 7px;
+}
+
+.smiley-eye.right {
+  right: 7px;
+}
+
+.smiley-mouth {
+  position: absolute;
+  left: 8px;
+  top: 17px;
+  width: 13px;
+  height: 8px;
+  border-bottom: 2.5px solid #17111f;
+  border-radius: 0 0 14px 14px;
 }
 
 .nav-links {
