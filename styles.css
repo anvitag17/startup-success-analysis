@@ -134,9 +134,8 @@ a {
 .ness-wrap {
   position: relative;
   display: inline-block;
-  min-width: 94px;
+  min-width: 0;
   margin-left: -2px;
-  isolation: isolate;
 }
 
 .ness-word {
@@ -150,70 +149,6 @@ a {
   font-weight: 650;
   letter-spacing: -0.035em;
   line-height: 0.78;
-}
-
-.logo-nessie {
-  position: absolute;
-  z-index: 1;
-  left: 0;
-  top: -12px;
-  width: 91px;
-  height: 44px;
-  overflow: visible;
-  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.24));
-}
-
-.nessie-tail-outline,
-.nessie-body,
-.nessie-tail-belly {
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.nessie-tail-outline {
-  stroke: var(--nessie-outline);
-  stroke-width: 12;
-}
-
-.nessie-body {
-  stroke: var(--teal);
-  stroke-width: 9;
-}
-
-.nessie-tail-belly {
-  stroke: var(--belly);
-  stroke-width: 3.2;
-}
-
-.logo-snake-face {
-  position: absolute;
-  z-index: 3;
-  left: 70px;
-  top: -1px;
-  width: 13px;
-  height: 13px;
-}
-
-.snake-eye {
-  position: absolute;
-  left: 3px;
-  top: 2px;
-  width: 3.5px;
-  height: 3.5px;
-  border-radius: 50%;
-  background: #17111f;
-}
-
-.snake-smile {
-  position: absolute;
-  left: 5px;
-  top: 5px;
-  width: 6px;
-  height: 5px;
-  border-bottom: 1.7px solid #17111f;
-  border-radius: 0 0 7px 7px;
-  transform: rotate(-18deg);
 }
 
 .nav-links {
