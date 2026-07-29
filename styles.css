@@ -186,44 +186,34 @@ a {
   stroke-width: 3.2;
 }
 
-.logo-smiley-face {
+.logo-snake-face {
   position: absolute;
   z-index: 3;
-  left: 63px;
-  top: -20px;
-  width: 35px;
-  height: 35px;
-  border: 3px solid var(--nessie-outline);
-  border-radius: 50%;
-  background: var(--teal);
-  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.25));
+  left: 70px;
+  top: -1px;
+  width: 13px;
+  height: 13px;
 }
 
-.smiley-eye {
+.snake-eye {
   position: absolute;
-  top: 9px;
-  width: 5px;
-  height: 5px;
+  left: 3px;
+  top: 2px;
+  width: 3.5px;
+  height: 3.5px;
   border-radius: 50%;
   background: #17111f;
 }
 
-.smiley-eye.left {
-  left: 7px;
-}
-
-.smiley-eye.right {
-  right: 7px;
-}
-
-.smiley-mouth {
+.snake-smile {
   position: absolute;
-  left: 8px;
-  top: 17px;
-  width: 13px;
-  height: 8px;
-  border-bottom: 2.5px solid #17111f;
-  border-radius: 0 0 14px 14px;
+  left: 5px;
+  top: 5px;
+  width: 6px;
+  height: 5px;
+  border-bottom: 1.7px solid #17111f;
+  border-radius: 0 0 7px 7px;
+  transform: rotate(-18deg);
 }
 
 .nav-links {
