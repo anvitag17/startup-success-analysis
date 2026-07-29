@@ -20,6 +20,7 @@
   --teal: #88b7b5;
   --sage: #a7cab1;
   --belly: #cbdfb8;
+  --nessie-outline: #3a0842;
   --cream: #f4ecd6;
   --bg: #17111f;
   --surface: #21182c;
@@ -155,12 +156,27 @@ a {
   filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.24));
 }
 
-.nessie-body {
+.nessie-tail-outline,
+.nessie-body,
+.nessie-tail-belly {
   fill: none;
-  stroke: var(--teal);
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-width: 7;
+}
+
+.nessie-tail-outline {
+  stroke: var(--nessie-outline);
+  stroke-width: 12;
+}
+
+.nessie-body {
+  stroke: var(--teal);
+  stroke-width: 9;
+}
+
+.nessie-tail-belly {
+  stroke: var(--belly);
+  stroke-width: 3.2;
 }
 
 .logo-nessie-face {
